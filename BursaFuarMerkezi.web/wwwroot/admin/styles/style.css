@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    /* --base-clr: #11121a;
+    --line-clr: #42434a;
+    --hover-clr: #222533;
+    --text-clr: #e6e6ef;
+    --accent-clr: #5e63ff;
+    --secondary-text-clr: #b0b3c1; */
+    --base-clr: #F7F7F7;
+    --line-clr: #00171f;
+    --hover-clr: #d8d8d885;
+    --text-clr: #00171f;
+    --accent-clr: #149A9B;
+    --secondary-text-clr: #494949;
+    --linear-clr: linear-gradient(145deg, #149A9B 0%, #09382c 100%);
+    
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+
+
+body {
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* line-height: 1.5rem; */
+}
+
+
+/* side bar */
+
+
+
+/* Sidebar styles */
+#sidebar {
+    height: 100vh;
+    width: 250px;
+    background-color: var(--base-clr);
+    border-color: var(--line-clr) !important;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    transition: 0.3s ease-in-out;
+    text-wrap: nowrap;
+    overflow: hidden;
+    padding: 5px;
+    padding-left: .5rem;
+}
+#sidebar.close {
+    width: 60px;
+    /* padding: 5px; */
+}
+
+#sidebar .sd-header {
+    width: 100%;
+    height: 84px;
+    margin-left: -2px;
+}
+
+
+#toggle-btn {
+    transition: 0.3s ease-in-out;
+    /* margin-left: auto; */
+}
+
+#toggle-btn:hover {
+    background-color: var(--hover-clr);
+}
+
+#toggle-btn.rotate {
+    transform: rotate(-180deg);
+}
+
+#sidebar .logo {
+    height: 40px;
+    object-fit: contain;
+    transition: opacity .3s ease;
+}
+
+#sidebar.close .logo {
+    opacity: 0;
+}
+
+
+
+
+
+#sidebar .label {
+    transition: opacity .3s ease;
+}
+
+#sidebar.close .label {
+    opacity: 0;
+}
+
+
+#sidebar .nav-item.active .nav-link {
+    color: var(--accent-clr);
+}
+
+#sidebar .nav-item.active .svv {
+    fill: var(--accent-clr);
+}
+
+#sidebar .nav-link,
+#sidebar .dropdown-btn {
+    color: var(--text-clr);
+    border-radius: .5em;
+    padding: .85em;
+    text-decoration: none;
+    color: var(--text-clr);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#sidebar .svv {
+    color: var(--text-clr);
+    fill: var(--text-clr);
+}
+
+#sidebar .dropdown-btn span:last-child {
+    transition: .3s ease-in-out;
+}
+
+#sidebar .dropdown-btn.rotate span:last-child {
+    transform: rotate(-180deg);
+}
+
+#sidebar .nav-link:hover,
+#sidebar .dropdown-btn:hover {
+    background-color: var(--hover-clr);
+}
+
+#sidebar .sub-menu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: .3s ease-in-out;
+}
+
+#sidebar .sub-menu > div {
+    overflow: hidden;
+}
+
+#sidebar .sub-menu.show {
+    grid-template-rows: 1fr;
+}
+
+#sidebar .sub-menu a {
+    padding-left: 4rem;
+    color: var(--secondary-text-clr);
+}
+
+
+
+
+
+
+
+
+
+/* Main content wrapper */
+.main-content {
+    display: block;
+    width: 100%;
+    min-height: 100vh;
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+}
+
+/* When body has loading class */
+body.loading .main-content {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.main-con {
+
+    padding: 8em 2em;
+}
+
+main p {
+    color: var(--secondary-text-clr);
+}
+
+.container-card {
+    padding: 0;
+    border: 1px solid var(--line-clr);
+    border-radius: 1em;
+    width: max(30em, 30%);
+    min-height: 26em;
+    transition: all 0.3s ease-in-out;
+
+
+    .mycard-body {
+        padding: 3em 32px;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    p {
+        padding: 3em 0em 0px 8px;
+    }
+    h2 {
+        background: var(--linear-clr);
+        color: transparent;
+        background-clip: text;
+        line-height: normal;
+        margin-bottom: 0;
+
+        /* -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; */
+    }
+}
+
+.container-card:hover {
+    transform: scale(1.009);
+    background-color: #e5e5e56c;
+}
+
+
+
+
+
+.mycard-header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.mycard-header span.material-symbols-rounded {
+    font-size: 1.5rem;
+    color: white;
+    background-color: var(--accent-clr);
+    padding: 0.5em;
+    border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+.cn {
+    width: 30em;
+}
+
+
+
+.tabel-wrapper th,
+.tabel-wrapper td {
+    padding: 1em 1.5em;
+}
+
+.btn-mine1 {
+    background-color: var(--accent-clr);
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    outline: 1px solid var(--accent-clr);
+    
+
+    transition: all 0.3s ease;
+}
+
+.btn-mine1:hover {
+    background-color: transparent;
+    outline: 1px solid rgba(159, 159, 159, 0.456);
+    color: var(--line-clr);
+}
+
+/* .card-wrapper {
+    min-width: 20em;
+    width: 60%;
+} */
+.min-wid-250 {
+    min-width: 250px;
+}
+.width-12 {
+    width: 12em;
+}
+.width-300 {
+    width: 300px;
+}
+.min-max-width-60-90 {
+    /* width: 40em; */
+    min-width: 40em;
+    max-width: 90em;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+.btn-container a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100%;
+    height: 100%; */
+    padding: 8px 10px;
+}
+.svv-2 {
+    font-size: 1.5rem !important;
+}
+
+.fn-sz {
+    font-size: 1.8rem !important;
+}
+
+
+
+#alert-placeholder {
+    display: block;
+    height: 3em;
+    width: 100%;
+}

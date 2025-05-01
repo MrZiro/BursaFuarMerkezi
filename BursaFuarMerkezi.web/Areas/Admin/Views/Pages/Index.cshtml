@@ -1,0 +1,156 @@
+﻿@section Styles {
+    <link rel="stylesheet" href="~/admin/styles/table.css">
+}
+
+<div class="wrapper w-100">
+    <div class="form-container">
+        <div class="form-wrapper">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Add New Page</h5>
+                </div>
+                <div class="card-body">
+                    <form id="addPageForm">
+                        <div class="mb-3">
+                            <label for="pageTitle" class="form-label">Page Title</label>
+                            <input type="text" class="form-control" id="pageTitle" placeholder="Enter page title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pageSlug" class="form-label">Page URL Slug</label>
+                            <input type="text" class="form-control" id="pageSlug" placeholder="page-url-slug" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pageType" class="form-label">Page Type</label>
+                            <select class="form-select" id="pageType">
+                                <option selected>Select page type</option>
+                                <option value="standard">Standard Page</option>
+                                <option value="blog">Blog Post</option>
+                                <option value="product">Product Page</option>
+                                <option value="landing">Landing Page</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pageTemplate" class="form-label">Template</label>
+                            <select class="form-select" id="pageTemplate">
+                                <option selected>Select template</option>
+                                <option value="default">Default</option>
+                                <option value="fullwidth">Full Width</option>
+                                <option value="sidebar">With Sidebar</option>
+                                <option value="blank">Blank</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pageDescription" class="form-label">Page Description</label>
+                            <textarea class="form-control" id="pageDescription" rows="3" placeholder="Brief description of the page"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="featuredImage" class="form-label">Featured Image</label>
+                            <input class="form-control" type="file" id="featuredImage">
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="publishSwitch" checked>
+                            <label class="form-check-label" for="publishSwitch">Publish immediately</label>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="reset" class="btn btn-secondary me-md-2">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Create Page</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-wrapper min-max-width-60-90 mx-auto">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1 class="inline-block fn-sz">Pages</h1>
+                <div class="d-inline-flex justify-content-end width-12">
+                    <div class="btn-container add-btn">
+                        <a href="popupForm.html" class="btn btn-mine1">
+                            <span class="svv-2 material-symbols-rounded">
+                                add
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tabel-wrapper overflow-auto rounded-4">
+                    <table class="table" id="table-container">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col" class="text-center width-300">actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>
+                                    <div class="btn-container">
+                                        <a href="#" class="btn btn-mine1">
+                                            <span class="svv-2 material-symbols-rounded">
+                                                edit
+                                            </span>
+                                        </a>
+                                        <a href="#" class="btn btn-mine1">
+                                            <span class="svv-2 material-symbols-rounded">
+                                                delete
+                                            </span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td class="text-center">
+                                    <div class="btn-container">
+                                        <a href="#" class="btn btn-mine1">
+                                            <span class="svv-2 material-symbols-rounded">
+                                                edit
+                                            </span>
+                                        </a>
+                                        <a href="#" class="btn btn-mine1">
+                                            <span class="svv-2 material-symbols-rounded">
+                                                delete
+                                            </span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>John</td>
+                                <td>Doe</td>
+                                <td class="text-center">
+                                    <div class="btn-container">
+                                        <a href="#" class="btn btn-mine1">
+                                            <span class="svv-2 material-symbols-rounded">
+                                                edit
+                                            </span>
+                                        </a>
+                                        <a href="#" class="btn btn-mine1">
+                                            <span class="svv material-symbols-rounded">
+                                                delete
+                                            </span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/admin/scripts/table.js"></script>
+}
