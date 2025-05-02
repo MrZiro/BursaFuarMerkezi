@@ -1,6 +1,7 @@
 ﻿using BursaFuarMerkezi.DataAccess.Data;
 using BursaFuarMerkezi.DataAccess.Repository;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
+using BursaFuarMerkezi.web.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Add repository services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IFileHelper, FileHelper>();
 
 var app = builder.Build();
 

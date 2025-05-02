@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<Product>
-
+@Html.AntiForgeryToken()
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css" />
+}
 
 <div class="container">
     <div class="row pt-4 pb-3">
@@ -9,7 +12,7 @@
             </h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+            <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
                 Create New Product
             </a>
         </div>
@@ -76,15 +79,14 @@
 
                         <td>
                             <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                                <a asp-controller="Product" asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-primary mx-2">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
-                                @* <a asp-controller="Product" asp-action="Delete" class="btn btn-danger mx-2"> *@
-                                @*     <i class="bi bi-trash-fill"></i> Delete *@
-                                @* </a> *@
                                 <button type="button"
-                                        class="btn btn-danger"
-                                        onclick="deleteProduct(@item.Id)">
+                                        class="btn btn-danger delete-btn"
+                                        data-itemid="@item.Id"
+                                        @* onclick="deleteProduct(@item.Id)"> *@
+                                >
                                     <i class="bi bi-trash-fill"></i> Delete
                                 </button>
                             </div>
@@ -98,55 +100,139 @@
 </div>
 
 
+<div>
+    <!-- #endregion -->
+
+
+    @* @section Scripts { *@
+    @*     <script src="https://code.jquery.com/jquery-3.6.0.min.js" *@
+    @*             integrity="sha256-/xUj+3OJ+YB+2n4zXaz2bJ9N6p0oK9ZXp5nEzafTNEI=" *@
+    @*             crossorigin="anonymous"></script> *@
+    @*     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> *@
+    @*     <script> *@
+
+    @*         // toastr.info('Are you the 6 fingered man?') *@
+    @*         function deleteProduct(id) { *@
+    @*             if (!confirm("Are you sure you want to delete this Product?")) { *@
+    @*                 return; *@
+    @*             } *@
+
+
+    @*             $.ajax({ *@
+    @*                 url: '@Url.Action("Delete")', *@
+    @*                 type: 'POST', *@
+    @*                 data: { *@
+    @*                     id: id *@
+    @*                 }, *@
+    @*                 success: function (res) { *@
+    @*                     if (res.success) { *@
+    @*                         // Option A: remove the row in-place: *@
+    @*                         $('#row-'+id).fadeOut(300, function() { $(this).remove(); }); *@
+    @*                         // Option B: or simply reload the page: *@
+    @*                         // location.reload(); *@
+    @*                        // 2) build & show the Bootstrap alert *@
+    @*                         const alertHtml = ` *@
+    @*                           <div class="alert alert-success alert-dismissible fade show" role="alert"> *@
+    @*                             ${res.message} *@
+    @*                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> *@
+    @*                           </div>`; *@
+
+    @*                         // inject into the placeholder *@
+    @*                         // $('#alert-placeholder').html(alertHtml); *@
+
+    @*                         // optional: auto‐dismiss after 3 seconds *@
+    @*                         // setTimeout(() => { *@
+    @*                         //   $('.alert').alert('close'); *@
+    @*                         // }, 2500); *@
+
+    @*                     } else { *@
+    @*                         alert("Delete failed: " + res.message); *@
+    @*                     } *@
+    @*                 }, *@
+    @*                 error: function () { *@
+    @*                     alert("An error occurred while trying to delete."); *@
+    @*                 } *@
+    @*             }); *@
+    @*         } *@
+    @*     </script> *@
+    @* } *@
+    @* @section Scripts { *@
+    @* --- Ensure jQuery is loaded before this script --- *@
+    @* You already have the jQuery CDN link here *@
+    @* <script src="https://code.jquery.com/jquery-3.6.0.min.js" *@
+    @*         integrity="sha256-/xUj+3OJ+YB+2n4zXaz2bJ9N6p0oK9ZXp5nEzafTNEI=" *@
+    @*         crossorigin="anonymous"></script> *@
+
+    @* --- Include Toastr JS and CSS --- *@
+    @* --------------------------------- *@
+
+    @* <script> *@
+    @*     const antiForgeryToken = $('input[name="__RequestVerificationToken"]').val(); *@
+    @*     const deleteButtons = document.querySelectorAll('.delete-btn'); *@
+
+    @*     deleteButtons.forEach(button => { *@
+    @*         button.addEventListener('click', function (event) { *@
+    @*             // Prevent default button behavior (if it were inside a form) *@
+    @*             event.preventDefault(); *@
+
+    @*             // Get the product ID from the data-id attribute *@
+    @*             const productId = this.getAttribute('data-itemid'); *@
+
+    @*             // Show confirmation dialog *@
+    @*             const confirmDelete = confirm('Are you sure you want to delete this Product?'); *@
+
+    @*             // If user confirms deletion *@
+    @*             if (confirmDelete) { *@
+    @*                 // Send an AJAX POST request to the Delete action using jQuery.ajax *@
+    @*                 $.ajax({ *@
+    @*                     // --- Correct URL using Url.Action helper for Area controller --- *@
+    @*                     // Assumes Controller is "Product" and Area is "Admin" *@
+    @*                     url: '@Url.Action("Delete", "Product")', *@
+    @*                     // ------------------------------------------------------------- *@
+    @*                     type: 'POST', // Use POST for deletion *@
+    @*                     data: { id: productId }, // Send the product ID as data *@
+    @*                     headers: { // Include the Anti-Forgery Token in headers for security *@
+    @*                        'RequestVerificationToken': antiForgeryToken *@
+    @*                     }, *@
+    @*                     success: function (response) { *@
+    @*                         // Handle the JSON response from the server (response will have .success and .message) *@
+    @*                         if (response.success) { *@
+    @*                             console.log(response.message); // Log the success message *@
+
+    @*                             // Remove the corresponding table row from the DOM *@
+    @*                             const rowToRemove = document.getElementById(`row-${productId}`); *@
+    @*                             if (rowToRemove) { *@
+    @*                                 // Use jQuery fadeOut and remove for animation *@
+    @*                                 $(rowToRemove).fadeOut(300, function() { $(this).remove(); }); *@
+    @*                             } *@
+
+    @*                             // --- Show success message using Toastr --- *@
+    @*                             toastr.success(response.message); *@
+    @*                             // --------------------------------------- *@
+
+    @*                         } else { *@
+    @*                             // Handle error message from the server *@
+    @*                             console.error(response.message); *@
+    @*                             // --- Show error message using Toastr --- *@
+    @*                             toastr.error(response.message); *@
+    @*                             // ------------------------------------ *@
+    @*                         } *@
+    @*                     }, *@
+    @*                     error: function (xhr, status, error) { *@
+    @*                         // Handle AJAX request errors (network issues, server errors not returning JSON) *@
+    @*                         console.error("AJAX Error:", status, error, xhr.responseText); *@
+    @*                          // --- Show a generic error message using Toastr --- *@
+    @*                         toastr.error("An error occurred while trying to delete the product."); *@
+    @*                         // --------------------------------------------- *@
+    @*                     } *@
+    @*                 }); *@
+    @*             } *@
+    @*         }); *@
+    @*     }); *@
+    @* // </script> *@
+    @* } *@
+</div>
+
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJ+YB+2n4zXaz2bJ9N6p0oK9ZXp5nEzafTNEI="
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script>
-
-        // toastr.info('Are you the 6 fingered man?')
-        function deleteProduct(id) {
-            if (!confirm("Are you sure you want to delete this Product?")) {
-                return;
-            }
-
-
-            $.ajax({
-                url: '@Url.Action("Delete")',
-                type: 'POST',
-                data: {
-                    id: id
-                },
-                success: function (res) {
-                    if (res.success) {
-                        // Option A: remove the row in-place:
-                        $('#row-'+id).fadeOut(300, function() { $(this).remove(); });
-                        // Option B: or simply reload the page:
-                        // location.reload();
-                       // 2) build & show the Bootstrap alert
-                        const alertHtml = `
-                          <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            ${res.message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>`;
-
-                        // inject into the placeholder
-                        // $('#alert-placeholder').html(alertHtml);
-
-                        // optional: auto‐dismiss after 3 seconds
-                        // setTimeout(() => {
-                        //   $('.alert').alert('close');
-                        // }, 2500);
-
-                    } else {
-                        alert("Delete failed: " + res.message);
-                    }
-                },
-                error: function () {
-                    alert("An error occurred while trying to delete.");
-                }
-            });
-        }
-    </script>
+    <script src="https//cdn.datatables.net/2.3.0/js/dataTables.min.js"></script>
 }
