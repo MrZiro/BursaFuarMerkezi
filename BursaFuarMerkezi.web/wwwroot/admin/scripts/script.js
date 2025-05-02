@@ -37,19 +37,13 @@ dropdownBtns.forEach(btn => {
 // Initialize active nav item highlighting
 document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('#sidebar .nav-item');
-    console.log("navItems : ");
-    console.log(navItems);
     
     navItems.forEach(item => {
         const link = item.querySelector('.nav-link');
-        console.log("link : ");
-        console.log(link);
         if (!link) return;
         
         link.addEventListener('click', () => {
-            // Remove active class from all items
             navItems.forEach(i => i.classList.remove('active'));
-            // Add active class to clicked item
             item.classList.add('active');
         });
     });

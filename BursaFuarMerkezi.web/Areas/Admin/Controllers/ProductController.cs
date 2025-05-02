@@ -159,8 +159,8 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
         // POST action for Deleting a Product (intended to be called via AJAX from Index page)
         // URL example: POST to /Admin/Product/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken] // Crucial for security
+        [HttpDelete]
+        //[ValidateAntiForgeryToken] // Crucial for security
         // Accept the ID of the product to delete
         public async Task<IActionResult> Delete(int? id) // Made id nullable for safety
         {
@@ -208,192 +208,16 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             }
         }
 
-        #region Old
-        //private readonly IUnitOfWork _unitOfWork;
-        //private readonly IWebHostEnvironment _hostEnvironment;
-        //public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
-        //{
-        //    _unitOfWork = unitOfWork;
-        //    _hostEnvironment = hostEnvironment;
-        //}
-        //public IActionResult Index()
-        //{
+        #region API CALLS
 
-        //    List<Product> products = _unitOfWork.Product.GetAll().ToList();
-
-        //    // --- Strip HTML from the Description of each product ---
-        //    //foreach (var product in products)
-        //    //{
-        //    //    // Assume Description is the property containing HTML
-        //    //    product.Description = HelperExtensions.StripHtml(product.Description);
-        //    //    // If other properties contain HTML, strip them here too
-        //    //}
-        //    // ----------------------------------------------------
-
-
-        //    return View(products);
-        //}
-
-        //#region Create
-
-        ////public IActionResult Create()
-        ////{
-
-
-        ////    ProductVM productVM = new ProductVM()
-        ////    {
-        ////        Product = new Product(),
-        ////        CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
-        ////        {
-        ////            Text = u.Name,
-        ////            Value = u.Id.ToString()
-        ////        })
-        ////    };
-
-        ////    return View(productVM);
-        ////}
-
-        ////[HttpPost]
-        ////public IActionResult Create(ProductVM productVM)
-        ////{
-        ////    if (ModelState.IsValid)
-        ////    {
-        ////        _unitOfWork.Product.Add(productVM.Product);
-        ////        _unitOfWork.Save();
-        ////        TempData["success"] = "Product created successfully";
-        ////        return RedirectToAction("Index");
-        ////    }
-        ////    else
-        ////    {
-        ////        productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
-        ////        {
-        ////            Text = u.Name,
-        ////            Value = u.Id.ToString()
-        ////        });
-        ////        return View(productVM);
-        ////    }
-        ////}
-
-        //#endregion
-
-
-        //public IActionResult Upsert(int? id)
-        //{
-
-
-        //    ProductVM productVM = new ProductVM()
-        //    {
-        //        Product = new Product(),
-        //        CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
-        //        {
-        //            Text = u.Name,
-        //            Value = u.Id.ToString()
-        //        })
-        //    };
-
-        //    if (id == null || id == 0)
-        //    {
-        //        //create product
-        //        return View(productVM);
-        //    }
-        //    else
-        //    {
-        //        //update product
-        //        productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
-        //    }
-
-        //    return View(productVM);
-        //}
-
-        //[HttpPost]
-        //public IActionResult Upsert(ProductVM productVM, IFormFile file)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        string wwwRootPath = _hostEnvironment.WebRootPath;
-        //        if (file != null)
-        //        {
-        //            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-        //            string productPath = Path.Combine(wwwRootPath, @"admin/images/product");
-
-        //            // create images file if not exist
-        //            if (!Directory.Exists(productPath))
-        //            {
-        //                Directory.CreateDirectory(productPath);
-        //            }
-
-        //            if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
-        //            {
-        //                //delete the old image
-        //                var oldImagePath =
-        //                    Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
-
-        //                if (System.IO.File.Exists(oldImagePath))
-        //                {
-        //                    System.IO.File.Delete(oldImagePath);
-        //                }
-        //            }
-
-        //            using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-        //            {
-        //                file.CopyTo(fileStream);
-        //            }
-
-        //            productVM.Product.ImageUrl = @"admin/images/product/" + fileName;
-        //        }
-        //        //// --- Insert HTML sanitization code here ---
-        //        //if (!string.IsNullOrEmpty(productVM.Product.Description))
-        //        //{
-        //        //    var sanitizer = new HtmlSanitizer();
-
-        //        //    // Optional: Configure the sanitizer if you need to allow specific tags or attributes
-        //        //    // Example: sanitizer.AllowedTags.Add("iframe");
-        //        //    // Example: sanitizer.AllowedAttributes.Add("class");
-
-        //        //    productVM.Product.Description = sanitizer.Sanitize(productVM.Product.Description);
-        //        //}
-        //        //// --- End HTML sanitization code ---
-
-        //        if (productVM.Product.Id == 0)
-        //        {
-        //            _unitOfWork.Product.Add(productVM.Product);
-        //        }
-        //        else
-        //        {
-        //            _unitOfWork.Product.Update(productVM.Product);
-        //        }
-
-        //        _unitOfWork.Save();
-        //        TempData["success"] = "Product created successfully";
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //    {
-        //        productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
-        //        {
-        //            Text = u.Name,
-        //            Value = u.Id.ToString()
-        //        });
-        //        return View(productVM);
-        //    }
-        //}
-
-
-
-
-        //[HttpPost]
-        //public IActionResult Delete(int id)
-        //{
-        //    var cat = _unitOfWork.Product.Get(c => c.Id == id);
-        //    if (cat == null)
-        //        return Json(new { success = false, message = "Product not found." });
-
-        //    _unitOfWork.Product.Remove(cat);
-        //    _unitOfWork.Save();
-        //    return Json(new { success = true, message = "Deleted successfully." });
-        //}
-
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            return Json(new { data = productList });
+        }
         #endregion
+
 
     }
 }

@@ -45,7 +45,7 @@
                                 @* </a> *@
                                 <button type="button"
                                         class="btn btn-danger"
-                                        onclick="deleteCategory(@item.Id)">
+                                        onclick="deleteRow(@item.Id,'@Url.Action("Delete")')">
                                     <i class="bi bi-trash-fill"></i> Delete
                                 </button>
                             </div>
@@ -64,50 +64,7 @@
             integrity="sha256-/xUj+3OJ+YB+2n4zXaz2bJ9N6p0oK9ZXp5nEzafTNEI="
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script>
 
-        // toastr.info('Are you the 6 fingered man?')
-        function deleteCategory(id) {
-            if (!confirm("Are you sure you want to delete this category?")) {
-                return;
-            }
+    <script src="~/admin/scripts/req.js" asp-append-version="true"></script>
 
-
-            $.ajax({
-                url: '@Url.Action("Delete")',
-                type: 'POST',
-                data: {
-                    id: id
-                },
-                success: function (res) {
-                    if (res.success) {
-                        // Option A: remove the row in-place:
-                        $('#row-'+id).fadeOut(300, function() { $(this).remove(); });
-                        // Option B: or simply reload the page:
-                        // location.reload();
-                       // 2) build & show the Bootstrap alert
-                        const alertHtml = `
-                          <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            ${res.message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>`;
-
-                        // inject into the placeholder
-                        // $('#alert-placeholder').html(alertHtml);
-
-                        // optional: auto‐dismiss after 3 seconds
-                        // setTimeout(() => {
-                        //   $('.alert').alert('close');
-                        // }, 2500);
-
-                    } else {
-                        alert("Delete failed: " + res.message);
-                    }
-                },
-                error: function () {
-                    alert("An error occurred while trying to delete.");
-                }
-            });
-        }
-    </script>
 }
