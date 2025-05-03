@@ -45,7 +45,7 @@
                                 @* </a> *@
                                 <button type="button"
                                         class="btn btn-danger"
-                                        onclick="deleteRow(@item.Id,'@Url.Action("Delete")')">
+                                        onclick="deleteItem('@Url.Action()',@item.Id, false)">
                                     <i class="bi bi-trash-fill"></i> Delete
                                 </button>
                             </div>

@@ -339,3 +339,37 @@ main p {
     height: 3em;
     width: 100%;
 }
+
+
+
+/* Table header */
+#tblData thead th {
+    background-color: var(--accent-clr);
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Table rows */
+#tblData tbody tr.data-row {
+    transition: background 0.8s;
+}
+
+    #tblData tbody tr.data-row:hover {
+        background-color: red;
+    }
+
+    /* Selected row example */
+    #tblData tbody tr.data-row.selected {
+        background-color: yellow;
+    }
+
+/* Action buttons */
+#tblData .btn-group .btn {
+    min-width: 80px;
+    font-size: 0.95rem;
+}
+div.dt-container.dt-empty-footer tbody > tr:last-child > * {
+    border: none;
+}

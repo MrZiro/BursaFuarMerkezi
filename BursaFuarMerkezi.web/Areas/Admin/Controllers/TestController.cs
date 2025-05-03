@@ -1,11 +1,14 @@
 ﻿using BursaFuarMerkezi.DataAccess.Data;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
+using BursaFuarMerkezi.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class TestController : Controller
     {
 
@@ -73,7 +76,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             var cat = _unitOfWork.Category.Get(c => c.Id == id);

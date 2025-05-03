@@ -1,43 +1,88 @@
-﻿function deleteRow(id, url) {
+﻿function deleteItem(url, id, dt = true) {
     console.log("triggered")
     if (!confirm("Are you sure you want to delete this category?")) {
         return;
     }
 
 
+
     $.ajax({
-        url: url,
-        type: 'POST',
+        url: url + "/Delete",
+        type: 'DELETE',
         data: {
             id: id
         },
         success: function (res) {
             if (res.success) {
-                // Option A: remove the row in-place:
-                $('#row-' + id).fadeOut(300, function () { $(this).remove(); });
-                // Option B: or simply reload the page:
-                // location.reload();
-                // 2) build & show the Bootstrap alert
-                const alertHtml = `
-                          <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            ${res.message}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                          </div>`;
+                $('#row-' + id).fadeOut(300, function () {
+                    $(this).remove();
 
-                // inject into the placeholder
-                // $('#alert-placeholder').html(alertHtml);
+                    if (dt) {
+                        // Optional: Refresh the DataTable to maintain proper pagination
+                        dataTables.ajax.reload(null, false); // null, false keeps the current pagination page
+                    }
 
-                // optional: auto‐dismiss after 3 seconds
-                // setTimeout(() => {
-                //   $('.alert').alert('close');
-                // }, 2500);
+                    toastr.success(res.message);
+                });
+
+
+
 
             } else {
-                alert("Delete failed: " + res.message);
+                toastr.error(res.message);
             }
         },
-        error: function () {
-            alert("An error occurred while trying to delete.");
+        error: function (xhr, status, error) {
+            console.error('Delete error:', error);
+            toastr.error("An error occurred while trying to delete.");
         }
     });
 } 
+
+
+
+
+//// req.js
+//function deleteItem(entity, id) {
+//    Swal.fire({
+//        title: 'Delete Confirmation',
+//        text: "Are you sure you want to delete this item?",
+//        icon: 'warning',
+//        showCancelButton: true,
+//        confirmButtonColor: '#d33',
+//        cancelButtonColor: '#3085d6',
+//        confirmButtonText: 'Yes, delete it!'
+//    }).then((result) => {
+//        if (result.isConfirmed) {
+//            $.ajax({
+//                url: `/admin/${entity}/delete/${id}`,
+//                type: 'DELETE',
+//                success: function (response) {
+//                    if (response.success) {
+
+
+//                        // Refresh the DataTable
+//                        dataTables.ajax.reload();
+
+//                        toastr.success(response.message || 'Item deleted successfully');
+//                    } else {
+//                        toastr.error(response.message || 'Failed to delete item');
+//                    }
+//                },
+//                error: function (xhr, status, error) {
+//                    console.error('Delete error:', error);
+//                    toastr.error('An error occurred while deleting');
+//                }
+//            });
+//        }
+//    });
+//}
+
+//// Additional utility functions if needed
+//function showLoading() {
+//    $('#loading-overlay').show();
+//}
+
+//function hideLoading() {
+//    $('#loading-overlay').hide();
+//}
