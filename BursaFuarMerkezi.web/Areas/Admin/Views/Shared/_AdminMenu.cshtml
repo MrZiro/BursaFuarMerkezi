@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Identity
+@using BursaFuarMerkezi.Models
+@using BursaFuarMerkezi.Utility
+
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+    bool isAdmin = user != null && await UserManager.IsInRoleAsync(user, SD.Role_Admin);
+}
+
+
+
+
+@if (isAdmin)
+{
+    <li class="nav-item">
+        <a asp-area="admin" asp-controller="FuarPage" asp-action="Index" class="nav-link d-flex align-items-center">
+            <span class="svv material-symbols-rounded">
+                event
+            </span>
+            <span class="label ms-3">Fuarlar</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-area="admin" asp-controller="Users" asp-action="Index" class="nav-link d-flex align-items-center">
+            <span class="svv material-symbols-rounded">
+                people
+            </span>
+            <span class="label ms-3">Users</span>
+        </a>
+    </li>
+}

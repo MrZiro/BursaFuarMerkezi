@@ -14,89 +14,77 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
-    @* <link rel="stylesheet" href="~/admin/styles/loader.css"> *@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/admin/styles/loader.css">
     @RenderSection("Styles", required: false)
     <link href="~/admin/styles/style.css" rel="stylesheet" />
 </head>
 <body>
-
-    @* <header> *@
-    @*     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"> *@
-    @*         <div class="container-fluid"> *@
-    @*             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BursaFuarMerkezi.web</a> *@
-    @*             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" *@
-    @*                     aria-expanded="false" aria-label="Toggle navigation"> *@
-    @*                 <span class="navbar-toggler-icon"></span> *@
-    @*             </button> *@
-    @*             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"> *@
-    @*                 <ul class="navbar-nav flex-grow-1"> *@
-    @*                     <li class="nav-item"> *@
-    @*                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a> *@
-    @*                     </li> *@
-    @*                     <li class="nav-item"> *@
-    @*                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
-    @*                     </li> *@
-    @*                 </ul> *@
-    @*             </div> *@
-    @*         </div> *@
-    @*     </nav> *@
-    @* </header> *@
-
-
-
     <div class="main-content">
         <partial name="_Notification" />
-        <div class="d-flex">
-            <!-- sidebar -->
-            <div class="sd-bar-container">
-                <aside id="sidebar" class="border-end">
-                    <div class="sd-header d-flex justify-content-end align-items-center py-4 mb-2">
-                        <img src="logo-turkuaz.png" alt="logo" class="logo">
-                        <button id="toggle-btn" class="btn d-flex align-items-center justify-content-center ms-auto py-2">
-                            <span class="svv material-symbols-rounded">keyboard_double_arrow_left</span>
-                        </button>
-                    </div>
-                    <ul class="nav flex-column">
-                        <li class="nav-item active">
-                            <a asp-area="admin" asp-controller="Home" asp-action="Index" class="nav-link d-flex align-items-center">
-                                <span class="svv material-symbols-rounded">
-                                    home
-                                </span>
-                                <span class="label ms-3">Home</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="admin" asp-controller="Pages" asp-action="Index" class="nav-link d-flex align-items-center">
-                                <span class="svv material-symbols-rounded">
-                                    edit
-                                </span>
-                                <span class="label ms-3">Pages</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="admin" asp-controller="Test" asp-action="Index" class="nav-link d-flex align-items-center">
-                                <span class="svv material-symbols-rounded">
-                                    test
-                                </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="admin" asp-controller="Product" asp-action="Index" class="nav-link d-flex align-items-center">
-                                <span class="svv material-symbols-rounded">
-                                    Product
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </aside>
+        <div class="d-flex flex-column">
+            <div class="nav-bar">
+                <partial name="_LogoutAdmin" />
             </div>
-            <!-- Pages content -->
-            <main role="main" class="w-100">
-                <div class="main-con">
 
-                    @RenderBody()
+            <div class="d-flex">
+                <!-- sidebar -->
+                <div class="sd-bar-container">
+                    
+                    <aside id="sidebar">
+                        <div class="sd-header d-flex justify-content-end align-items-center py-4 mb-2">
+                            @* <img src="logo-turkuaz.png" alt="logo" class="logo"> *@
+                            <button id="toggle-btn" class="btn d-flex align-items-center justify-content-center ms-auto py-2">
+                                <span class="svv material-symbols-rounded">keyboard_double_arrow_left</span>
+                            </button>
+                        </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item active">
+                                <a asp-area="admin" asp-controller="Home" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        home
+                                    </span>
+                                    <span class="label ms-3">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="admin" asp-controller="Pages" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        edit
+                                    </span>
+                                    <span class="label ms-3">Pages</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="admin" asp-controller="Test" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        add
+                                    </span>
+                                    <span class="label ms-3">Test</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="admin" asp-controller="Product" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        shopping_cart
+                                    </span>
+                                    <span class="label ms-3">Product</span>
+                                </a>
+                            </li>
+                            <partial name="_AdminMenu" />
+                        </ul>
+                    </aside>
                 </div>
-            </main>
+                <!-- Pages content -->
+                <main id="main" role="main" class="w-100">
+                    <div class="main-con">
+
+                        @RenderBody()
+                    </div>
+                </main>
+            </div>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -106,6 +94,55 @@
     @* <script src="~/js/site.js" asp-append-version="true"></script> *@
     <script src="~/admin/scripts/script.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if the session key exists
+            const hasSeenIntro = sessionStorage.getItem('introShown');
+            const $mainContent = $('.main-content');
+
+            // For returning visitors, show content immediately without fade
+            if (!hasSeenIntro) {
+                // For first-time visitors, hide content initially
+                $mainContent.hide();
+                
+                // Add loading animation to DOM
+                const loaderHTML = `
+                    <div class="loading-container show">
+                        <div class="loading-page">
+                            <svg id="my-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 371 419">
+                                <path d="M182.5 59.5c13.727-1.986 26.06 1.181 37 9.5 8.5 8.5 17 17 25.5 25.5 6.536 11.079 7.203 22.412 2 34 11.451-5.694 22.618-5.194 33.5 1.5 10.863 10.529 21.363 21.363 31.5 32.5 11.303 20.153 9.637 39.153-5 57-36.014 36.18-72.18 72.18-108.5 108-6.959-6.458-13.792-13.125-20.5-20-.667-.667-.667-1.333 0-2 35.667-35.667 71.333-71.333 107-107 5.482-6.409 5.815-13.076 1-20-28.745-29.058-57.578-57.892-86.5-86.5-7.365-3.794-14.032-2.794-20 3-34.584 35.585-69.584 70.918-105 106-7.977-5.798-15.31-12.632-22-20.5 37.955-38.789 76.289-76.956 115-114.5 4.867-2.774 9.867-4.941 15-6.5z"/>
+                                <path d="M190.5 124.5c6.965 6.464 13.798 13.131 20.5 20 .667.667.667 1.333 0 2-36.931 37.766-74.098 75.432-111.5 113 6.357 7.536 13.357 14.036 21 19.5 37.595-37.428 74.928-74.928 112-112.5 6.986 6.485 13.819 13.152 20.5 20 .749 1.135.583 2.135-.5 3-37.347 36.514-74.181 73.514-110.5 111-.667.667-.667 1.333 0 2 13.5 13.5 27 26.5 40.5 40-6.483 7.65-13.483 14.817-21 21.5-35.333-34.667-70.333-69.667-105-105 44.742-45.075 89.409-90.075 134-135z"/>
+                            </svg>
+                            <div class="name-container">
+                                <div class="logo-name">fbm</div>
+                            </div>
+                        </div>
+                    </div>`;
+                
+                // Insert loader at the beginning of body
+                $('body').prepend(loaderHTML);
+                
+                // Apply loading class to body
+                $('body').addClass('loading');
+                
+                // Set session key to remember user has seen the intro
+                sessionStorage.setItem('introShown', 'true');
+                
+                // Remove loader after animation completes
+                setTimeout(function() {
+                    $('.loading-container').removeClass('show');
+                    
+                    setTimeout(function() {
+                        $('body').removeClass('loading');
+                        $('.loading-container').remove();
+                        
+                        // Only fade in after loading animation for first-time visitors
+                        $mainContent.fadeIn(800);
+                    }, 1000);
+                }, 2000);
+            }
+        });
+    </script>
 
 
 

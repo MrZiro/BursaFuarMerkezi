@@ -135,6 +135,61 @@ namespace BursaFuarMerkezi.DataAccess.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BursaFuarMerkezi.Models.FuarPage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FeaturedImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MetaDescription")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("MetaKeywords")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PageType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FuarPages");
+                });
+
             modelBuilder.Entity("BursaFuarMerkezi.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -268,6 +323,286 @@ namespace BursaFuarMerkezi.DataAccess.Migrations
                             Price100 = 20.0,
                             Price50 = 22.0,
                             Title = "Leaves and Wonders"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Author = "TechPro",
+                            CategoryId = 1,
+                            Description = "High-performance gaming laptop with RTX graphics, 16GB RAM, and 1TB SSD. Perfect for gamers and content creators.",
+                            ISBN = "TECH7001001",
+                            ImageUrl = "",
+                            ListPrice = 1299.0,
+                            Price = 1249.0,
+                            Price100 = 1149.0,
+                            Price50 = 1199.0,
+                            Title = "Gaming Laptop X1"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Author = "SoundWave",
+                            CategoryId = 1,
+                            Description = "Portable Bluetooth speaker with 24-hour battery life, waterproof design, and superior sound quality.",
+                            ISBN = "SOUND8001001",
+                            ImageUrl = "",
+                            ListPrice = 89.0,
+                            Price = 79.0,
+                            Price100 = 69.0,
+                            Price50 = 74.0,
+                            Title = "Bluetooth Speaker"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Author = "HealthTech",
+                            CategoryId = 1,
+                            Description = "Advanced fitness tracker with heart rate monitor, sleep tracking, and smartphone notifications.",
+                            ISBN = "HEALTH9001001",
+                            ImageUrl = "",
+                            ListPrice = 79.0,
+                            Price = 69.0,
+                            Price100 = 59.0,
+                            Price50 = 65.0,
+                            Title = "Fitness Tracker"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Author = "FashionPlus",
+                            CategoryId = 2,
+                            Description = "Premium denim jeans with modern slim fit design. Available in multiple washes.",
+                            ISBN = "FASHION10001",
+                            ImageUrl = "",
+                            ListPrice = 89.0,
+                            Price = 79.0,
+                            Price100 = 69.0,
+                            Price50 = 75.0,
+                            Title = "Designer Jeans"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Author = "KitchenElite",
+                            CategoryId = 3,
+                            Description = "Professional-grade blender with variable speed control and pulse function. Perfect for smoothies and food preparation.",
+                            ISBN = "KITCHEN11001",
+                            ImageUrl = "",
+                            ListPrice = 129.0,
+                            Price = 119.0,
+                            Price100 = 99.0,
+                            Price50 = 109.0,
+                            Title = "Blender Pro"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Author = "HomeElectronics",
+                            CategoryId = 3,
+                            Description = "Digital microwave oven with multiple power settings, timer, and child lock feature.",
+                            ISBN = "HOME12001001",
+                            ImageUrl = "",
+                            ListPrice = 109.0,
+                            Price = 99.0,
+                            Price100 = 89.0,
+                            Price50 = 95.0,
+                            Title = "Microwave Oven"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Author = "VisualTech",
+                            CategoryId = 1,
+                            Description = "4K Ultra HD Smart TV with built-in streaming apps, voice control, and HDR support.",
+                            ISBN = "VISUAL13001",
+                            ImageUrl = "",
+                            ListPrice = 599.0,
+                            Price = 549.0,
+                            Price100 = 499.0,
+                            Price50 = 519.0,
+                            Title = "Smart TV 55-inch"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Author = "SportGear",
+                            CategoryId = 2,
+                            Description = "Lightweight running shoes with cushioned soles and breathable mesh. Ideal for long-distance running.",
+                            ISBN = "SPORT14001001",
+                            ImageUrl = "",
+                            ListPrice = 119.0,
+                            Price = 109.0,
+                            Price100 = 89.0,
+                            Price50 = 99.0,
+                            Title = "Running Shoes"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Author = "CleanAir",
+                            CategoryId = 3,
+                            Description = "HEPA air purifier that removes 99.97% of airborne particles. Perfect for allergies and asthma sufferers.",
+                            ISBN = "CLEAN15001001",
+                            ImageUrl = "",
+                            ListPrice = 199.0,
+                            Price = 179.0,
+                            Price100 = 159.0,
+                            Price50 = 169.0,
+                            Title = "Air Purifier"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Author = "TechInput",
+                            CategoryId = 1,
+                            Description = "RGB mechanical keyboard with customizable key switches and programmable macros for gaming and typing.",
+                            ISBN = "TECH16001001",
+                            ImageUrl = "",
+                            ListPrice = 129.0,
+                            Price = 119.0,
+                            Price100 = 99.0,
+                            Price50 = 109.0,
+                            Title = "Mechanical Keyboard"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Author = "StyleWear",
+                            CategoryId = 2,
+                            Description = "Genuine leather jacket with quilted lining. Classic design suitable for casual and formal occasions.",
+                            ISBN = "STYLE17001001",
+                            ImageUrl = "",
+                            ListPrice = 229.0,
+                            Price = 209.0,
+                            Price100 = 189.0,
+                            Price50 = 199.0,
+                            Title = "Leather Jacket"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Author = "CleanTech",
+                            CategoryId = 3,
+                            Description = "Smart robot vacuum with mapping technology, app control, and automatic charging. Keeps your floors spotless.",
+                            ISBN = "CLEAN18001001",
+                            ImageUrl = "",
+                            ListPrice = 249.0,
+                            Price = 229.0,
+                            Price100 = 199.0,
+                            Price50 = 219.0,
+                            Title = "Robot Vacuum"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Author = "PhotoPro",
+                            CategoryId = 1,
+                            Description = "20MP digital camera with 4K video recording, optical zoom, and image stabilization. Perfect for photography enthusiasts.",
+                            ISBN = "PHOTO19001001",
+                            ImageUrl = "",
+                            ListPrice = 449.0,
+                            Price = 419.0,
+                            Price100 = 379.0,
+                            Price50 = 399.0,
+                            Title = "Digital Camera"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Author = "ColdGear",
+                            CategoryId = 2,
+                            Description = "Thermal winter gloves with touchscreen compatibility and waterproof outer layer. Keeps your hands warm and dry.",
+                            ISBN = "COLD20001001",
+                            ImageUrl = "",
+                            ListPrice = 49.0,
+                            Price = 45.0,
+                            Price100 = 39.0,
+                            Price50 = 42.0,
+                            Title = "Winter Gloves"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Author = "KitchenPro",
+                            CategoryId = 3,
+                            Description = "Multi-function toaster oven with convection, broil, and toast settings. Compact design for small kitchens.",
+                            ISBN = "KITCHEN21001",
+                            ImageUrl = "",
+                            ListPrice = 89.0,
+                            Price = 79.0,
+                            Price100 = 69.0,
+                            Price50 = 75.0,
+                            Title = "Toaster Oven"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Author = "InputTech",
+                            CategoryId = 1,
+                            Description = "Ergonomic wireless mouse with adjustable DPI settings and long battery life. Comfortable for all-day use.",
+                            ISBN = "INPUT22001001",
+                            ImageUrl = "",
+                            ListPrice = 39.0,
+                            Price = 35.0,
+                            Price100 = 29.0,
+                            Price50 = 32.0,
+                            Title = "Wireless Mouse"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Author = "ComfortWear",
+                            CategoryId = 2,
+                            Description = "100% cotton polo shirt with moisture-wicking technology. Available in multiple colors.",
+                            ISBN = "COMFORT23001",
+                            ImageUrl = "",
+                            ListPrice = 35.0,
+                            Price = 32.0,
+                            Price100 = 28.0,
+                            Price50 = 30.0,
+                            Title = "Casual Polo Shirt"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Author = "BoilFast",
+                            CategoryId = 3,
+                            Description = "1.7L electric kettle with rapid boil technology, auto shut-off, and boil-dry protection. Perfect for tea and coffee lovers.",
+                            ISBN = "BOIL24001001",
+                            ImageUrl = "",
+                            ListPrice = 45.0,
+                            Price = 42.0,
+                            Price100 = 35.0,
+                            Price50 = 39.0,
+                            Title = "Electric Kettle"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Author = "AudioElite",
+                            CategoryId = 1,
+                            Description = "Over-ear wireless headphones with active noise cancellation, 30-hour battery life, and premium sound quality.",
+                            ISBN = "AUDIO25001001",
+                            ImageUrl = "",
+                            ListPrice = 159.0,
+                            Price = 149.0,
+                            Price100 = 129.0,
+                            Price50 = 139.0,
+                            Title = "Wireless Headphones"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Author = "TravelGear",
+                            CategoryId = 2,
+                            Description = "Water-resistant backpack with laptop compartment, multiple pockets, and USB charging port. Perfect for travel and daily use.",
+                            ISBN = "TRAVEL26001",
+                            ImageUrl = "",
+                            ListPrice = 79.0,
+                            Price = 69.0,
+                            Price100 = 59.0,
+                            Price50 = 65.0,
+                            Title = "Backpack Pro"
                         });
                 });
 

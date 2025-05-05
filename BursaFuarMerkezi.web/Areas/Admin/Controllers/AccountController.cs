@@ -32,6 +32,11 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
         public IActionResult Login(string returnUrl=null)
         {
 
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
+
             returnUrl ??= Url.Content("~/");
 
             LoginVM loginVM = new()

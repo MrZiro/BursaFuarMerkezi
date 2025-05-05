@@ -5,13 +5,13 @@
 }
 
 <div class="container">
-    <div class="row pt-4 pb-3">
+    <div class="row row pt-4 pb-5">
         <div class="col-6">
             <h2 class="text-primary">
                 Product List
             </h2>
             @* search bar *@
-            <input id="searchInput" class="form-control form-control-lg" type="text" placeholder="search">
+            @* <input id="searchInput" class="form-control form-control-lg" type="text" placeholder="search"> *@
 
         </div>
         <div class="col-6 text-end">
@@ -19,6 +19,9 @@
                 Create New Product
             </a>
         </div>
+    </div>
+
+    <div class="table-container">
         <table id="tblData" class="">
             <thead>
                 @* <tr> *@
@@ -34,16 +37,51 @@
                 
             </tbody>
         </table>
-
     </div>
+
 </div>
 
 @section Scripts {
-        <script src="//cdn.datatables.net/2.3.0/js/dataTables.min.js" asp-append-version="true"></script>
-    <script src="~/admin/scripts/req.js" asp-append-version="true"></script>
+    <partial name="_PartialReqScript" />
+    <script src="~/admin/scripts/SearchBarIcon.js"></script>
+    
 
-    <script src="~/admin/scripts/product.js" asp-append-version="true"></script>
     <script>
+        
+        $(document).ready(() => {
+            initializeDataTable('product', [
+                {
+                    title: 'Title',
+                    data: 'title',
+                    width: '20em'
+                },
+                {
+                    title: 'ISBN',
+                    data: 'isbn',
+                    width: '15em'
+                },
+                {
+                    title: 'Price',
+                    data: 'price',
+                    width: '15em'
+                },
+                {
+                    title: 'Author',
+                    data: 'author',
+                    width: '15em'
+                },
+                {
+                    title: 'Category',
+                    data: 'category.name',
+                    width: '15em'
+                }
+            ]);
+            addSearchBarIcon();
+        });
+    
+    
+    
     </script>
+
 
 }

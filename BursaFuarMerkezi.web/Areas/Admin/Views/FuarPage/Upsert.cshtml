@@ -1,0 +1,154 @@
+@model FuarPageVM
+
+@section Styles {
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+}
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-12">
+            <h2 class="text-primary">
+                @(Model.FuarPage.Id == 0 ? "Create" : "Update") Fuar Page
+            </h2>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="FuarPage.Id" hidden />
+        <input asp-for="FuarPage.CreatedAt" hidden />
+        <input asp-for="FuarPage.FeaturedImageUrl" hidden />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <div class="border p-3 mt-2 mb-3">
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.Title" class="form-label">Title</label>
+                        <input asp-for="FuarPage.Title" class="form-control" />
+                        <span asp-validation-for="FuarPage.Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.Slug" class="form-label">URL Slug</label>
+                        <input asp-for="FuarPage.Slug" class="form-control" placeholder="Leave blank to auto-generate" />
+                        <span asp-validation-for="FuarPage.Slug" class="text-danger"></span>
+                        <div class="form-text">Will be auto-generated from title if left blank.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.PageType" class="form-label">Page Type</label>
+                        <select asp-for="FuarPage.PageType" class="form-select">
+                            <option value="fuar">Fuar</option>
+                            <option value="etkinlik">Etkinlik</option>
+                            <option value="haber">Haber</option>
+                        </select>
+                        <span asp-validation-for="FuarPage.PageType" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="border p-3 mt-2">
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.Content" class="form-label">Content</label>
+                        <textarea asp-for="FuarPage.Content" id="summernote" class="form-control"></textarea>
+                        <span asp-validation-for="FuarPage.Content" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="border p-3 mt-2">
+                    <div class="mb-3">
+                        <label asp-for="FeaturedImage" class="form-label">Featured Image</label>
+                        <input type="file" id="featuredImageInput" asp-for="FeaturedImage" class="form-control" />
+                    </div>
+                    <div class="mb-3 text-center">
+                        @if (Model.FuarPage.FeaturedImageUrl != null)
+                        {
+                            <img src="@Model.FuarPage.FeaturedImageUrl" id="featuredImagePreview" style="width:100%; max-height:300px; object-fit: contain;" />
+                        }
+                        else
+                        {
+                            <img src="" id="featuredImagePreview" style="width:100%; max-height:300px; object-fit: contain; display:none;" />
+                        }
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input asp-for="FuarPage.IsPublished" type="checkbox" class="form-check-input" />
+                        <label asp-for="FuarPage.IsPublished" class="form-check-label">Published</label>
+                    </div>
+                </div>
+                
+                <div class="border p-3 mt-2">
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.MetaDescription" class="form-label">Meta Description</label>
+                        <textarea asp-for="FuarPage.MetaDescription" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="FuarPage.MetaDescription" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.MetaKeywords" class="form-label">Meta Keywords</label>
+                        <input asp-for="FuarPage.MetaKeywords" class="form-control" placeholder="Comma-separated keywords" />
+                        <span asp-validation-for="FuarPage.MetaKeywords" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="text-end mt-3">
+                    <a asp-controller="FuarPage" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                    <button type="submit" class="btn btn-primary" style="width:150px">
+                        <i class="bi bi-save"></i> @(Model.FuarPage.Id == 0 ? "Create" : "Update")
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize rich text editor
+            $('#summernote').summernote({
+                placeholder: 'Enter page content here...',
+                tabsize: 2,
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'italic', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'help']]
+                ]
+            });
+
+            // Image preview
+            $('#featuredImageInput').change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#featuredImagePreview').attr('src', e.target.result);
+                        $('#featuredImagePreview').show();
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+
+            // Auto-generate slug from title if slug is empty
+            $('#FuarPage_Title').keyup(function () {
+                if ($('#FuarPage_Slug').val() === '') {
+                    // Convert title to slug format
+                    var slug = $(this).val().toLowerCase()
+                        .replace(/[^\w\s-]/g, '') // Remove special characters
+                        .replace(/\s+/g, '-')     // Replace spaces with hyphens
+                        .replace(/-+/g, '-');     // Replace multiple hyphens with single hyphen
+                    
+                    $('#FuarPage_Slug').val(slug);
+                }
+            });
+        });
+    </script>
+} 

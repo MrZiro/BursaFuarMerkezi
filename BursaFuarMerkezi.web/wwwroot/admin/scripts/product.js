@@ -7,7 +7,7 @@
     const $headerRow = $('<tr>').appendTo($thead);
 
     // Add columns including the Actions column
-    columns.concat({ title: 'Actions', width: '25%' }).forEach(col => {
+    columns.concat({ title: 'Actions', width: '' }).forEach(col => {
         $headerRow.append(
             $('<th>').css('width', col.width).text(col.title)
         );
@@ -27,53 +27,96 @@
         columns: columns.concat({
             data: 'id',
             render: function (data) {
-                return `<div class="w-75 btn-group" role="group">
-                    <a href="${baseUrl}/upsert?id=${data}" class="btn btn-primary mx-2">
-                        <i class="bi bi-pencil-square"></i> Edit
+                return `<div class="btn-container" role="group">
+                    <a href="${baseUrl}/upsert?id=${data}" class="btn btn-mine1 edit-btn">
+                        <i class="bi bi-pencil-square"></i>
                     </a>
-                    <button class="btn btn-danger mx-2" 
-                            onclick="deleteItem('${entity}', ${data})">
-                        <i class="bi bi-trash-fill"></i> Delete
+                    <button class="btn btn-mine1 delete-btn" 
+                            onclick="deleteItem('${entity}', '${data}')">
+                        <i class="bi bi-trash-fill"></i>
                     </button>
                 </div>`;
             },
-            width: "25%",
+            width: "",
             orderable: false
         }),
         //processing: true,
-        //pageLength: 10,
-        //responsive: true,
-
+        // pageLength: 10,
+        // processing: true,
+        serverSide: true,
+        language: {
+            processing: "Loading products...",
+            zeroRecords: "No matching products found",
+            info: "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+            paginate: {
+                first: "First",
+                last: "Last",
+                next: "Next",
+                previous: "Previous"
+            }
+        },
+        pagingType: "full_numbers",
+        lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
     });
 }
 
-// Usage remains the same
-$(document).ready(() => {
-    initializeDataTable('product', [
-        {
-            title: 'Title',
-            data: 'title',
-            width: '25%'
+
+function initializeDataTableNoOption(entity, columns, tableId = '#tblData') {
+    const $table = $(tableId);
+    const baseUrl = `/admin/${entity}`;
+
+    const $thead = $(`${tableId} thead`);
+    const $headerRow = $('<tr>').appendTo($thead);
+
+    columns.concat({ title: 'Actions', width: '' }).forEach(col => {
+        $headerRow.append(
+            $('<th>').css('width', col.width).text(col.title)
+        );
+    });
+
+    dataTables = $table.DataTable({
+        ajax: { url: `${baseUrl}/getall` },
+        order: false,
+        createdRow: function (row, data, dataIndex) {
+            console.log(data);
+            console.log(row);
+            $(row).attr('id', 'row-' + data.id);
+            $(row).addClass('data-row');
         },
-        {
-            title: 'ISBN',
-            data: 'isbn',
-            width: '15%'
-        },
-        {
-            title: 'List Price',
-            data: 'listPrice',
-            width: '10%'
-        },
-        {
-            title: 'Author',
-            data: 'author',
-            width: '15%'
-        },
-        {
-            title: 'Category',
-            data: 'category.name',
-            width: '10%'
+        columns: columns.concat({
+            data: 'id',
+            render: function (data) {
+                return `<div class="btn-container" role="group">
+                    <a href="${baseUrl}/upsert?id=${data}" class="btn btn-mine1 edit-btn">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <button class="btn btn-mine1 delete-btn" 
+                            onclick="deleteItem('${entity}', '${data}')">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>`;
+            },
+            width: "",
+            orderable: false
+        }),
+        language: {
+            zeroRecords: "No matching products found",
+            info: "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
         }
-    ]);
+        ,
+        paging: false,
+        info: false,
+        searching: false,
+        ordering: false
+
+    });
+
+
+}
+
+$(document).on('init.dt', function(e, settings) {
+    const table = $(settings.nTable);
+    table.closest('.dt-container')
+         .find('.dt-layout-row:last')
+         .css('margin-top', 'auto').css('display', 'flex').css('height', '12em').css('align-items', 'end');
 });

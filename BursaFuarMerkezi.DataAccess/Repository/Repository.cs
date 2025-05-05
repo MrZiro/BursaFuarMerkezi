@@ -62,5 +62,34 @@ namespace BursaFuarMerkezi.DataAccess.Repository
         {
             dbSet.RemoveRange(entities);
         }
+
+        public async Task<(IEnumerable<T> data, int filteredTotal, int total)> GetPagedAsync(
+            int start, int length, string orderColumn, string orderDirection, 
+            string searchValue, string includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            
+            // Include properties
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProperty in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+            
+            // Count total before any filtering
+            int total = await query.CountAsync();
+            
+            // Apply filtering logic (to be overridden in specific repositories)
+            int filteredTotal = total;
+            
+            // Apply pagination
+            var data = await query.Skip(start)
+                                .Take(length > 0 ? length : total)
+                                .ToListAsync();
+            
+            return (data, filteredTotal, total);
+        }
     }
 }

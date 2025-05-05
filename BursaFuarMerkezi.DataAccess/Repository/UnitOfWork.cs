@@ -15,11 +15,14 @@ namespace BursaFuarMerkezi.DataAccess.Repository
 
         public IProductRepository Product { get; private set; }
 
+        public IFuarPageRepository FuarPage { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             Product = new ProductRepository(_db);
+            FuarPage = new FuarPageRepository(_db);
         }
 
         public void Save()

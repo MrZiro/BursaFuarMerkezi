@@ -43,15 +43,15 @@ namespace BursaFuarMerkezi.DataAccess.DbInitializer
                     _roleManager.CreateAsync(new IdentityRole(SD.Role_Editor)).Wait();
                     _userManager.CreateAsync(new ApplicationUser
                     {
-                        UserName = "admin@dotnetmastery.com",
-                        Email = "admin@dotnetmastery.com",
-                        Name = "Bhrugen Patel",
-                        NormalizedUserName = "ADMIN@DOTNETMASTERY.COM",
-                        NormalizedEmail = "ADMIN@DOTNETMASTERY.COM",
+                        UserName = "admin@BFM.com",
+                        Email = "admin@BFM.com",
+                        Name = "BFM",
+                        NormalizedUserName = "ADMIN@BFM.COM",
+                        NormalizedEmail = "ADMIN@BFM.COM",
                         PhoneNumber = "1112223333",
                     }, "Admin123*").GetAwaiter().GetResult();
 
-                    ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@dotnetmastery.com");
+                    ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@BFM.com");
                     _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
                 }
             }

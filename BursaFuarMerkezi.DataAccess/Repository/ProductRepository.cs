@@ -1,6 +1,7 @@
 ﻿using BursaFuarMerkezi.DataAccess.Data;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,62 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                     objFromDb.ImageUrl = obj.ImageUrl;
                 }
             }
+        }
+        public async Task<(IEnumerable<Product> data, int filteredTotal, int total)> GetPagedAsync(
+        int start, int length, string orderColumn, string orderDirection, 
+        string searchValue, string includeProperties = null)
+        {
+            IQueryable<Product> query = dbSet;
+            
+            // Include properties
+            if (!string.IsNullOrWhiteSpace(includeProperties))
+            {
+                foreach (var includeProperty in includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty.Trim());
+                }
+            }
+            
+            // Count total before any filtering
+            int total = await query.CountAsync();
+            
+            // Apply search
+            if (!string.IsNullOrWhiteSpace(searchValue))
+            {
+                string search = searchValue.ToLower();
+                query = query.Where(p =>
+                    (p.Title != null && p.Title.ToLower().Contains(search)) ||
+                    (p.Description != null && p.Description.ToLower().Contains(search)) ||
+                    (p.Author != null && p.Author.ToLower().Contains(search)) ||
+                    (p.ISBN != null && p.ISBN.ToLower().Contains(search)) ||
+                    (p.Category != null && p.Category.Name != null && p.Category.Name.ToLower().Contains(search))
+                );
+            }
+            
+            // Get filtered count
+            int filteredTotal = await query.CountAsync();
+            
+            // Apply sorting
+            bool isDescending = orderDirection?.ToLower() == "desc";
+            orderColumn = orderColumn?.ToLower() ?? "id";
+            query = orderColumn switch
+            {
+                "title" => isDescending ? query.OrderByDescending(p => p.Title) : query.OrderBy(p => p.Title),
+                "price" => isDescending ? query.OrderByDescending(p => p.Price) : query.OrderBy(p => p.Price),
+                "author" => isDescending ? query.OrderByDescending(p => p.Author) : query.OrderBy(p => p.Author),
+                "isbn" => isDescending ? query.OrderByDescending(p => p.ISBN) : query.OrderBy(p => p.ISBN),
+                "category.name" or "category" => isDescending
+                    ? query.OrderByDescending(p => p.Category.Name)
+                    : query.OrderBy(p => p.Category.Name),
+                _ => isDescending ? query.OrderByDescending(p => p.Id) : query.OrderBy(p => p.Id),
+            };
+            
+            // Apply pagination
+            var data = await query.Skip(start)
+                                .Take(length > 0 ? length : filteredTotal)
+                                .ToListAsync();
+            
+            return (data, filteredTotal, total);
         }
     }
 }

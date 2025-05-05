@@ -24,6 +24,18 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
             return View(categories);
         }
+        public IActionResult Upsert(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return View(new Category());
+            }
+            else
+            {
+                Category categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
+                return View(categoryFromDb);
+            }
+        }
 
         public IActionResult Create()
         {
@@ -86,6 +98,12 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             _unitOfWork.Category.Remove(cat);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Deleted successfully." });
+        }
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var categories = _unitOfWork.Category.GetAll();
+            return Json(new { data = categories });
         }
     }
 }

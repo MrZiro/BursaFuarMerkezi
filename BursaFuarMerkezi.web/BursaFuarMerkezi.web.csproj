@@ -22,4 +22,10 @@
     <ProjectReference Include="..\BursaFuarMerkezi.Utility\BursaFuarMerkezi.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Fuar\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\videos\" />
+  </ItemGroup>
+
 </Project>

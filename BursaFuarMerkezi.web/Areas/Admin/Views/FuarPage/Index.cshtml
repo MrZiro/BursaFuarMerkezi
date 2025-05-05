@@ -1,0 +1,76 @@
+@model List<FuarPage>
+@section Styles {
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css" />
+}
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Fuar Pages
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="FuarPage" asp-action="Upsert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Fuar Page
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <!-- DataTable will populate headers -->
+            </thead>
+            <tbody>
+                <!-- DataTable will populate data -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_PartialReqScript" />
+    
+    <script>
+        $(document).ready(() => {
+            initializeDataTable('fuarpage', [
+                {
+                    title: 'Title',
+                    data: 'title',
+                    width: '25%'
+                },
+                {
+                    title: 'Slug',
+                    data: 'slug',
+                    width: '20%'
+                },
+                {
+                    title: 'Type',
+                    data: 'pageType',
+                    width: '10%'
+                },
+                {
+                    title: 'Status',
+                    data: 'isPublished',
+                    width: '10%'
+                },
+                {
+                    title: 'Created',
+                    data: 'createdAt',
+                    width: '15%',
+                    render: function(data) {
+                        return new Intl.DateTimeFormat('en-GB', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        }).format(new Date(data)).replace(',', ' -');
+                    }
+                }
+            ]);
+        });
+    </script>
+} 

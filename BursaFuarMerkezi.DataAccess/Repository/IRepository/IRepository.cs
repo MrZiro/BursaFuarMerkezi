@@ -15,5 +15,12 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
         void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);
+
+        // Add these new methods
+        Task<(IEnumerable<T> data, int filteredTotal, int total)> GetPagedAsync(
+            int start, int length, string orderColumn, string orderDirection, 
+            string searchValue, string includeProperties = null);
+    
+
     }
 }

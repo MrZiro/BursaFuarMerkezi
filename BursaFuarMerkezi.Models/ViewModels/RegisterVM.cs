@@ -11,6 +11,8 @@ namespace BursaFuarMerkezi.Models.ViewModels
 {
     public class RegisterVM
     {
+        
+        public string? Id { get; set; }
         [Required]
         public string Email { get; set; }
 
