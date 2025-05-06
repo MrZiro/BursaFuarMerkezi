@@ -22,8 +22,9 @@
     <link href="~/admin/styles/style.css" rel="stylesheet" />
 </head>
 <body>
+    <partial name="_Notification" />
     <div class="main-content">
-        <partial name="_Notification" />
+
         <div class="d-flex flex-column">
             <div class="nav-bar">
                 <partial name="_LogoutAdmin" />
@@ -95,7 +96,7 @@
     <script src="~/admin/scripts/script.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).ready(function() {
+        @* $(document).ready(function() {
             // Check if the session key exists
             const hasSeenIntro = sessionStorage.getItem('introShown');
             const $mainContent = $('.main-content');
@@ -141,12 +142,15 @@
                     }, 1000);
                 }, 2000);
             }
-        });
+        }); *@
     </script>
 
 
 
     @await RenderSectionAsync("Scripts", required: false)
 	
+
+
+
 </body>
 </html>
