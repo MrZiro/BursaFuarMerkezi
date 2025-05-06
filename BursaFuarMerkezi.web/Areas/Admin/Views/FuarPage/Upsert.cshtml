@@ -44,6 +44,50 @@
                         <span asp-validation-for="FuarPage.PageType" class="text-danger"></span>
                     </div>
                 </div>
+                
+                <!-- Fuar Künyesi (Fair Information) Section -->
+                <div class="border p-3 mt-2 mb-3">
+                    <h4 class="mb-3">Fuar Künyesi</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FuarPage.StartDate" class="form-label">Başlangıç Tarihi</label>
+                            <input asp-for="FuarPage.StartDate" type="date" class="form-control" />
+                            <span asp-validation-for="FuarPage.StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FuarPage.EndDate" class="form-label">Bitiş Tarihi</label>
+                            <input asp-for="FuarPage.EndDate" type="date" class="form-control" />
+                            <span asp-validation-for="FuarPage.EndDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FuarPage.FairHall" class="form-label">Fuar Salonu</label>
+                            <input asp-for="FuarPage.FairHall" class="form-control" />
+                            <span asp-validation-for="FuarPage.FairHall" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FuarPage.VisitingHours" class="form-label">Ziyaret Saatleri</label>
+                            <input asp-for="FuarPage.VisitingHours" class="form-control" placeholder="09:30-18:00" />
+                            <span asp-validation-for="FuarPage.VisitingHours" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.Organizer" class="form-label">Organizatör</label>
+                        <input asp-for="FuarPage.Organizer" class="form-control" />
+                        <span asp-validation-for="FuarPage.Organizer" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.FairLocation" class="form-label">Fuar Alanı</label>
+                        <input asp-for="FuarPage.FairLocation" class="form-control" />
+                        <span asp-validation-for="FuarPage.FairLocation" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.WebsiteUrl" class="form-label">Web Sitesi</label>
+                        <input asp-for="FuarPage.WebsiteUrl" class="form-control" placeholder="https://risingcity.com.tr" />
+                        <span asp-validation-for="FuarPage.WebsiteUrl" class="text-danger"></span>
+                    </div>
+                </div>
 
                 <div class="border p-3 mt-2">
                     <div class="mb-3">

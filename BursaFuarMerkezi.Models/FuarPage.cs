@@ -37,5 +37,25 @@ namespace BursaFuarMerkezi.Models
 
         [MaxLength(50)]
         public string PageType { get; set; } = "fuar"; // Default type
+
+        // New fields for Fuar Künyesi (Fair Information)
+        public DateTime StartDate { get; set; } = DateTime.Now;
+        
+        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(3);
+        
+        [MaxLength(50)]
+        public string FairHall { get; set; } = "1";
+        
+        [MaxLength(100)]
+        public string Organizer { get; set; } = "Bursa Fuar Merkezi";
+        
+        [MaxLength(50)]
+        public string VisitingHours { get; set; } = "09:30-18:00";
+        
+        [MaxLength(200)]
+        public string FairLocation { get; set; } = "Bursa Uluslararası Fuar ve Kongre Merkezi";
+        
+        [MaxLength(200)]
+        public string WebsiteUrl { get; set; } = "https://bursafuarmerkezi.com";
     }
 } 
