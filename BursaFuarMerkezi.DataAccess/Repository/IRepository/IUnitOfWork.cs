@@ -12,6 +12,9 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
         IProductRepository Product { get; }
         IFuarPageRepository FuarPage { get; }
 
+        IFuarTestRepository FuarTests { get; }
+
+
         void Save();
 
     }
