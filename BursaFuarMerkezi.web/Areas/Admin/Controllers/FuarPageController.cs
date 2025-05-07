@@ -56,7 +56,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(FuarPageVM pageVM)
+        public async Task<IActionResult> Upsert(FuarPageVM pageVM, bool removeImage = false)
         {
             // Generate slug if empty
             if (string.IsNullOrEmpty(pageVM.FuarPage.Slug))
@@ -78,36 +78,96 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 ModelState.AddModelError("FuarPage.Slug", "This URL is already taken. Please modify it.");
             }
 
+            // Validate image if provided
+            if (pageVM.FeaturedImage != null)
+            {
+                // Check file size (5MB max)
+                if (pageVM.FeaturedImage.Length > 5 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("FeaturedImage", "Image size cannot exceed 5MB.");
+                }
+
+                // Check file format
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                var fileExtension = Path.GetExtension(pageVM.FeaturedImage.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("FeaturedImage", "Only image files (jpg, jpeg, png, gif, webp) are allowed.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Handle image operations
+                    string oldImageUrl = pageVM.FuarPage.FeaturedImageUrl;
+                    
                     // Process featured image if uploaded
                     if (pageVM.FeaturedImage != null)
                     {
                         pageVM.FuarPage.FeaturedImageUrl = await _fileHelper.SaveFileAsync(
                             pageVM.FeaturedImage, 
                             pageVM.FuarPage.FeaturedImageUrl);
+                        
+                        if (pageVM.FuarPage.FeaturedImageUrl == null)
+                        {
+                            // If image saving failed but validation passed, something went wrong
+                            ModelState.AddModelError("FeaturedImage", "Failed to upload image. Please try again.");
+                            return View(pageVM);
+                        }
+                    }
+                    // Remove image if requested (and no new one uploaded)
+                    else if (removeImage && !string.IsNullOrEmpty(oldImageUrl))
+                    {
+                        await _fileHelper.DeleteFileAsync(oldImageUrl);
+                        pageVM.FuarPage.FeaturedImageUrl = null;
                     }
 
-                    string successMessage;
+                    // Handle update vs insert
                     if (pageVM.FuarPage.Id == 0)
                     {
-                        // Create new page
+                        // Creating new record
+                        pageVM.FuarPage.CreatedAt = DateTime.Now;
                         _unitOfWork.FuarPage.Add(pageVM.FuarPage);
-                        successMessage = "Fuar page created successfully";
+                        TempData["success"] = "Fuar page created successfully";
                     }
                     else
                     {
-                        // Update existing page
-                        _unitOfWork.FuarPage.Update(pageVM.FuarPage);
-                        successMessage = "Fuar page updated successfully";
+                        // Updating existing record
+                        var existingPage = _unitOfWork.FuarPage.Get(u => u.Id == pageVM.FuarPage.Id);
+                        if (existingPage == null)
+                        {
+                            return NotFound();
+                        }
+
+                        // Update main properties, preserving CreatedAt
+                        existingPage.Title = pageVM.FuarPage.Title;
+                        existingPage.Slug = pageVM.FuarPage.Slug;
+                        existingPage.Content = pageVM.FuarPage.Content;
+                        existingPage.IsPublished = pageVM.FuarPage.IsPublished;
+                        existingPage.MetaDescription = pageVM.FuarPage.MetaDescription;
+                        existingPage.MetaKeywords = pageVM.FuarPage.MetaKeywords;
+                        existingPage.PageType = pageVM.FuarPage.PageType;
+                        existingPage.UpdatedAt = DateTime.Now;
+                        
+                        // Update FeaturedImageUrl if changed
+                        existingPage.FeaturedImageUrl = pageVM.FuarPage.FeaturedImageUrl;
+
+                        // Update fair-specific fields
+                        existingPage.StartDate = pageVM.FuarPage.StartDate;
+                        existingPage.EndDate = pageVM.FuarPage.EndDate;
+                        existingPage.FairHall = pageVM.FuarPage.FairHall;
+                        existingPage.Organizer = pageVM.FuarPage.Organizer;
+                        existingPage.VisitingHours = pageVM.FuarPage.VisitingHours;
+                        existingPage.FairLocation = pageVM.FuarPage.FairLocation;
+                        existingPage.WebsiteUrl = pageVM.FuarPage.WebsiteUrl;
+
+                        _unitOfWork.FuarPage.Update(existingPage);
+                        TempData["success"] = "Fuar page updated successfully";
                     }
 
                     _unitOfWork.Save();
-
-                    TempData["success"] = successMessage;
-
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
