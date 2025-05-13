@@ -57,6 +57,10 @@ app.MapControllerRoute(
     name: "AreaRoute",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );
+app.MapControllerRoute(
+    name: "fuarTestSlug",
+    pattern: "fuartest/{slug}",
+    defaults: new { controller = "FuarTest", action = "Details" });
 
 app.MapControllerRoute(
     name: "default",

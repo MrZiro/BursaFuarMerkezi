@@ -44,5 +44,22 @@ namespace BursaFuarMerkezi.DataAccess.Repository
 
             }
         }
+        public async Task<bool> IsSlugUniqueAsync(string slug, int? id = null)
+        {
+            if (id.HasValue)
+            {
+                // Check if slug exists but not for this page (for updates)
+                return await _db.FuarTests.FirstOrDefaultAsync(p => p.Slug == slug && p.Id != id) == null;
+            }
+            else
+            {
+                // Check if slug exists at all (for new pages)
+                return await _db.FuarTests.FirstOrDefaultAsync(p => p.Slug == slug) == null;
+            }
+        }
+        public async Task<FuarTest> GetBySlugAsync(string slug)
+        {
+            return await _db.FuarTests.FirstOrDefaultAsync(p => p.Slug == slug);
+        }
     }
 }

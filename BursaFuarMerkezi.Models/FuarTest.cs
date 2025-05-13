@@ -50,7 +50,8 @@ namespace BursaFuarMerkezi.Models
         [MaxLength(200)]
         public string WebsiteUrl { get; set; } = "https://bursafuarmerkezi.com";
 
-
+        [MaxLength(100)]
+        public string City { get; set; } = "Bursa";
 
         [ValidateNever]
         public string? FeaturedImageUrl { get; set; } 

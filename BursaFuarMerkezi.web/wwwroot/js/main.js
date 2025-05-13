@@ -352,131 +352,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 /*============== Fuar Takvim Js ================*/
-// Sample event data
-const events = [
-  {
-    id: 1,
-    title: "IJS İstanbul Jewelry Show 2025 - 57. İstanbul Uluslararası Mücevherat, Saat ve Malzemeleri Fuarı",
-    date: "16 - 19 Nisan",
-    year: "2025",
-    month: "Nisan",
-    sector: "Mücevherat",
-    location: "İstanbul",
-    organizer: "UBM İstanbul Fuarcılık ve Gösteri Hizmetleri A.Ş.",
-    url: "event-details.html?id=1",
-  },
-  {
-    id: 2,
-    title: "Mobilefest - Agora, Avrasya Teknoloji Haftası",
-    date: "17 - 19 Nisan 2025",
-    year: "2025",
-    month: "Nisan",
-    sector: "Teknoloji",
-    location: "Agora",
-    organizer: "HİS Fuarcılık Hizmetleri Ltd. Şti.",
-    url: "event-details.html?id=2",
-  },
-  {
-    id: 3,
-    title: "VIV SELECT TÜRKİYE 2025 - 11. Tavukçuluk ve Teknolojileri Uluslararası İhtisas Fuarı",
-    date: "24 - 26 Nisan 2025",
-    year: "2025",
-    month: "Nisan",
-    sector: "Tavukçuluk",
-    location: "İstanbul",
-    organizer: "HKF Fuarcılık A.Ş.",
-    url: "event-details.html?id=3",
-  },
-  {
-    id: 4,
-    title: "FOTEG İstanbul 2025 - Gıda İşleme Teknolojileri Uluslararası İhtisas Fuarı",
-    date: "24 - 26 Nisan 2025",
-    year: "2025",
-    month: "Nisan",
-    sector: "Gıda İşleme",
-    location: "İstanbul",
-    organizer: "HKF Fuarcılık A.Ş.",
-    url: "event-details.html?id=4",
-  },
-  {
-    id: 5,
-    title: "Teknoloji Fuarı 2025",
-    date: "10 - 15 Temmuz 2025",
-    year: "2025",
-    month: "Temmuz",
-    sector: "Teknoloji",
-    location: "Ankara",
-    organizer: "ABC Fuarcılık Ltd. Şti.",
-    url: "event-details.html?id=5",
-  },
-  {
-    id: 6,
-    title: "Gıda Festivali 2026",
-    date: "5 - 10 Ocak 2026",
-    year: "2026",
-    month: "Ocak",
-    sector: "Gıda İşleme",
-    location: "İstanbul",
-    organizer: "XYZ Organizasyon A.Ş.",
-    url: "event-details.html?id=6",
-  },
-  {
-    id: 7,
-    title: "Yapı Fuarı 2025",
-    date: "15 - 20 Mayıs 2025",
-    year: "2025",
-    month: "Mayıs",
-    sector: "İnşaat",
-    location: "İstanbul",
-    organizer: "DEF Fuarcılık A.Ş.",
-    url: "event-details.html?id=7",
-  },
-  {
-    id: 8,
-    title: "Otomotiv Fuarı 2025",
-    date: "1 - 5 Haziran 2025",
-    year: "2025",
-    month: "Haziran",
-    sector: "Otomotiv",
-    location: "İstanbul",
-    organizer: "GHI Fuarcılık Ltd. Şti.",
-    url: "event-details.html?id=8",
-  },
-  {
-    id: 9,
-    title: "Turizm Fuarı 2025",
-    date: "10 - 15 Eylül 2025",
-    year: "2025",
-    month: "Eylül",
-    sector: "Turizm",
-    location: "Antalya",
-    organizer: "JKL Organizasyon A.Ş.",
-    url: "event-details.html?id=9",
-  },
-  {
-    id: 10,
-    title: "Mobilya Fuarı 2025",
-    date: "20 - 25 Ekim 2025",
-    year: "2025",
-    month: "Ekim",
-    sector: "Mobilya",
-    location: "İstanbul",
-    organizer: "MNO Fuarcılık A.Ş.",
-    url: "event-details.html?id=10",
-  },
-
-  {
-    id: 11,
-    title: "İnşaat ve Gayrimenkul Fuarı",
-    date: "24 - 27 Nisan 2025",
-    year: "2025",
-    month: "Nisan",
-    sector: "İnşaat",
-    location: "Bursa",
-    organizer: "Bursa Fuar Merkezi",
-    url: "./fuar-single-page.html",
-  },
-]
 // DOM elements
 const yearFilter = document.getElementById("yearFilter")
 const monthFilter = document.getElementById("monthFilter")
@@ -488,11 +363,13 @@ const paginationContainer = document.getElementById("pagination")
 // Pagination variables
 let currentPage = 1
 const eventsPerPage = 6
-let filteredEvents = events
+let events = []
+let filteredEvents = []
 
 // Initialize page
 document.addEventListener("DOMContentLoaded", () => {
-  updateEvents()
+  // Fetch events from backend
+  fetchEvents()
 
   // Add event listeners to filters
   yearFilter.addEventListener("change", () => {
@@ -512,6 +389,23 @@ document.addEventListener("DOMContentLoaded", () => {
     filterEvents()
   })
 })
+
+// Fetch events from the backend API
+async function fetchEvents() {
+  try {
+    const response = await fetch('/FuarTest/GetFuars')
+    const result = await response.json()
+    
+    if (result.data) {
+      events = result.data
+      filteredEvents = events
+      updateEvents()
+    }
+  } catch (error) {
+    console.error('Error fetching events:', error)
+    eventsList.innerHTML = '<div class="alert alert-danger">Etkinlik verileri yüklenirken bir hata oluştu.</div>'
+  }
+}
 
 // Filter events based on selected criteria
 function filterEvents() {

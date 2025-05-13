@@ -50,10 +50,49 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult Upsert(FuarTestVM pageVM)
+        public async Task<IActionResult> Upsert(FuarTestVM pageVM)
         {
+
+            if (pageVM.FeaturedImage == null)
+            {
+                ModelState.AddModelError("FeaturedImage", "Please select an image.");
+            
+            } else {
+                // Check file size (5MB max)
+                if (pageVM.FeaturedImage.Length > 5 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("FeaturedImage", "Image size cannot exceed 5MB.");
+                }
+                // Check file format
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                var fileExtension = Path.GetExtension(pageVM.FeaturedImage.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("FeaturedImage", "Only image files (jpg, jpeg, png, gif, webp) are allowed.");
+                }
+            }
+
+
             if (ModelState.IsValid)
             {
+                try {
+                    string oldImageUrl = pageVM.FuarTest.FeaturedImageUrl;
+                    pageVM.FuarTest.FeaturedImageUrl = await _fileHelper.SaveFileAsync(
+                        pageVM.FeaturedImage, pageVM.FuarTest.FeaturedImageUrl);
+                    if (pageVM.FuarTest.FeaturedImageUrl == null)
+                    {
+                        // If image saving failed but validation passed, something went wrong
+                        ModelState.AddModelError("FeaturedImage", "Failed to upload image. Please try again.");
+                        return View(pageVM);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "error : " + ex.Message);
+                }
+
+
+
                 if (pageVM.FuarTest.Id == 0)
                 {
                     _unitOfWork.FuarTests.Add(pageVM.FuarTest);
@@ -70,6 +109,40 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             return View(pageVM);
         }
 
+
+
+         [HttpDelete]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return Json(new { success = false, message = "Invalid ID." });
+            }
+
+            FuarTest pageToDelete = _unitOfWork.FuarTests.Get(u => u.Id == id);
+
+            if (pageToDelete == null)
+            {
+                return Json(new { success = false, message = "Error: Page not found." });
+            }
+
+            try
+            {
+                if (!string.IsNullOrEmpty(pageToDelete.FeaturedImageUrl))
+                {
+                    await _fileHelper.DeleteFileAsync(pageToDelete.FeaturedImageUrl);
+                }
+                
+                _unitOfWork.FuarTests.Remove(pageToDelete);
+                _unitOfWork.Save();
+
+                return Json(new { success = true, message = "Page deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred while deleting the page: " + ex.Message });
+            }
+        }
 
 
         public IActionResult GetAll()

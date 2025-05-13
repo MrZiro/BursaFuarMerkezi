@@ -42,7 +42,6 @@
                 class="fas fa-chevron-down"></i></a></li>
           <li><a href="#" class="nav-toggle-button" data-translate="nav.visitBFM">BFM'yi Ziyaret Edin <i
                 class="fas fa-chevron-down"></i></a></li>
-          <li><a asp-controller="Fuar" asp-action="Index" data-translate="nav.fuars">FUARLAR</a></li>
           <li><a href="#" class="nav-toggle-button" data-translate="nav.events">ETKİNLİKLER <i
                 class="fas fa-chevron-down"></i></a></li>
           <li><a href="#" class="nav-toggle-button" data-translate="nav.contactUs">Bize Ulaşın</a></li>
@@ -66,6 +65,86 @@
     </div>
   </header>
   <!-- Header End -->
+    <div class="fullscreen-menu">
+        <div class="menu-header">
+            <a href="index.html" class="logo-menu">
+                <!-- Menüdeki logo -->
+                <img src="~/images/logo-beyaz.png" alt="Rising City & Yapı ve Yaşam Fuarı Logo" class="fs-2">
+            </a>
+            <div class="menu-search-container">
+                <input type="text" data-translate-placeholder="menu.searchPlaceholder"
+                       placeholder="aramak istediğiniz kelimeyi yazınız..." class="menu-search-input">
+                <button class="menu-search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="menu-header-actions">
+                <div class="lang-switch">
+                    <a href="#" class="active" data-lang="tr" data-translate="lang.tr">TR</a> | <a href="" data-lang="en"
+                                                                                                   data-translate="lang.en">EN</a>
+                </div>
+                <button class="close-menu-btn" data-translate-aria-label="menu.closeAriaLabel" aria-label="Menüyü Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="menu-content">
+            <div class="menu-column">
+                <!-- Başlığa tıklanınca menüyü kapatmak için nav-toggle-button ekledik -->
+                <h3 class="nav-toggle-button" data-translate="menu.discoverBFM">BFM'yi Keşfedin</h3>
+                <ul>
+                    <li><a href="hakkimizda.html" data-translate="menu.aboutUs">Hakkımızda</a></li>
+                    <li><a href="fuar-takvimi.html" data-translate="menu.fairCalendar">BFM Fuar Takvimi</a></li>
+                    <li>
+                        <a href="toplanti-salonlari.html" data-translate="menu.officesAndMeetingRooms">
+                            Hazır Ofisler ve Toplantı
+                            Salonları
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="menu-column">
+                <h3 class="nav-toggle-button" data-translate="menu.organizeFair">BFM'de Fuar Organize Edin</h3>
+                <ul>
+                    <li><a href="organizator.html" data-translate="menu.organizer">Organizatör</a></li>
+                </ul>
+            </div>
+            <div class="menu-column">
+                <h3 class="nav-toggle-button" data-translate="menu.visitBFM">BFM'yi Ziyaret Edin</h3>
+                <ul>
+                    <li><a href="ulasim.html" data-translate="menu.transport">Ulaşım</a></li>
+                    <li><a href="konaklama.html" data-translate="menu.accommodation">Konaklama</a></li>
+                    <li><a href="restoran-ve-kafeler.html" data-translate="menu.restaurantsAndCafes">Restoran Ve Kafeler</a></li>
+                    <li><a href="hizmetler.html" data-translate="menu.services">Hizmetler</a></li>
+                </ul>
+            </div>
+            <div class="menu-column">
+                <h3 class="nav-toggle-button" data-translate="menu.events">ETKİNLİKLER</h3>
+                <ul>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+            </div>
+            <div class="menu-column">
+                <h3 class="nav-toggle-button" data-translate="menu.contact">İLETİŞİM</h3>
+                <ul>
+                    <li><a href="iletisim.html" class="fw-normal" data-translate="menu.contactInfo">İletişim Bilgileri</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="menu-footer">
+            <!-- <span class="up-menu-f2f"> Powered By F2F Bilişim Reklam ve Danışmanlık Hizmetleri</span> -->
+            <span data-translate="menu.followUs">Bizi Takip Edin</span>
+            <div class="social-icons-menu">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/bursafuarmerkezi/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
   <!-- Header End -->
     <div class="">
         @* <main role="main" class="pb-3"> *@
