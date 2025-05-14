@@ -1,85 +1,142 @@
+// Setup drag and drop for Featured Image
+const featuredDropzone = document.getElementById('image-dropzone');
+const featuredImageInput = document.getElementById('featuredImageInput');
+const featuredImagePreview = document.getElementById('featuredImagePreview');
+const featuredPreviewContainer = document.querySelector('#image-preview-container .img-container');
+const featuredPreviewCaption = document.getElementById('preview-caption');
+const removeFeaturedImageBtn = document.getElementById('removeImage');
 
- // Setup drag and drop image upload
- const dropzone = document.getElementById('image-dropzone');
- const imageInput = document.getElementById('featuredImageInput');
- const imagePreview = document.getElementById('featuredImagePreview');
- const previewContainer = document.querySelector('.img-container');
- const previewCaption = document.getElementById('preview-caption');
- const removeImageBtn = document.getElementById('removeImage');
- // Handle drag events
- ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-     dropzone.addEventListener(eventName, preventDefaults, false);
- });
+// Setup drag and drop for Card Image
+const cardDropzone = document.getElementById('card-image-dropzone');
+const cardImageInput = document.getElementById('cardImageInput');
+const cardImagePreview = document.getElementById('cardImagePreview');
+const cardPreviewContainer = document.querySelector('#card-image-preview-container .img-container');
+const cardPreviewCaption = document.getElementById('card-preview-caption');
+const removeCardImageBtn = document.getElementById('removeCardImage');
 
- function preventDefaults(e) {
-     e.preventDefault();
-     e.stopPropagation();
- }
+// Helper function to setup drag and drop events
+function setupDropzone(dropzone, inputElement, previewElement, previewContainer, previewCaption, removeBtn, isCardImage = false) {
+    if (!dropzone) return;
 
- ['dragenter', 'dragover'].forEach(eventName => {
-     dropzone.addEventListener(eventName, highlight, false);
- });
+    // Handle drag events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, preventDefaults, false);
+    });
 
- ['dragleave', 'drop'].forEach(eventName => {
-     dropzone.addEventListener(eventName, unhighlight, false);
- });
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, function() {
+            this.classList.add('dragover');
+        }, false);
+    });
 
- function highlight() {
-     dropzone.classList.add('dragover');
- }
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, function() {
+            this.classList.remove('dragover');
+        }, false);
+    });
 
- function unhighlight() {
-     dropzone.classList.remove('dragover');
- }
+    // Handle file drop
+    dropzone.addEventListener('drop', function(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length) {
+            inputElement.files = files;
+            handleFiles(files, previewElement, previewContainer, previewCaption, isCardImage);
+        }
+    }, false);
 
- // Handle file drop
- dropzone.addEventListener('drop', handleDrop, false);
+    // Handle file select via input
+    dropzone.addEventListener('click', function() {
+        inputElement.click();
+    });
 
- function handleDrop(e) {
-     const dt = e.dataTransfer;
-     const files = dt.files;
-     
-     if (files.length) {
-         imageInput.files = files;
-         handleFiles(files);
-     }
- }
+    inputElement.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            handleFiles(this.files, previewElement, previewContainer, previewCaption, isCardImage);
+        }
+    });
 
- // Handle file select via input
- dropzone.addEventListener('click', function() {
-     imageInput.click();
- });
+    // Remove image button functionality
+    if (removeBtn) {
+        removeBtn.addEventListener('click', function() {
+            previewElement.src = '';
+            previewContainer.style.display = 'none';
+            if (previewCaption) previewCaption.style.display = 'none';
+            inputElement.value = '';
+        });
+    }
+}
 
- imageInput.addEventListener('change', function() {
-     if (this.files && this.files[0]) {
-         handleFiles(this.files);
-     }
- });
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
 
- function handleFiles(files) {
-     const file = files[0];
-     
-     // Validate file type
-     const fileType = file.type;
-     const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-     
-     if (!validImageTypes.includes(fileType)) {
-         alert('Please select a valid image file (JPG, PNG, GIF, WEBP)');
-         return;
-     }
-     
-     // Validate file size (5MB)
-     if (file.size > 5 * 1024 * 1024) {
-         alert('Image size cannot exceed 5MB');
-         return;
-     }
-     
-     // Display preview
-     const reader = new FileReader();
-     reader.onload = function(e) {
-         imagePreview.src = e.target.result;
-         previewContainer.style.display = 'block';
-         if (previewCaption) previewCaption.style.display = 'block';
-     }
-     reader.readAsDataURL(file);
- }
+function handleFiles(files, previewElement, previewContainer, previewCaption, isCardImage) {
+    const file = files[0];
+    
+    // Validate file type
+    const fileType = file.type;
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    
+    if (!validImageTypes.includes(fileType)) {
+        alert('Please select a valid image file (JPG, PNG, GIF, WEBP)');
+        return;
+    }
+    
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Image size cannot exceed 5MB');
+        return;
+    }
+    
+    // Display preview
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Create an image element to check dimensions
+        const img = new Image();
+        img.onload = function() {
+            // Validate dimensions for card images
+            if (isCardImage) {
+                if (img.width !== 300 || img.height !== 550) {
+                    alert('Card image must be exactly 300×550 pixels. Current dimensions: ' + img.width + '×' + img.height);
+                    return;
+                }
+            }
+            
+            // If validation passes or not a card image, show preview
+            previewElement.src = e.target.result;
+            previewContainer.style.display = 'block';
+            if (previewCaption) previewCaption.style.display = 'block';
+        };
+        img.src = e.target.result;
+    }
+    reader.readAsDataURL(file);
+}
+
+// Initialize dropzones
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Setup Featured Image dropzone
+    setupDropzone(
+        featuredDropzone, 
+        featuredImageInput,
+        featuredImagePreview,
+        featuredPreviewContainer,
+        featuredPreviewCaption,
+        removeFeaturedImageBtn,
+        false // Not a card image
+    );
+    
+    // Setup Card Image dropzone
+    setupDropzone(
+        cardDropzone,
+        cardImageInput,
+        cardImagePreview,
+        cardPreviewContainer,
+        cardPreviewCaption,
+        removeCardImageBtn,
+        true // Is a card image
+    );
+});

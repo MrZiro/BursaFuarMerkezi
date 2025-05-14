@@ -1,4 +1,4 @@
-using BursaFuarMerkezi.DataAccess.Data;
+﻿using BursaFuarMerkezi.DataAccess.Data;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,6 @@ namespace BursaFuarMerkezi.DataAccess.Repository
     public class FuarPageRepository : Repository<FuarPage>, IFuarPageRepository
     {
         private readonly ApplicationDbContext _db;
-
         public FuarPageRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
@@ -27,32 +26,24 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 objFromDb.Title = obj.Title;
                 objFromDb.Slug = obj.Slug;
                 objFromDb.Content = obj.Content;
-                objFromDb.IsPublished = obj.IsPublished;
-                objFromDb.MetaDescription = obj.MetaDescription;
-                objFromDb.MetaKeywords = obj.MetaKeywords;
-                objFromDb.PageType = obj.PageType;
                 objFromDb.UpdatedAt = DateTime.Now;
-                
+                objFromDb.StartDate = obj.StartDate;
+                objFromDb.EndDate = obj.EndDate;
+                objFromDb.FairHall = obj.FairHall;
+                objFromDb.Organizer = obj.Organizer;
+                objFromDb.VisitingHours = obj.VisitingHours;
+                objFromDb.FairLocation = obj.FairLocation;
+                objFromDb.WebsiteUrl = obj.WebsiteUrl;
+                objFromDb.IsPublished = obj.IsPublished;
                 if (obj.FeaturedImageUrl != null)
                 {
                     objFromDb.FeaturedImageUrl = obj.FeaturedImageUrl;
                 }
+                objFromDb.MetaDescription = obj.MetaDescription;
+                objFromDb.MetaKeywords = obj.MetaKeywords;
+
             }
         }
-
-        public async Task<FuarPage> GetBySlugAsync(string slug)
-        {
-            return await _db.FuarPages.FirstOrDefaultAsync(p => p.Slug == slug);
-        }
-
-        public async Task<List<FuarPage>> GetPublishedPagesAsync()
-        {
-            return await _db.FuarPages
-                .Where(p => p.IsPublished)
-                .OrderByDescending(p => p.CreatedAt)
-                .ToListAsync();
-        }
-
         public async Task<bool> IsSlugUniqueAsync(string slug, int? id = null)
         {
             if (id.HasValue)
@@ -66,5 +57,9 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 return await _db.FuarPages.FirstOrDefaultAsync(p => p.Slug == slug) == null;
             }
         }
+        public async Task<FuarPage> GetBySlugAsync(string slug)
+        {
+            return await _db.FuarPages.FirstOrDefaultAsync(p => p.Slug == slug);
+        }
     }
-} 
+}

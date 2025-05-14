@@ -170,6 +170,46 @@
                     }
                 </div>
 
+                <!-- Card Image Section -->
+                <div class="border p-3 mt-2 rounded-2">
+                    <label class="form-label">Card Image</label>
+                    <p class="text-muted small">This image will be used for cards or thumbnails</p>
+
+                    <div class="dropzone" id="card-image-dropzone">
+                        <input type="file" id="cardImageInput" asp-for="CardImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        <div id="card-dropzone-content">
+                            <i class="bi bi-cloud-arrow-up fs-3"></i>
+                            <p class="mb-1">Drag and drop an image here, or click to select</p>
+                            <p class="text-muted small mb-0">Accepted: JPG, JPEG, PNG, GIF, WEBP (Max 5MB)</p>
+                            <p class="text-muted small mb-0 mt-2"><strong>Required dimensions:</strong> 300×550 pixels</p>
+                        </div>
+                    </div>
+                    <span asp-validation-for="CardImage" class="text-danger d-block mt-2"></span>
+                </div>
+                <div class="mb-3 text-center" id="card-image-preview-container">
+                    @if (!string.IsNullOrEmpty(Model.FuarTest.CardImageUrl))
+                    {
+                        <div class="img-container">
+                            <input asp-for="FuarTest.CardImageUrl" hidden />
+                            <img src="@Model.FuarTest.CardImageUrl" id="cardImagePreview" class="img-preview" />
+                            <div class="img-remove" id="removeCardImage" title="Remove card image">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-muted small">Current card image. Replace by uploading a new one.</p>
+                    }
+                    else
+                    {
+                        <div class="img-container" style="display:none;">
+                            <img src="" id="cardImagePreview" class="img-preview" />
+                            <div class="img-remove" id="removeCardImage" title="Remove card image">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-muted small" id="card-preview-caption" style="display:none;">Card image preview. Submit to save changes.</p>
+                    }
+                </div>
+
                 <div class="border p-3 mt-2 rounded-2">
                     <div class="mb-3">
                         <label asp-for="FuarTest.MetaDescription" class="form-label">Meta Description</label>

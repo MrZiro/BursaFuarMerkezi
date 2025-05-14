@@ -1,13 +1,13 @@
-@model FuarPageVM
+﻿@model FuarPageVM
 
 @section Styles {
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <style>
         .img-container {
             position: relative;
             width: 100%;
             margin-bottom: 1rem;
         }
+
         .img-preview {
             width: 100%;
             max-height: 300px;
@@ -15,6 +15,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+
         .img-remove {
             position: absolute;
             top: 5px;
@@ -25,6 +26,7 @@
             cursor: pointer;
             color: #dc3545;
         }
+
         .dropzone {
             border: 2px dashed #ddd;
             border-radius: 5px;
@@ -33,13 +35,15 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .dropzone:hover {
-            border-color: #007bff;
-        }
-        .dropzone.dragover {
-            border-color: #28a745;
-            background-color: rgba(40, 167, 69, 0.1);
-        }
+
+            .dropzone:hover {
+                border-color: #007bff;
+            }
+
+            .dropzone.dragover {
+                border-color: #28a745;
+                background-color: rgba(40, 167, 69, 0.1);
+            }
     </style>
 }
 
@@ -47,22 +51,18 @@
     <div class="row pt-4 pb-3">
         <div class="col-12">
             <h2 class="text-primary">
-                @(Model.FuarPage.Id == 0 ? "Create" : "Update") Fuar Page
+                @(Model.FuarPage.Id == 0 ? "Create" : "Update") Fuar Test
             </h2>
         </div>
     </div>
 
     <form method="post" enctype="multipart/form-data">
         <input asp-for="FuarPage.Id" hidden />
-        <input asp-for="FuarPage.CreatedAt" hidden />
-        <input asp-for="FuarPage.FeaturedImageUrl" hidden />
-        <input type="hidden" id="removeImageInput" name="removeImage" value="false" />
-
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="row mb-3">
             <div class="col-md-8">
-                <div class="border p-3 mt-2 mb-3">
+                <div class="border p-3 mt-2 mb-3 rounded-2 ">
                     <div class="mb-3">
                         <label asp-for="FuarPage.Title" class="form-label">Title</label>
                         <input asp-for="FuarPage.Title" class="form-control" />
@@ -74,19 +74,9 @@
                         <span asp-validation-for="FuarPage.Slug" class="text-danger"></span>
                         <div class="form-text">Will be auto-generated from title if left blank.</div>
                     </div>
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.PageType" class="form-label">Page Type</label>
-                        <select asp-for="FuarPage.PageType" class="form-select">
-                            <option value="fuar">Fuar</option>
-                            <option value="etkinlik">Etkinlik</option>
-                            <option value="haber">Haber</option>
-                        </select>
-                        <span asp-validation-for="FuarPage.PageType" class="text-danger"></span>
-                    </div>
                 </div>
-                
                 <!-- Fuar Künyesi (Fair Information) Section -->
-                <div class="border p-3 mt-2 mb-3">
+                <div class="border p-3 mt-2 mb-3 rounded-2">
                     <h4 class="mb-3">Fuar Künyesi</h4>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -123,62 +113,104 @@
                         <span asp-validation-for="FuarPage.FairLocation" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
+                        <label asp-for="FuarPage.City" class="form-label">Şehir</label>
+                        <input asp-for="FuarPage.City" class="form-control" placeholder="Bursa" />
+                        <span asp-validation-for="FuarPage.City" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
                         <label asp-for="FuarPage.WebsiteUrl" class="form-label">Web Sitesi</label>
                         <input asp-for="FuarPage.WebsiteUrl" class="form-control" placeholder="https://risingcity.com.tr" />
                         <span asp-validation-for="FuarPage.WebsiteUrl" class="text-danger"></span>
                     </div>
                 </div>
 
-                <div class="border p-3 mt-2">
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.Content" class="form-label">Content</label>
-                        <textarea asp-for="FuarPage.Content" id="summernote" class="form-control"></textarea>
-                        <span asp-validation-for="FuarPage.Content" class="text-danger"></span>
+                <div class="border p-3 mt-2 mb-3 rounded-2">
+                    <div class="row">
+                        <label asp-for="FuarPage.Content" class="form-label"></label>
+                        <textarea asp-for="FuarPage.Content" class="form-control Editor"></textarea>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="border p-3 mt-2">
-                    <div class="mb-3">
-                        <label class="form-label">Featured Image</label>
-                        
-                        <div class="dropzone" id="image-dropzone">
-                            <input type="file" id="featuredImageInput" asp-for="FeaturedImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
-                            <div id="dropzone-content">
-                                <i class="bi bi-cloud-arrow-up fs-3"></i>
-                                <p class="mb-1">Drag and drop an image here, or click to select</p>
-                                <p class="text-muted small mb-0">Accepted: JPG, JPEG, PNG, GIF, WEBP (Max 5MB)</p>
+                <div class="border p-3 mt-2 rounded-2">
+                    <label class="form-label">Featured Image</label>
+
+                    <div class="dropzone" id="image-dropzone">
+                        <input type="file" id="featuredImageInput" asp-for="FeaturedImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        <div id="dropzone-content">
+                            <i class="bi bi-cloud-arrow-up fs-3"></i>
+                            <p class="mb-1">Drag and drop an image here, or click to select</p>
+                            <p class="text-muted small mb-0">Accepted: JPG, JPEG, PNG, GIF, WEBP (Max 5MB)</p>
+                        </div>
+                    </div>
+                    <span asp-validation-for="FeaturedImage" class="text-danger d-block mt-2"></span>
+                </div>
+                <div class="mb-3 text-center" id="image-preview-container">
+                    @if (!string.IsNullOrEmpty(Model.FuarPage.FeaturedImageUrl))
+                    {
+                        <div class="img-container">
+                            <input asp-for="FuarPage.FeaturedImageUrl" hidden />
+                            <img src="@Model.FuarPage.FeaturedImageUrl" id="featuredImagePreview" class="img-preview" />
+                            <div class="img-remove" id="removeImage" title="Remove image">
+                                <i class="bi bi-x-circle-fill"></i>
                             </div>
                         </div>
-                        <span asp-validation-for="FeaturedImage" class="text-danger d-block mt-2"></span>
-                    </div>
-                    
-                    <div class="mb-3 text-center" id="image-preview-container">
-                        @if (!string.IsNullOrEmpty(Model.FuarPage.FeaturedImageUrl))
-                        {
-                            <div class="img-container">
-                                <img src="@Model.FuarPage.FeaturedImageUrl" id="featuredImagePreview" class="img-preview" />
-                                <div class="img-remove" id="removeImage" title="Remove image">
-                                    <i class="bi bi-x-circle-fill"></i>
-                                </div>
+                        <p class="text-muted small">Current image. Replace by uploading a new one.</p>
+                    }
+                    else
+                    {
+                        <div class="img-container" style="display:none;">
+                            <img src="" id="featuredImagePreview" class="img-preview" />
+                            <div class="img-remove" id="removeImage" title="Remove image">
+                                <i class="bi bi-x-circle-fill"></i>
                             </div>
-                            <p class="text-muted small">Current image. Replace by uploading a new one.</p>
-                        }
-                        else
-                        {
-                            <div class="img-container" style="display:none;">
-                                <img src="" id="featuredImagePreview" class="img-preview" />
-                                <div class="img-remove" id="removeImage" title="Remove image">
-                                    <i class="bi bi-x-circle-fill"></i>
-                                </div>
-                            </div>
-                            <p class="text-muted small" id="preview-caption" style="display:none;">Image preview. Submit to save changes.</p>
-                        }
-                    </div>
+                        </div>
+                        <p class="text-muted small" id="preview-caption" style="display:none;">Image preview. Submit to save changes.</p>
+                    }
                 </div>
-                
-                <div class="border p-3 mt-2">
+
+                <!-- Card Image Section -->
+                <div class="border p-3 mt-2 rounded-2">
+                    <label class="form-label">Card Image</label>
+                    <p class="text-muted small">This image will be used for cards or thumbnails</p>
+
+                    <div class="dropzone" id="card-image-dropzone">
+                        <input type="file" id="cardImageInput" asp-for="CardImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        <div id="card-dropzone-content">
+                            <i class="bi bi-cloud-arrow-up fs-3"></i>
+                            <p class="mb-1">Drag and drop an image here, or click to select</p>
+                            <p class="text-muted small mb-0">Accepted: JPG, JPEG, PNG, GIF, WEBP (Max 5MB)</p>
+                            <p class="text-muted small mb-0 mt-2"><strong>Required dimensions:</strong> 300×550 pixels</p>
+                        </div>
+                    </div>
+                    <span asp-validation-for="CardImage" class="text-danger d-block mt-2"></span>
+                </div>
+                <div class="mb-3 text-center" id="card-image-preview-container">
+                    @if (!string.IsNullOrEmpty(Model.FuarPage.CardImageUrl))
+                    {
+                        <div class="img-container">
+                            <input asp-for="FuarPage.CardImageUrl" hidden />
+                            <img src="@Model.FuarPage.CardImageUrl" id="cardImagePreview" class="img-preview" />
+                            <div class="img-remove" id="removeCardImage" title="Remove card image">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-muted small">Current card image. Replace by uploading a new one.</p>
+                    }
+                    else
+                    {
+                        <div class="img-container" style="display:none;">
+                            <img src="" id="cardImagePreview" class="img-preview" />
+                            <div class="img-remove" id="removeCardImage" title="Remove card image">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </div>
+                        </div>
+                        <p class="text-muted small" id="card-preview-caption" style="display:none;">Card image preview. Submit to save changes.</p>
+                    }
+                </div>
+
+                <div class="border p-3 mt-2 rounded-2">
                     <div class="mb-3">
                         <label asp-for="FuarPage.MetaDescription" class="form-label">Meta Description</label>
                         <textarea asp-for="FuarPage.MetaDescription" class="form-control" rows="3"></textarea>
@@ -210,148 +242,26 @@
     </form>
 </div>
 
-@section Scripts {
+
+@section Scripts{
     @{
+        <script src="https://cdn.tiny.cloud/1/ksmksgnd1ppn1dd8gfjy1rhu22ru4v191js89isjbbf27fnm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="~/admin/scripts/Editor.js"></script>
         <partial name="_ValidationScriptsPartial" />
+		<script src="~/admin/scripts/Dropzone.js"></script>
     }
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script>
-        $(document).ready(function () {
-            // Initialize rich text editor
-            $('#summernote').summernote({
-                placeholder: 'Enter page content here...',
-                tabsize: 2,
-                height: 300,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'underline', 'italic', 'clear']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'help']]
-                ]
-            });
+        // Auto-generate slug from title if slug is empty
+        $('#FuarPage_Title').change(function () {
+            // Convert title to slug format
+            var slug = $(this).val().toLowerCase()
+                .replace(/[^\w\s-]/g, '') // Remove special characters
+                .replace(/\s+/g, '-')     // Replace spaces with hyphens
+                .replace(/-+/g, '-');     // Replace multiple hyphens with single hyphen
 
-            // Setup drag and drop image upload
-            const dropzone = document.getElementById('image-dropzone');
-            const imageInput = document.getElementById('featuredImageInput');
-            const imagePreview = document.getElementById('featuredImagePreview');
-            const previewContainer = document.querySelector('.img-container');
-            const previewCaption = document.getElementById('preview-caption');
-            const removeImageBtn = document.getElementById('removeImage');
-            const removeImageInput = document.getElementById('removeImageInput');
-
-            // Handle drag events
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, preventDefaults, false);
-            });
-
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-
-            ['dragenter', 'dragover'].forEach(eventName => {
-                dropzone.addEventListener(eventName, highlight, false);
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                dropzone.addEventListener(eventName, unhighlight, false);
-            });
-
-            function highlight() {
-                dropzone.classList.add('dragover');
-            }
-
-            function unhighlight() {
-                dropzone.classList.remove('dragover');
-            }
-
-            // Handle file drop
-            dropzone.addEventListener('drop', handleDrop, false);
-
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files.length) {
-                    imageInput.files = files;
-                    handleFiles(files);
-                }
-            }
-
-            // Handle file select via input
-            dropzone.addEventListener('click', function() {
-                imageInput.click();
-            });
-
-            imageInput.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    handleFiles(this.files);
-                    // Reset removeImage flag as we're adding a new image
-                    removeImageInput.value = 'false';
-                }
-            });
-
-            function handleFiles(files) {
-                const file = files[0];
-                
-                // Validate file type
-                const fileType = file.type;
-                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-                
-                if (!validImageTypes.includes(fileType)) {
-                    alert('Please select a valid image file (JPG, PNG, GIF, WEBP)');
-                    return;
-                }
-                
-                // Validate file size (5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('Image size cannot exceed 5MB');
-                    return;
-                }
-                
-                // Display preview
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    previewContainer.style.display = 'block';
-                    if (previewCaption) previewCaption.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-
-            // Remove image button functionality
-            if (removeImageBtn) {
-                removeImageBtn.addEventListener('click', function() {
-                    imagePreview.src = '';
-                    previewContainer.style.display = 'none';
-                    if (previewCaption) previewCaption.style.display = 'none';
-                    imageInput.value = '';
-                    
-                    // Set the remove flag to true
-                    removeImageInput.value = 'true';
-                    
-                    // Show a message that the image will be removed when the form is submitted
-                    if ($('#FuarPage_FeaturedImageUrl').val()) {
-                        alert('The current image will be removed when you save the changes.');
-                    }
-                });
-            }
-
-            // Auto-generate slug from title if slug is empty
-            $('#FuarPage_Title').change(function () {
-                if ($('#FuarPage_Slug').val() === '') {
-                    // Convert title to slug format
-                    var slug = $(this).val().toLowerCase()
-                        .replace(/[^\w\s-]/g, '') // Remove special characters
-                        .replace(/\s+/g, '-')     // Replace spaces with hyphens
-                        .replace(/-+/g, '-');     // Replace multiple hyphens with single hyphen
-                    
-                    $('#FuarPage_Slug').val(slug);
-                }
-            });
+            $('#FuarPage_Slug').val(slug);
         });
+        
+        
     </script>
-} 
+}

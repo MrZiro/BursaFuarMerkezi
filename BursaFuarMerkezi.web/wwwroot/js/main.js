@@ -362,44 +362,67 @@ const paginationContainer = document.getElementById("pagination")
 
 // Pagination variables
 let currentPage = 1
-const eventsPerPage = 6
-let events = []
 let filteredEvents = []
 
 // Initialize page
 document.addEventListener("DOMContentLoaded", () => {
   // Fetch events from backend
-  fetchEvents()
+  fetchEvents(1)
 
   // Add event listeners to filters
   yearFilter.addEventListener("change", () => {
-    currentPage = 1 // Reset to first page when filter changes
-    filterEvents()
+    fetchEvents() // Reset to first page when filter changes
   })
   monthFilter.addEventListener("change", () => {
-    currentPage = 1
-    filterEvents()
+    fetchEvents()
   })
   sectorFilter.addEventListener("change", () => {
-    currentPage = 1
-    filterEvents()
+    fetchEvents()
   })
   locationFilter.addEventListener("change", () => {
-    currentPage = 1
-    filterEvents()
+    fetchEvents()
   })
 })
 
-// Fetch events from the backend API
-async function fetchEvents() {
+// Fetch events from the backend API with server-side pagination and filtering
+async function fetchEvents(page = 1) {
+  currentPage = page
+  
   try {
-    const response = await fetch('/FuarTest/GetFuars')
+    // Build query string with pagination and filter parameters
+    const params = new URLSearchParams({
+      PageNumber: page,
+      PageSize: 6
+    })
+    
+    // Add filters if they have values
+    if (yearFilter && yearFilter.value) params.append('Year', yearFilter.value)
+    if (monthFilter && monthFilter.value) params.append('Month', monthFilter.value)
+    if (sectorFilter && sectorFilter.value) params.append('Sector', sectorFilter.value)
+    if (locationFilter && locationFilter.value) params.append('Location', locationFilter.value)
+    
+    const url = `/fuartest/getfuars?${params.toString()}`
+    
+    // Make the API request
+    const response = await fetch(url)
     const result = await response.json()
     
+    
+    if (result.error) {
+      console.error('API error:', result.error)
+      eventsList.innerHTML = `<div class="alert alert-danger">Error: ${result.error}</div>`
+      return
+    }
+    
     if (result.data) {
-      events = result.data
-      filteredEvents = events
-      updateEvents()
+      // Store the returned data
+      filteredEvents = result.data
+      
+      // Display events
+      displayEvents()
+      
+      // Setup pagination based on server response
+      setupPagination(result.totalPages)
     }
   } catch (error) {
     console.error('Error fetching events:', error)
@@ -407,57 +430,17 @@ async function fetchEvents() {
   }
 }
 
-// Filter events based on selected criteria
-function filterEvents() {
-  const selectedYear = yearFilter.value
-  const selectedMonth = monthFilter.value
-  const selectedSector = sectorFilter.value
-  const selectedLocation = locationFilter.value
-
-  filteredEvents = events
-
-  // Apply filters
-  if (selectedYear) {
-    filteredEvents = filteredEvents.filter((event) => event.year === selectedYear)
-  }
-
-  if (selectedMonth) {
-    filteredEvents = filteredEvents.filter((event) => event.month === selectedMonth)
-  }
-
-  if (selectedSector) {
-    filteredEvents = filteredEvents.filter((event) => event.sector === selectedSector)
-  }
-
-  if (selectedLocation) {
-    filteredEvents = filteredEvents.filter((event) => event.location === selectedLocation)
-  }
-
-  // Update display with filtered events
-  updateEvents()
-}
-
-// Update events display and pagination
-function updateEvents() {
-  displayEvents()
-  setupPagination()
-}
-
 // Display events in the DOM
 function displayEvents() {
   eventsList.innerHTML = ""
 
-  if (filteredEvents.length === 0) {
+  if (!filteredEvents || filteredEvents.length === 0) {
     eventsList.innerHTML = '<div class="alert alert-info">Seçilen kriterlere uygun etkinlik bulunamadı.</div>'
     return
   }
 
-  // Calculate pagination
-  const startIndex = (currentPage - 1) * eventsPerPage
-  const endIndex = Math.min(startIndex + eventsPerPage, filteredEvents.length)
-  const paginatedEvents = filteredEvents.slice(startIndex, endIndex)
-
-  paginatedEvents.forEach((event) => {
+  // Display the filtered events
+  filteredEvents.forEach((event) => {
     const eventElement = document.createElement("div")
     eventElement.className = "event-item"
 
@@ -473,11 +456,9 @@ function displayEvents() {
   })
 }
 
-// Setup pagination
-function setupPagination() {
+// Setup pagination with total pages from server
+function setupPagination(totalPages) {
   paginationContainer.innerHTML = ""
-
-  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage)
 
   if (totalPages <= 1) {
     return // Don't show pagination if there's only one page
@@ -494,8 +475,7 @@ function setupPagination() {
 
     pageLink.addEventListener("click", (e) => {
       e.preventDefault()
-      currentPage = i
-      updateEvents()
+      fetchEvents(i) // Fetch with new page number
     })
 
     pageItem.appendChild(pageLink)

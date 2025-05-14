@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Fuar\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\videos\" />
   </ItemGroup>

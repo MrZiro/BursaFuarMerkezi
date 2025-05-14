@@ -22,7 +22,7 @@ namespace BursaFuarMerkezi.web.Services
             _uploadPath = configuration["FileSettings:UploadPath"]?.Trim('/') ?? "uploads"; // Use a default if config missing
         }
 
-        public async Task<string?> SaveFileAsync(IFormFile file, string? existingImageUrl)
+        public async Task<string?> SaveFileAsync(IFormFile file, string? existingImageUrl, string? subDirectory = null)
         {
             if (file == null || file.Length == 0)
             {
@@ -37,6 +37,16 @@ namespace BursaFuarMerkezi.web.Services
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // If a subdirectory is specified, create it within the uploads folder
+            if (!string.IsNullOrEmpty(subDirectory))
+            {
+                uploadsFolder = Path.Combine(uploadsFolder, subDirectory);
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
             }
 
             // Generate a unique file name
@@ -67,8 +77,11 @@ namespace BursaFuarMerkezi.web.Services
             }
 
             // Return the new URL relative to wwwroot (using correct separators for URL)
-            // Example: \images\product\someguid.jpg
-            return $"/{_uploadPath.Replace('\\', '/')}/{fileName}{extension}"; // Use / for URL
+            string relativePath = subDirectory != null 
+                ? $"/{_uploadPath.Replace('\\', '/')}/{subDirectory}/{fileName}{extension}"
+                : $"/{_uploadPath.Replace('\\', '/')}/{fileName}{extension}";
+                
+            return relativePath; // Use / for URL
         }
 
         public async Task DeleteFileAsync(string imageUrl)

@@ -1,6 +1,9 @@
-﻿using BursaFuarMerkezi.DataAccess.Repository.IRepository;
+﻿using BursaFuarMerkezi.DataAccess.Pagination;
+using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace BursaFuarMerkezi.web.Controllers
@@ -16,15 +19,21 @@ namespace BursaFuarMerkezi.web.Controllers
 
         public IActionResult Index()
         {
-            // Get all published fuar pages
-            var fuarPages = _unitOfWork.FuarTests.GetAll()
-                .OrderByDescending(p => p.CreatedAt)
+            // Get current date
+            DateTime today = DateTime.Today;
+            
+            // Calculate date 2 months from now
+            DateTime twoMonthsFromNow = today.AddMonths(2);
+            
+            // Get upcoming fuar pages (starting today or in the future, but not beyond 2 months)
+            var upcomingFuars = _unitOfWork.FuarTests.GetAll()
+                .Where(p => p.IsPublished && p.StartDate >= today && p.StartDate <= twoMonthsFromNow)
+                .OrderBy(p => p.StartDate) // Order by nearest date first
                 .ToList();
-
-            return View(fuarPages);
+                
+            // Pass upcoming fuars to the view
+            return View(upcomingFuars);
         }
-
-
 
         public async Task<IActionResult> Details(string slug)
         {
@@ -46,23 +55,59 @@ namespace BursaFuarMerkezi.web.Controllers
 
         [HttpGet]
         [Route("fuartest/getfuars")]
-        public JsonResult GetFuars()
+        public JsonResult GetFuars([FromQuery] FuarFilterParams filterParams)
         {
-            var fuarList = _unitOfWork.FuarTests.GetAll()
-                .Select(f => new
+            try {
+                // Start with the base query - forcing IQueryable with AsQueryable()
+                var query = _unitOfWork.FuarTests.GetAll().AsQueryable();
+                
+                // Apply filters if provided
+                if (!string.IsNullOrEmpty(filterParams.Year))
+                    query = query.Where(f => f.EndDate.Year.ToString() == filterParams.Year);
+                    
+                if (!string.IsNullOrEmpty(filterParams.Month))
+                    query = query.Where(f => f.EndDate.ToString("MMMM") == filterParams.Month);
+                    
+                if (!string.IsNullOrEmpty(filterParams.Sector))
+                    query = query.Where(f => f.Sector == filterParams.Sector);
+                    
+                if (!string.IsNullOrEmpty(filterParams.Location))
+                    query = query.Where(f => f.City == filterParams.Location);
+                
+                // Get paged data with synchronous Create method
+                var paginatedFuars = PaginatedList<FuarTest>.Create(
+                    query, 
+                    filterParams.PageNumber, 
+                    filterParams.PageSize
+                );
+                
+                // Map to DTOs
+                var mappedItems = paginatedFuars.Items.Select(f => new
                 {
                     id = f.Id,
                     title = f.Title,
                     date = $"{f.StartDate:dd} - {f.EndDate:dd} {f.EndDate:MMMM yyyy}",
                     year = f.EndDate.Year.ToString(),
                     month = f.EndDate.ToString("MMMM"),
-                    sector = "Turizim",
-                    location = f.City == "" ? "Bursa" : f.City,
+                    sector = f.Sector ?? "Turizm",
+                    location = f.City ?? "Bursa",
                     organizer = f.Organizer,
                     url = $"FuarTest/{f.Slug}",
-                })
-                .ToList();
-            return Json(new { data = fuarList });
+                }).ToList();
+                
+                return Json(new
+                {
+                    data = mappedItems,
+                    totalPages = paginatedFuars.TotalPages,
+                    currentPage = paginatedFuars.PageNumber,
+                    totalCount = paginatedFuars.TotalCount,
+                    hasNext = paginatedFuars.HasNextPage,
+                    hasPrevious = paginatedFuars.HasPreviousPage
+                });
+            }
+            catch (Exception ex) {
+                return Json(new { error = ex.Message, stackTrace = ex.StackTrace });
+            }
         }
 
         [HttpGet]

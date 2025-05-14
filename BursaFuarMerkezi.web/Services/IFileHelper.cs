@@ -10,7 +10,7 @@ namespace BursaFuarMerkezi.web.Services
         // This example uses async as the file operations are async.
 
         // Saves a file, deletes the old one if specified, returns the new URL relative to wwwroot
-        Task<string?> SaveFileAsync(IFormFile file, string? existingImageUrl);
+        Task<string?> SaveFileAsync(IFormFile file, string? existingImageUrl, string? subDirectory = null);
 
         // Deletes a file based on its URL relative to wwwroot
         Task DeleteFileAsync(string imageUrl);

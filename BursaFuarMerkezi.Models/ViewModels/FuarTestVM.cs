@@ -15,5 +15,8 @@ namespace BursaFuarMerkezi.Models.ViewModels
 
         [ValidateNever]
         public IFormFile? FeaturedImage { get; set; }
+
+        [ValidateNever]
+        public IFormFile? CardImage { get; set; }
     }
 }

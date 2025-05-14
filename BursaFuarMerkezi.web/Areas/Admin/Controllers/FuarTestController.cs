@@ -52,12 +52,16 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(FuarTestVM pageVM)
         {
+            bool isNewRecord = pageVM.FuarTest.Id == 0;
 
-            if (pageVM.FeaturedImage == null)
+            // Only require featured image for new records
+            if (isNewRecord && pageVM.FeaturedImage == null)
             {
                 ModelState.AddModelError("FeaturedImage", "Please select an image.");
-            
-            } else {
+            }
+            else if (pageVM.FeaturedImage != null)
+            {
+                // Validate image if provided
                 // Check file size (5MB max)
                 if (pageVM.FeaturedImage.Length > 5 * 1024 * 1024)
                 {
@@ -72,28 +76,68 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 }
             }
 
+            if (isNewRecord && pageVM.CardImage == null)
+            {
+                ModelState.AddModelError("CardImage", "Please select a card image.");
+            } else if (pageVM.CardImage != null)
+            {
+                // Check file size (5MB max)
+                if (pageVM.CardImage.Length > 5 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("CardImage", "Card image size cannot exceed 5MB.");
+                }
+                // Check file format
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                var fileExtension = Path.GetExtension(pageVM.CardImage.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("CardImage", "Only image files (jpg, jpeg, png, gif, webp) are allowed.");
+                }
+            }
 
             if (ModelState.IsValid)
             {
                 try {
-                    string oldImageUrl = pageVM.FuarTest.FeaturedImageUrl;
-                    pageVM.FuarTest.FeaturedImageUrl = await _fileHelper.SaveFileAsync(
-                        pageVM.FeaturedImage, pageVM.FuarTest.FeaturedImageUrl);
-                    if (pageVM.FuarTest.FeaturedImageUrl == null)
+                    // Only process the featured image if a new one is provided
+                    if (pageVM.FeaturedImage != null)
                     {
-                        // If image saving failed but validation passed, something went wrong
-                        ModelState.AddModelError("FeaturedImage", "Failed to upload image. Please try again.");
+                        string oldImageUrl = pageVM.FuarTest.FeaturedImageUrl;
+                        pageVM.FuarTest.FeaturedImageUrl = await _fileHelper.SaveFileAsync(
+                            pageVM.FeaturedImage, pageVM.FuarTest.FeaturedImageUrl);
+                        if (pageVM.FuarTest.FeaturedImageUrl == null)
+                        {
+                            // If image saving failed but validation passed, something went wrong
+                            ModelState.AddModelError("FeaturedImage", "Failed to upload image. Please try again.");
+                            return View(pageVM);
+                        }
+                    }
+                    else if (isNewRecord)
+                    {
+                        // This is a safety check - shouldn't happen due to validation above
+                        ModelState.AddModelError("FeaturedImage", "Please select an image.");
                         return View(pageVM);
+                    }
+
+                    // Process card image if provided
+                    if (pageVM.CardImage != null)
+                    {
+                        string oldCardImageUrl = pageVM.FuarTest.CardImageUrl;
+                        pageVM.FuarTest.CardImageUrl = await _fileHelper.SaveFileAsync(
+                            pageVM.CardImage, pageVM.FuarTest.CardImageUrl);
+                        if (pageVM.FuarTest.CardImageUrl == null)
+                        {
+                            ModelState.AddModelError("CardImage", "Failed to upload card image. Please try again.");
+                            return View(pageVM);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "error : " + ex.Message);
+                    ModelState.AddModelError("", "Error: " + ex.Message);
+                    return View(pageVM);
                 }
 
-
-
-                if (pageVM.FuarTest.Id == 0)
+                if (isNewRecord)
                 {
                     _unitOfWork.FuarTests.Add(pageVM.FuarTest);
                     TempData["success"] = "Page created successfully.";
@@ -133,6 +177,11 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                     await _fileHelper.DeleteFileAsync(pageToDelete.FeaturedImageUrl);
                 }
                 
+                if (!string.IsNullOrEmpty(pageToDelete.CardImageUrl))
+                {
+                    await _fileHelper.DeleteFileAsync(pageToDelete.CardImageUrl);
+                }
+                
                 _unitOfWork.FuarTests.Remove(pageToDelete);
                 _unitOfWork.Save();
 
@@ -147,8 +196,9 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
         public IActionResult GetAll()
         {
-            var allObj = _unitOfWork.FuarTests.GetAll();
+            var allObj = _unitOfWork.FuarTests.GetAll().OrderByDescending(u => u.Id);
             return Json(new { data = allObj });
         }
     }
 }
+

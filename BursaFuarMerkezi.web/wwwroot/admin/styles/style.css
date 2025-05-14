@@ -374,6 +374,23 @@ main p {
     min-width: 80px;
     font-size: 0.95rem;
 }
+
+#tblData.dataTable>tbody>tr>td {
+    overflow-x: auto;
+    max-width: 30em;
+}
+
+#tblData.dataTable>tbody>tr>td::-webkit-scrollbar-track{
+    background-color: var(--hover-clr2);
+}
+#tblData.dataTable>tbody>tr>td::-webkit-scrollbar-thumb{
+    background-color: var(--accent-clr);
+    border-radius: 1em;
+}
+#tblData.dataTable>tbody>tr>td::-webkit-scrollbar{
+    height: 4px;
+}
+
 div.dt-container.dt-empty-footer tbody > tr:last-child > * {
     border: none;
 }

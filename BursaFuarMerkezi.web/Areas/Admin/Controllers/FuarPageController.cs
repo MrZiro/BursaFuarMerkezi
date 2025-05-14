@@ -1,11 +1,10 @@
-using BursaFuarMerkezi.DataAccess.Repository.IRepository;
+﻿using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.Utility;
 using BursaFuarMerkezi.web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
 
 namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 {
@@ -24,9 +23,9 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<FuarPage> pages = _unitOfWork.FuarPage.GetAll().ToList();
-            return View(pages);
+            return View();
         }
+
 
         public IActionResult Upsert(int? id)
         {
@@ -40,53 +39,34 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 // Create new page
                 return View(pageVM);
             }
-            else
-            {
                 // Edit existing page
-                pageVM.FuarPage = _unitOfWork.FuarPage.Get(u => u.Id == id);
-
-                if (pageVM.FuarPage == null)
-                {
-                    return NotFound();
-                }
+            pageVM.FuarPage = _unitOfWork.FuarPages.Get(u => u.Id == id);
+            if (pageVM.FuarPage == null)
+            {
+                return NotFound();
             }
-
             return View(pageVM);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(FuarPageVM pageVM, bool removeImage = false)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(FuarPageVM pageVM)
         {
-            // Generate slug if empty
-            if (string.IsNullOrEmpty(pageVM.FuarPage.Slug))
-            {
-                pageVM.FuarPage.Slug = GenerateSlug(pageVM.FuarPage.Title);
-            }
-            else
-            {
-                pageVM.FuarPage.Slug = GenerateSlug(pageVM.FuarPage.Slug);
-            }
+            bool isNewRecord = pageVM.FuarPage.Id == 0;
 
-            // Check for unique slug
-            bool isSlugUnique = await _unitOfWork.FuarPage.IsSlugUniqueAsync(
-                pageVM.FuarPage.Slug, 
-                pageVM.FuarPage.Id == 0 ? null : pageVM.FuarPage.Id);
-
-            if (!isSlugUnique)
+            // Only require featured image for new records
+            if (isNewRecord && pageVM.FeaturedImage == null)
             {
-                ModelState.AddModelError("FuarPage.Slug", "This URL is already taken. Please modify it.");
+                ModelState.AddModelError("FeaturedImage", "Please select an image.");
             }
-
-            // Validate image if provided
-            if (pageVM.FeaturedImage != null)
+            else if (pageVM.FeaturedImage != null)
             {
+                // Validate image if provided
                 // Check file size (5MB max)
                 if (pageVM.FeaturedImage.Length > 5 * 1024 * 1024)
                 {
                     ModelState.AddModelError("FeaturedImage", "Image size cannot exceed 5MB.");
                 }
-
                 // Check file format
                 var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
                 var fileExtension = Path.GetExtension(pageVM.FeaturedImage.FileName).ToLowerInvariant();
@@ -96,20 +76,34 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 }
             }
 
+            if (isNewRecord && pageVM.CardImage == null)
+            {
+                ModelState.AddModelError("CardImage", "Please select a card image.");
+            } else if (pageVM.CardImage != null)
+            {
+                // Check file size (5MB max)
+                if (pageVM.CardImage.Length > 5 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("CardImage", "Card image size cannot exceed 5MB.");
+                }
+                // Check file format
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+                var fileExtension = Path.GetExtension(pageVM.CardImage.FileName).ToLowerInvariant();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("CardImage", "Only image files (jpg, jpeg, png, gif, webp) are allowed.");
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                try
-                {
-                    // Handle image operations
-                    string oldImageUrl = pageVM.FuarPage.FeaturedImageUrl;
-                    
-                    // Process featured image if uploaded
+                try {
+                    // Only process the featured image if a new one is provided
                     if (pageVM.FeaturedImage != null)
                     {
+                        string oldImageUrl = pageVM.FuarPage.FeaturedImageUrl;
                         pageVM.FuarPage.FeaturedImageUrl = await _fileHelper.SaveFileAsync(
-                            pageVM.FeaturedImage, 
-                            pageVM.FuarPage.FeaturedImageUrl);
-                        
+                            pageVM.FeaturedImage, pageVM.FuarPage.FeaturedImageUrl, "FuarPage");
                         if (pageVM.FuarPage.FeaturedImageUrl == null)
                         {
                             // If image saving failed but validation passed, something went wrong
@@ -117,77 +111,59 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                             return View(pageVM);
                         }
                     }
-                    // Remove image if requested (and no new one uploaded)
-                    else if (removeImage && !string.IsNullOrEmpty(oldImageUrl))
+                    else if (isNewRecord)
                     {
-                        await _fileHelper.DeleteFileAsync(oldImageUrl);
-                        pageVM.FuarPage.FeaturedImageUrl = null;
+                        // This is a safety check - shouldn't happen due to validation above
+                        ModelState.AddModelError("FeaturedImage", "Please select an image.");
+                        return View(pageVM);
                     }
 
-                    // Handle update vs insert
-                    if (pageVM.FuarPage.Id == 0)
+                    // Process card image if provided
+                    if (pageVM.CardImage != null)
                     {
-                        // Creating new record
-                        pageVM.FuarPage.CreatedAt = DateTime.Now;
-                        _unitOfWork.FuarPage.Add(pageVM.FuarPage);
-                        TempData["success"] = "Fuar page created successfully";
-                    }
-                    else
-                    {
-                        // Updating existing record
-                        var existingPage = _unitOfWork.FuarPage.Get(u => u.Id == pageVM.FuarPage.Id);
-                        if (existingPage == null)
+                        string oldCardImageUrl = pageVM.FuarPage.CardImageUrl;
+                        pageVM.FuarPage.CardImageUrl = await _fileHelper.SaveFileAsync(
+                            pageVM.CardImage, pageVM.FuarPage.CardImageUrl, "FuarPageCard");
+                        if (pageVM.FuarPage.CardImageUrl == null)
                         {
-                            return NotFound();
+                            ModelState.AddModelError("CardImage", "Failed to upload card image. Please try again.");
+                            return View(pageVM);
                         }
-
-                        // Update main properties, preserving CreatedAt
-                        existingPage.Title = pageVM.FuarPage.Title;
-                        existingPage.Slug = pageVM.FuarPage.Slug;
-                        existingPage.Content = pageVM.FuarPage.Content;
-                        existingPage.IsPublished = pageVM.FuarPage.IsPublished;
-                        existingPage.MetaDescription = pageVM.FuarPage.MetaDescription;
-                        existingPage.MetaKeywords = pageVM.FuarPage.MetaKeywords;
-                        existingPage.PageType = pageVM.FuarPage.PageType;
-                        existingPage.UpdatedAt = DateTime.Now;
-                        
-                        // Update FeaturedImageUrl if changed
-                        existingPage.FeaturedImageUrl = pageVM.FuarPage.FeaturedImageUrl;
-
-                        // Update fair-specific fields
-                        existingPage.StartDate = pageVM.FuarPage.StartDate;
-                        existingPage.EndDate = pageVM.FuarPage.EndDate;
-                        existingPage.FairHall = pageVM.FuarPage.FairHall;
-                        existingPage.Organizer = pageVM.FuarPage.Organizer;
-                        existingPage.VisitingHours = pageVM.FuarPage.VisitingHours;
-                        existingPage.FairLocation = pageVM.FuarPage.FairLocation;
-                        existingPage.WebsiteUrl = pageVM.FuarPage.WebsiteUrl;
-
-                        _unitOfWork.FuarPage.Update(existingPage);
-                        TempData["success"] = "Fuar page updated successfully";
                     }
-
-                    _unitOfWork.Save();
-                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Error saving page: " + ex.Message);
+                    ModelState.AddModelError("", "Error: " + ex.Message);
+                    return View(pageVM);
                 }
-            }
 
+                if (isNewRecord)
+                {
+                    _unitOfWork.FuarPages.Add(pageVM.FuarPage);
+                    TempData["success"] = "Page created successfully.";
+                }
+                else
+                {
+                    _unitOfWork.FuarPages.Update(pageVM.FuarPage);
+                    TempData["success"] = "Page updated successfully.";
+                }
+                _unitOfWork.Save();
+                return RedirectToAction("Index");
+            }
             return View(pageVM);
         }
 
-        [HttpDelete]
-        public IActionResult Delete(int? id)
+
+
+         [HttpDelete]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
             {
                 return Json(new { success = false, message = "Invalid ID." });
             }
 
-            FuarPage pageToDelete = _unitOfWork.FuarPage.Get(u => u.Id == id);
+            FuarPage pageToDelete = _unitOfWork.FuarPages.Get(u => u.Id == id);
 
             if (pageToDelete == null)
             {
@@ -196,13 +172,17 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
             try
             {
-                // Delete featured image if exists
                 if (!string.IsNullOrEmpty(pageToDelete.FeaturedImageUrl))
                 {
-                    _fileHelper.DeleteFileAsync(pageToDelete.FeaturedImageUrl).Wait();
+                    await _fileHelper.DeleteFileAsync(pageToDelete.FeaturedImageUrl);
                 }
-
-                _unitOfWork.FuarPage.Remove(pageToDelete);
+                
+                if (!string.IsNullOrEmpty(pageToDelete.CardImageUrl))
+                {
+                    await _fileHelper.DeleteFileAsync(pageToDelete.CardImageUrl);
+                }
+                
+                _unitOfWork.FuarPages.Remove(pageToDelete);
                 _unitOfWork.Save();
 
                 return Json(new { success = true, message = "Page deleted successfully." });
@@ -213,46 +193,12 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             }
         }
 
-        #region API CALLS
 
-        [HttpGet]
         public IActionResult GetAll()
         {
-            var pages = _unitOfWork.FuarPage.GetAll()
-                .Select(p => new
-                {
-                    id = p.Id,
-                    title = p.Title,
-                    slug = p.Slug,
-                    isPublished = p.IsPublished ? "Published" : "Draft",
-                    createdAt = p.CreatedAt,
-                    pageType = p.PageType
-                });
-
-            return Json(new { data = pages });
-        }
-
-        #endregion
-
-        // Helper method to convert title to URL-friendly slug
-        private static string GenerateSlug(string title)
-        {
-            // Convert to lowercase and remove accents
-            string slug = title.ToLowerInvariant();
-            
-            // Remove invalid characters
-            slug = Regex.Replace(slug, @"[^a-z0-9\s-]", "");
-            
-            // Replace spaces with hyphens
-            slug = Regex.Replace(slug, @"\s+", "-");
-            
-            // Remove multiple hyphens
-            slug = Regex.Replace(slug, @"-+", "-");
-            
-            // Trim hyphens from beginning and end
-            slug = slug.Trim('-');
-            
-            return slug;
+            var allObj = _unitOfWork.FuarPages.GetAll().OrderByDescending(u => u.Id);
+            return Json(new { data = allObj });
         }
     }
-} 
+}
+

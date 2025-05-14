@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string GetActiveClass(string controller)
+    {
+        var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+        return controller.Equals(currentController, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -42,7 +49,7 @@
                             </button>
                         </div>
                         <ul class="nav flex-column">
-                            <li class="nav-item active">
+                            <li class="nav-item @GetActiveClass("Home")">
                                 <a asp-area="admin" asp-controller="Home" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">
                                         home
@@ -50,7 +57,7 @@
                                     <span class="label ms-3">Home</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @GetActiveClass("Pages")">
                                 <a asp-area="admin" asp-controller="Pages" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">
                                         edit
@@ -58,7 +65,7 @@
                                     <span class="label ms-3">Pages</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @GetActiveClass("Test")">
                                 <a asp-area="admin" asp-controller="Test" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">
                                         add
@@ -66,7 +73,7 @@
                                     <span class="label ms-3">Test</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item @GetActiveClass("Product")">
                                 <a asp-area="admin" asp-controller="Product" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">
                                         shopping_cart
@@ -96,7 +103,6 @@
     <script src="~/admin/scripts/script.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        @* $(document).ready(function() {
             // Check if the session key exists
             const hasSeenIntro = sessionStorage.getItem('introShown');
             const $mainContent = $('.main-content');
@@ -141,9 +147,7 @@
                         $mainContent.fadeIn(800);
                     }, 1000);
                 }, 2000);
-            }
-        }); *@
-    </script>
+            }  </script>
 
 
 

@@ -1,5 +1,27 @@
 ﻿@model List<FuarTest>
 
+<style>
+    .no-fairs-message {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        width: 100%;
+        margin: 20px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .no-fairs-message h3 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 24px;
+    }
+
+    .no-fairs-message p {
+        color: #666;
+        font-size: 16px;
+    }
+</style>
 
 <!-- Slider Start -->
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -143,27 +165,39 @@
     <div class="slider-container">
         <div class="slider">
 
-            @foreach(var fuarPage in Model)
+            @if(Model.Count > 0)
             {
-                <div class="card" style="background-image: url('@fuarPage.FeaturedImageUrl')">
-                    <div class="card-overlay">
-                        <div class="card-content">
-                            <div class="card-organizer" data-translate="upcomingFairs.card1.category">Tekstil & Giyim</div>
-                            <h2 class="card-title" data-translate="upcomingFairs.card1.title">
-                                @fuarPage.Title
-                            </h2>
-                            <a asp-controller="FuarTest" asp-action="Details" asp-route-slug="@fuarPage.Slug" class="card-link" data-translate="upcomingFairs.card1.details">
-                                Fuar Detayı <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <div class="card-date">
-                            <div class="date-box">
-                                <div class="date-day">28</div>
-                                <div class="date-month">30</div>
-                                <div class="date-info" data-translate="upcomingFairs.card1.month">Ocak</div>
+                @foreach(var fuarPage in Model)
+                {
+                    <div class="card" style="background-image: url('@fuarPage.CardImageUrl')">
+                        <div class="card-overlay">
+                            <div class="card-content">
+                                <div class="card-organizer" data-translate="upcomingFairs.card1.category">
+                                    @(string.IsNullOrEmpty(fuarPage.Sector) ? "Fuar" : fuarPage.Sector)
+                                </div>
+                                <h2 class="card-title" data-translate="upcomingFairs.card1.title">
+                                    @fuarPage.Title
+                                </h2>
+                                <a asp-controller="FuarTest" asp-action="Details" asp-route-slug="@fuarPage.Slug" class="card-link" data-translate="upcomingFairs.card1.details">
+                                    Fuar Detayı <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="card-date">
+                                <div class="date-box">
+                                    <div class="date-day">@fuarPage.StartDate.ToString("dd")</div>
+                                    <div class="date-month">@fuarPage.EndDate.ToString("dd")</div>
+                                    <div class="date-info">@fuarPage.StartDate.ToString("MMMM")</div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="no-fairs-message">
+                    <h3>Yaklaşan fuar bulunmamaktadır.</h3>
+                    <p>Önümüzdeki 2 ay içinde planlanan fuar bulunmamaktadır. Lütfen daha sonra tekrar kontrol ediniz.</p>
                 </div>
             }
             <!-- Kart 1 -->

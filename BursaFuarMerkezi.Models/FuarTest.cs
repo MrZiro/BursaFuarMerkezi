@@ -53,8 +53,14 @@ namespace BursaFuarMerkezi.Models
         [MaxLength(100)]
         public string City { get; set; } = "Bursa";
 
+        [MaxLength(50)]
+        public string Sector { get; set; } = "Turizm";
+
         [ValidateNever]
         public string? FeaturedImageUrl { get; set; } 
+
+        [ValidateNever]
+        public string? CardImageUrl { get; set; }
 
         public bool IsPublished { get; set; } = true;
         [MaxLength(500)]

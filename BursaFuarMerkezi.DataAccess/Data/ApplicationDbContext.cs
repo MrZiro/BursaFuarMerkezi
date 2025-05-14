@@ -13,9 +13,12 @@ namespace BursaFuarMerkezi.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<FuarPage> FuarPages { get; set; }
 
         public DbSet<FuarTest> FuarTests { get; set; }
+        public DbSet<FuarPage> FuarPages { get; set; }
+        public DbSet<ContentType> ContentTypes { get; set; }
+
+        public DbSet<Blog> Blogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

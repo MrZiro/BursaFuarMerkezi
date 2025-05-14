@@ -18,7 +18,7 @@
     </div>
 
     <div class="table-container">
-        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+        <table id="tblData" class="">
             <thead>
                 <!-- DataTable will populate headers -->
             </thead>
@@ -31,10 +31,12 @@
 
 @section Scripts {
     <partial name="_PartialReqScript" />
+    <script src="~/admin/scripts/SearchBarIcon.js"></script>
+
 
     <script>
         $(document).ready(() => {
-            initializeDataTableNoOption('FuarTest', [
+            initializeDataTableWithOption('FuarTest', [
                 {
                     title: 'Title',
                     data: 'title',

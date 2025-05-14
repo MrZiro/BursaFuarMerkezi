@@ -1,4 +1,4 @@
-@model List<FuarPage>
+﻿@model List<FuarPage>
 @section Styles {
     <link rel="stylesheet" href="//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css" />
 }
@@ -18,7 +18,7 @@
     </div>
 
     <div class="table-container">
-        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+        <table id="tblData" class="">
             <thead>
                 <!-- DataTable will populate headers -->
             </thead>
@@ -31,34 +31,26 @@
 
 @section Scripts {
     <partial name="_PartialReqScript" />
-    
+    <script src="~/admin/scripts/SearchBarIcon.js"></script>
+
+
     <script>
         $(document).ready(() => {
-            initializeDataTableNoOption('fuarpage', [
+            initializeDataTableWithOption('FuarPage', [
                 {
                     title: 'Title',
                     data: 'title',
-                    width: '25%'
+                    width: '25em'
                 },
                 {
                     title: 'Slug',
                     data: 'slug',
-                    width: '20%'
-                },
-                {
-                    title: 'Type',
-                    data: 'pageType',
-                    width: '10%'
-                },
-                {
-                    title: 'Status',
-                    data: 'isPublished',
-                    width: '10%'
+                    width: '20em'
                 },
                 {
                     title: 'Created',
                     data: 'createdAt',
-                    width: '15%',
+                    width: '15em',
                     render: function(data) {
                         return new Intl.DateTimeFormat('en-GB', {
                             day: '2-digit',
