@@ -105,7 +105,7 @@
                     <label class="form-label">Card Image</label>
                     <p class="text-muted small">This image will be used for cards or thumbnails</p>
 
-                    <div class="dropzone" id="card-image-dropzone">
+                    <div class="dropzone" id="card-image-dropzone" enabled="true">
                         <input type="file" id="cardImageInput" asp-for="CardImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
                         <div id="card-dropzone-content">
                             <i class="bi bi-cloud-arrow-up fs-3"></i>
@@ -192,6 +192,7 @@
                 .replace(/[^\w\s-]/g, '') // Remove special characters
                 .replace(/\s+/g, '-')     // Replace spaces with hyphens
                 .replace(/-+/g, '-');     // Replace multiple hyphens with single hyphen
+            console.log(slug);
 
             $('#Blog_Slug').val(slug);
         });

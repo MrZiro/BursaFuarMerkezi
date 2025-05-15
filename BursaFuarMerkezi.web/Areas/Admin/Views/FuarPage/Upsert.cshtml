@@ -136,7 +136,7 @@
                 <div class="border p-3 mt-2 rounded-2">
                     <label class="form-label">Featured Image</label>
 
-                    <div class="dropzone" id="image-dropzone">
+                    <div class="dropzone" id="image-dropzone" enabled="true">
                         <input type="file" id="featuredImageInput" asp-for="FeaturedImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
                         <div id="dropzone-content">
                             <i class="bi bi-cloud-arrow-up fs-3"></i>
@@ -175,7 +175,7 @@
                     <label class="form-label">Card Image</label>
                     <p class="text-muted small">This image will be used for cards or thumbnails</p>
 
-                    <div class="dropzone" id="card-image-dropzone">
+                    <div class="dropzone" id="card-image-dropzone" enabled="true">
                         <input type="file" id="cardImageInput" asp-for="CardImage" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
                         <div id="card-dropzone-content">
                             <i class="bi bi-cloud-arrow-up fs-3"></i>

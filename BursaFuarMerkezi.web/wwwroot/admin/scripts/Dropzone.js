@@ -14,6 +14,8 @@ const cardPreviewContainer = document.querySelector('#card-image-preview-contain
 const cardPreviewCaption = document.getElementById('card-preview-caption');
 const removeCardImageBtn = document.getElementById('removeCardImage');
 
+
+
 // Helper function to setup drag and drop events
 function setupDropzone(dropzone, inputElement, previewElement, previewContainer, previewCaption, removeBtn, isCardImage = false) {
     if (!dropzone) return;
@@ -118,25 +120,35 @@ function handleFiles(files, previewElement, previewContainer, previewCaption, is
 // Initialize dropzones
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Setup Featured Image dropzone
-    setupDropzone(
-        featuredDropzone, 
-        featuredImageInput,
-        featuredImagePreview,
-        featuredPreviewContainer,
-        featuredPreviewCaption,
-        removeFeaturedImageBtn,
-        false // Not a card image
-    );
+    // Check if dropzones have the 'enabled' attribute set to 'true'
+    const cardDropzoneEnabled = cardDropzone && cardDropzone.getAttribute('enabled') === 'true';
+    const featuredDropzoneEnabled = featuredDropzone && featuredDropzone.getAttribute('enabled') === 'true';
     
-    // Setup Card Image dropzone
-    setupDropzone(
-        cardDropzone,
-        cardImageInput,
-        cardImagePreview,
-        cardPreviewContainer,
-        cardPreviewCaption,
-        removeCardImageBtn,
-        true // Is a card image
-    );
+    if (featuredDropzoneEnabled) {
+        console.log('Featured dropzone is enabled');
+        // Setup Featured Image dropzone
+        setupDropzone(
+            featuredDropzone, 
+            featuredImageInput,
+            featuredImagePreview,
+            featuredPreviewContainer,
+            featuredPreviewCaption,
+            removeFeaturedImageBtn,
+            false // Not a card image
+        );
+    }
+    
+    if (cardDropzoneEnabled) {
+        console.log('Card dropzone is enabled');
+        // Setup Card Image dropzone
+        setupDropzone(
+            cardDropzone,
+            cardImageInput,
+            cardImagePreview,
+            cardPreviewContainer,
+            cardPreviewCaption,
+            removeCardImageBtn,
+            true // Is a card image
+        );
+    }
 });
