@@ -1,0 +1,50 @@
+@model BursaFuarMerkezi.Models.Blog
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["MetaDescription"] = Model.MetaDescription;
+    ViewData["MetaKeywords"] = Model.MetaKeywords;
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/blog-details.css">
+}
+
+<div class="banner">
+    <img src="~/images/iletisim-banner.png" class="" alt="">
+</div>
+
+<div class="container py-5">
+    <div class="breadcrumb justify-content-center">
+        <a href="/">Ana Sayfa</a> / 
+        <a href="/blogs">Bloglar</a> / 
+        <a href="@Url.Action("Details", "Blogs", new { slug = Model.Slug })">@Model.Title</a>  
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="news-container">
+                <div class="news-content">
+                    <h2 class="fw-normal">@Model.Title</h2>
+                    
+                    <div class="blog-meta">
+                        <span class="category">@Model.ContentType?.Name</span>
+                        <span class="date">@Model.CreatedAt.ToString("dd MMMM yyyy")</span>
+                        @if (!string.IsNullOrEmpty(Model.Author))
+                        {
+                            <span class="author">@Model.Author</span>
+                        }
+                    </div>
+
+                    <div class="blog-post-content">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Share functionality could be added here if needed
+    </script>
+} 

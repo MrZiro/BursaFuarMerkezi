@@ -63,6 +63,11 @@ app.MapControllerRoute(
     defaults: new { controller = "FuarTest", action = "Details" });
 
 app.MapControllerRoute(
+    name: "blogSlug",
+    pattern: "blogs/{slug}",
+    defaults: new { controller = "Blogs", action = "Details" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
