@@ -10,10 +10,10 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductRepository Product { get; }
-        IFuarTestRepository FuarTests { get; }
         IFuarPageRepository FuarPages { get; }
         IContentTypeRepository ContentType { get; }
         IBlogRepository Blog { get; }
+        IBlogImageRepository BlogImage { get; }
 
         void Save();
     }

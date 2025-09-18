@@ -1,9 +1,11 @@
 ﻿using BursaFuarMerkezi.Utility;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration; // Required for IConfiguration
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BursaFuarMerkezi.web.Services
@@ -77,10 +79,10 @@ namespace BursaFuarMerkezi.web.Services
             }
 
             // Return the new URL relative to wwwroot (using correct separators for URL)
-            string relativePath = subDirectory != null 
+            string relativePath = subDirectory != null
                 ? $"/{_uploadPath.Replace('\\', '/')}/{subDirectory}/{fileName}{extension}"
                 : $"/{_uploadPath.Replace('\\', '/')}/{fileName}{extension}";
-                
+
             return relativePath; // Use / for URL
         }
 
@@ -98,6 +100,41 @@ namespace BursaFuarMerkezi.web.Services
                     System.IO.File.Delete(filePath);
                 }
             });
+        }
+
+        public bool ValidateImageFile(IFormFile file, ModelStateDictionary modelState, string key, bool isRequired = false)
+        {
+            // Check if file is required but not provided
+            if (isRequired && (file == null || file.Length == 0))
+            {
+                modelState.AddModelError(key, "Lütfen bir görsel seçin.");
+                return false;
+            }
+
+            // If file is not required and not provided, it's valid
+            if (!isRequired && (file == null || file.Length == 0))
+            {
+                return true;
+            }
+
+            bool isValid = true;
+
+            // Check file size using constant from SD
+            if (file.Length > SD.MaxImageSizeInBytes)
+            {
+                modelState.AddModelError(key, $"Görsel boyutu {SD.MaxImageSizeInMB}MB'ı geçemez.");
+                isValid = false;
+            }
+
+            // Check file format using allowed extensions from SD
+            var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!SD.AllowedImageExtensions.Contains(fileExtension))
+            {
+                modelState.AddModelError(key, "Yalnızca görsel dosyaları (jpg, jpeg, png, gif, webp) kabul edilir.");
+                isValid = false;
+            }
+
+            return isValid;
         }
     }
 }

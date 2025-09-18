@@ -30,34 +30,49 @@ namespace BursaFuarMerkezi.DataAccess.DbInitializer
 
         public void Initialize()
         {
-            try
+            // Ensure database exists and apply migrations if present
+            var pendingMigrations = _db.Database.GetPendingMigrations();
+            if (pendingMigrations.Any())
             {
-                if (_db.Database.GetPendingMigrations().Count() > 0)
-                {
-                    _db.Database.Migrate();
-                }
-
-                if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
-                {
-                    _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).Wait();
-                    _roleManager.CreateAsync(new IdentityRole(SD.Role_Editor)).Wait();
-                    _userManager.CreateAsync(new ApplicationUser
-                    {
-                        UserName = "admin@BFM.com",
-                        Email = "admin@BFM.com",
-                        Name = "BFM",
-                        NormalizedUserName = "ADMIN@BFM.COM",
-                        NormalizedEmail = "ADMIN@BFM.COM",
-                        PhoneNumber = "1112223333",
-                    }, "Admin123*").GetAwaiter().GetResult();
-
-                    ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@BFM.com");
-                    _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
-                }
+                _db.Database.Migrate();
             }
-            catch (Exception e)
+            else
             {
-                throw;
+                _db.Database.EnsureCreated();
+            }
+
+            // Seed roles and admin user idempotently
+            if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
+            }
+            if (!_roleManager.RoleExistsAsync(SD.Role_Editor).GetAwaiter().GetResult())
+            {
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Editor)).GetAwaiter().GetResult();
+            }
+
+            var adminEmail = "admin@BFM.com";
+            var existingUser = _userManager.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
+            if (existingUser == null)
+            {
+                var createResult = _userManager.CreateAsync(new ApplicationUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    Name = "BFM"
+                }, "Admin123*").GetAwaiter().GetResult();
+
+                if (!createResult.Succeeded)
+                {
+                    throw new Exception($"Failed to create seed admin user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+                }
+
+                existingUser = _userManager.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
+            }
+
+            if (existingUser != null && !_userManager.IsInRoleAsync(existingUser, SD.Role_Admin).GetAwaiter().GetResult())
+            {
+                _userManager.AddToRoleAsync(existingUser, SD.Role_Admin).GetAwaiter().GetResult();
             }
         }
     }

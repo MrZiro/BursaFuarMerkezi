@@ -15,14 +15,14 @@ namespace BursaFuarMerkezi.Models
 
         [Required]
         [MaxLength(100)]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        [Required]
         [MaxLength(100)]
-        public string Slug { get; set; }
+        [Required]
+        public string Slug { get; set; } = string.Empty;
 
         [ValidateNever]
-        public string? Content { get; set; } = "content";
+        public string? Content { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
@@ -48,13 +48,13 @@ namespace BursaFuarMerkezi.Models
         public string FairLocation { get; set; } = "Bursa Uluslararası Fuar ve Kongre Merkezi";
 
         [MaxLength(200)]
-        public string WebsiteUrl { get; set; } = "https://bursafuarmerkezi.com";
+        public string WebsiteUrl { get; set; } = string.Empty;
 
         [MaxLength(100)]
-        public string City { get; set; } = "Bursa";
+        public string City { get; set; } = string.Empty;
 
         [MaxLength(50)]
-        public string Sector { get; set; } = "Turizm";
+        public string Sector { get; set; } = string.Empty;
 
         [ValidateNever]
         public string? FeaturedImageUrl { get; set; } 
@@ -64,10 +64,10 @@ namespace BursaFuarMerkezi.Models
 
         public bool IsPublished { get; set; } = true;
         [MaxLength(500)]
-        public string MetaDescription { get; set; }
+        public string MetaDescription { get; set; } = string.Empty;
 
         [MaxLength(100)]
-        public string MetaKeywords { get; set; }
+        public string MetaKeywords { get; set; } = string.Empty;
 
         //[MaxLength(50)]
         //public string PageType { get; set; } = "fuar"; // Default type

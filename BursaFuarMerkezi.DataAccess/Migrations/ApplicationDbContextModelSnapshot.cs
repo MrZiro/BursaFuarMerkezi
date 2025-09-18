@@ -133,6 +133,11 @@ namespace BursaFuarMerkezi.DataAccess.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("ShortDescription")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Slug")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -151,6 +156,39 @@ namespace BursaFuarMerkezi.DataAccess.Migrations
                     b.HasIndex("ContentTypeId");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("BursaFuarMerkezi.Models.BlogImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Caption")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("BlogImages");
                 });
 
             modelBuilder.Entity("BursaFuarMerkezi.Models.Category", b =>
@@ -302,98 +340,6 @@ namespace BursaFuarMerkezi.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FuarPages");
-                });
-
-            modelBuilder.Entity("BursaFuarMerkezi.Models.FuarTest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CardImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FairHall")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("FairLocation")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("FeaturedImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MetaDescription")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("MetaKeywords")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Organizer")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Sector")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VisitingHours")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("WebsiteUrl")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FuarTests");
                 });
 
             modelBuilder.Entity("BursaFuarMerkezi.Models.Product", b =>
@@ -952,6 +898,17 @@ namespace BursaFuarMerkezi.DataAccess.Migrations
                         .HasForeignKey("ContentTypeId");
 
                     b.Navigation("ContentType");
+                });
+
+            modelBuilder.Entity("BursaFuarMerkezi.Models.BlogImage", b =>
+                {
+                    b.HasOne("BursaFuarMerkezi.Models.Blog", "Blog")
+                        .WithMany()
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
                 });
 
             modelBuilder.Entity("BursaFuarMerkezi.Models.Product", b =>

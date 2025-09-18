@@ -16,6 +16,13 @@ namespace BursaFuarMerkezi.Models.ViewModels
         [ValidateNever]
         public IFormFile? CardImage { get; set; }
         
+        // Gallery support
+        [ValidateNever]
+        public List<IFormFile>? GalleryImages { get; set; }
+        
+        [ValidateNever]
+        public IEnumerable<BlogImage>? ExistingImages { get; set; }
+        
         [ValidateNever]
         public IEnumerable<SelectListItem>? ContentTypeList { get; set; }
     }

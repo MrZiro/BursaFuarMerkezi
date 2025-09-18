@@ -3,14 +3,21 @@ using BursaFuarMerkezi.DataAccess.DbInitializer;
 using BursaFuarMerkezi.DataAccess.Repository;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
+using BursaFuarMerkezi.Utility;
+using BursaFuarMerkezi.web.Middleware;
+using BursaFuarMerkezi.web.Models.Configuration;
 using BursaFuarMerkezi.web.Services;
+using BursaFuarMerkezi.web.ViewEngines;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
 
 // Add database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -29,10 +36,34 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 
-// Add repository services
+// Add localization services
+builder.Services.Configure<LocalizedRoutesConfig>(builder.Configuration.GetSection(LocalizedRoutesConfig.SectionName));
+
+
+
+// Add repository/services
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IFileHelper, FileHelper>();
+builder.Services.AddScoped<IUrlLocalizationService, UrlLocalizationService>();
+builder.Services.AddScoped<IEmailSender, EmailSenderSmtp>();
+builder.Services.AddHostedService<TempFileCleanupService>();
+
+builder.Services.Configure<EmailTemplatesConfig>(
+    builder.Configuration.GetSection(EmailTemplatesConfig.SectionName));
+
+
+builder.Services.AddRazorPages()
+    .AddRazorOptions(options =>
+    {
+        options.ViewLocationFormats.Add("/Areas/{2}/Views/{1}/{0}.cshtml");
+        options.ViewLocationFormats.Add("/Areas/{2}/Views/Shared/{0}.cshtml");
+        options.ViewLocationFormats.Add("/Views/{2}/{1}/{0}.cshtml");
+        options.ViewLocationFormats.Add("/Views/{2}/Shared/{0}.cshtml");
+        options.ViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
+        options.ViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+        options.ViewLocationExpanders.Add(new CustomViewLocationExpander());
+    });
 
 var app = builder.Build();
 
@@ -47,6 +78,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseUrlCanonicalization();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -57,15 +89,12 @@ app.MapControllerRoute(
     name: "AreaRoute",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 );
-app.MapControllerRoute(
-    name: "fuarTestSlug",
-    pattern: "fuartest/{slug}",
-    defaults: new { controller = "FuarTest", action = "Details" });
 
 app.MapControllerRoute(
-    name: "blogSlug",
-    pattern: "blogs/{slug}",
-    defaults: new { controller = "Blogs", action = "Details" });
+    name: "localized",
+    pattern: "{lang}/{controller=Home}/{action=Index}/{id?}",
+    constraints: new { lang = "en|tr" }
+);
 
 app.MapControllerRoute(
     name: "default",
@@ -80,7 +109,15 @@ void SeedDatabase()
 {
     using (var scope = app.Services.CreateScope())
     {
-        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        dbInitializer.Initialize();
+        try
+        {
+            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+            dbInitializer.Initialize();
+        }
+        catch (Exception ex)
+        {
+            app.Logger.LogError(ex, "An error occurred while seeding the database.");
+            throw;
+        }
     }
 }

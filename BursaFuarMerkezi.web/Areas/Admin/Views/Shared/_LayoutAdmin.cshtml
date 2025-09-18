@@ -57,6 +57,22 @@
                                     <span class="label ms-3">Home</span>
                                 </a>
                             </li>
+                            <li class="nav-item @GetActiveClass("Blogs")">
+                                <a asp-area="admin" asp-controller="Blogs" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        article
+                                    </span>
+                                    <span class="label ms-3">Blogs</span>
+                                </a>
+                            </li>
+                            <li class="nav-item @GetActiveClass("ContentType")">
+                                <a asp-area="admin" asp-controller="ContentType" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        article
+                                    </span>
+                                    <span class="label ms-3">Content Type</span>
+                                </a>
+                            </li>
                             <li class="nav-item @GetActiveClass("Test")">
                                 <a asp-area="admin" asp-controller="Test" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">

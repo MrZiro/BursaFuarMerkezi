@@ -1,0 +1,169 @@
+/*============ Fuar Single Page ============*/
+/* Fuar Başlık Bölümü */
+.organizer-info {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.fair-title {
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.takvim-ekle-btn {
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
+.share-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Fuar Açıklaması */
+.fair-description h2 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.fair-description p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.calendar-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.calendar-table th,
+.calendar-table td {
+  border: 1px solid #e0e0e0;
+  padding: 0.6em 0.4em;
+  min-width: 36px;
+  font-size: 1.1em;
+}
+
+.calendar-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.calendar-table td.selected {
+  background: #dc3545;
+  color: #fff;
+  font-weight: bold;
+  border-color: #dc3545;
+  position: relative;
+}
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  gap: 0.5em;
+}
+
+.legend-box {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: #dc3545;
+  margin-right: 0.3em;
+  border: 1px solid #dc3545;
+}
+
+.legend-box.selected {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Fuar Künyesi */
+.fair-info-panel {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.fair-info-panel h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.info-item {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  color: #dc3545;
+}
+
+.info-value a {
+  color: #dc3545;
+  text-decoration: none;
+}
+
+.info-value a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Ayarlar */
+@media (max-width: 768px) {
+  .fair-title {
+    font-size: 24px;
+  }
+
+  .calendar-title {
+    font-size: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .calendar-dates {
+    margin-top: 5px;
+  }
+
+  .info-item {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .fair-title {
+    font-size: 22px;
+  }
+
+  .calendar-cards .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .calendar-cards .col-sm-6 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

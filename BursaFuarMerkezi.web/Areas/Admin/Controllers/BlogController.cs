@@ -6,6 +6,7 @@ using BursaFuarMerkezi.web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 {
@@ -45,8 +46,11 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 // Create new page
                 return View(pageVM);
             }
-                // Edit existing page
+            // Edit existing page
             pageVM.Blog = _unitOfWork.Blog.Get(u => u.Id == id, includeProperties: "ContentType");
+            pageVM.ExistingImages = _unitOfWork.BlogImage.GetAll()
+                .Where(x => x.BlogId == id)
+                .OrderBy(x => x.DisplayOrder);
             if (pageVM.Blog == null)
             {
                 return NotFound();
@@ -124,6 +128,32 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                     TempData["success"] = "Page updated successfully.";
                 }
                 _unitOfWork.Save();
+
+                // Save gallery images after we have Blog.Id
+                if (pageVM.GalleryImages != null && pageVM.GalleryImages.Count > 0)
+                {
+                    int nextOrder = _unitOfWork.BlogImage.GetAll()
+                        .Where(x => x.BlogId == pageVM.Blog.Id)
+                        .Select(x => x.DisplayOrder)
+                        .DefaultIfEmpty(0)
+                        .Max();
+
+                    foreach (var file in pageVM.GalleryImages)
+                    {
+                        var imageUrl = await _fileHelper.SaveFileAsync(file, null, "BlogGallery");
+                        if (!string.IsNullOrEmpty(imageUrl))
+                        {
+                            nextOrder++;
+                            _unitOfWork.BlogImage.Add(new BlogImage
+                            {
+                                BlogId = pageVM.Blog.Id,
+                                ImageUrl = imageUrl,
+                                DisplayOrder = nextOrder
+                            });
+                        }
+                    }
+                    _unitOfWork.Save();
+                }
                 return RedirectToAction("Index");
             }
             return View(pageVM);
@@ -153,6 +183,17 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                     await _fileHelper.DeleteFileAsync(pageToDelete.CardImageUrl);
                 }
                 
+                // Delete gallery images files
+                var gallery = _unitOfWork.BlogImage.GetAll().Where(x => x.BlogId == pageToDelete.Id).ToList();
+                foreach (var img in gallery)
+                {
+                    if (!string.IsNullOrEmpty(img.ImageUrl))
+                    {
+                        await _fileHelper.DeleteFileAsync(img.ImageUrl);
+                    }
+                }
+                _unitOfWork.BlogImage.RemoveRange(gallery);
+
                 _unitOfWork.Blog.Remove(pageToDelete);
                 _unitOfWork.Save();
 
@@ -169,6 +210,24 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
         {
             var allObj = _unitOfWork.Blog.GetAll(includeProperties: "ContentType").OrderByDescending(u => u.Id);
             return Json(new { data = allObj });
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            var img = _unitOfWork.BlogImage.Get(x => x.Id == id);
+            if (img == null)
+            {
+                return Json(new { success = false, message = "Image not found." });
+            }
+
+            if (!string.IsNullOrEmpty(img.ImageUrl))
+            {
+                await _fileHelper.DeleteFileAsync(img.ImageUrl);
+            }
+            _unitOfWork.BlogImage.Remove(img);
+            _unitOfWork.Save();
+            return Json(new { success = true });
         }
     }
 }

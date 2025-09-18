@@ -101,8 +101,8 @@ function handleFiles(files, previewElement, previewContainer, previewCaption, is
         img.onload = function() {
             // Validate dimensions for card images
             if (isCardImage) {
-                if (img.width !== 300 || img.height !== 550) {
-                    alert('Card image must be exactly 300×550 pixels. Current dimensions: ' + img.width + '×' + img.height);
+                if (img.width > 400 || img.height > 550) {
+                    alert('Card image must be less than 400×550 pixels. Current dimensions: ' + img.width + '×' + img.height);
                     return;
                 }
             }

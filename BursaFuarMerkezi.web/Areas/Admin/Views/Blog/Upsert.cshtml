@@ -163,6 +163,33 @@
                     </div>
                 </div>
 
+                <!-- Gallery Upload -->
+                <div class="border p-3 mt-2 rounded-2">
+                    <label class="form-label">Blog Gallery</label>
+                    <p class="text-muted small">Select multiple images to add to the gallery</p>
+                    <input type="file" asp-for="GalleryImages" class="form-control" accept=".jpg,.jpeg,.png,.gif,.webp" multiple />
+                    <span class="text-muted small d-block mt-1">Accepted: JPG, JPEG, PNG, GIF, WEBP</span>
+                    <div class="mt-3">
+                        @if (Model.ExistingImages != null && Model.ExistingImages.Any())
+                        {
+                            <div class="row g-2">
+                                @foreach (var img in Model.ExistingImages)
+                                {
+                                    <div class="col-6 col-md-4">
+                                        <div class="position-relative border rounded p-1">
+                                            <img src="@img.ImageUrl" class="img-fluid" alt="Gallery image" />
+                                            <button type="button" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1"
+                                                    data-image-id="@img.Id" onclick="deleteGalleryImage(@img.Id)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
                 <div class="text-end mt-3">
                     <a asp-controller="Blog" asp-action="Index" class="btn btn-secondary" style="width:150px">
                         <i class="bi bi-arrow-left"></i> Back to List
@@ -196,5 +223,30 @@
 
             $('#Blog_Slug').val(slug);
         });
+
+        function deleteGalleryImage(id) {
+            if (!id) return;
+            Swal.fire({
+                title: 'Delete image?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/Admin/Blog/DeleteImage/' + id,
+                        type: 'DELETE'
+                    }).done(function (res) {
+                        if (res.success) {
+                            location.reload();
+                        } else {
+                            toastr.error(res.message || 'Failed to delete image');
+                        }
+                    }).fail(function () {
+                        toastr.error('Failed to delete image');
+                    });
+                }
+            });
+        }
     </script>
 }

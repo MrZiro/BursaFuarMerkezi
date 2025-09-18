@@ -1,0 +1,223 @@
+/* Card Slider Container */
+.card-slider-container-2 {
+  position: relative;
+  padding: 0 6rem;
+  margin-top: 2rem;
+}
+
+.container-2 {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Card Styles - Fixed Height */
+.card-2 {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  /* Sabit yükseklik */
+}
+
+.card-image-2 {
+  position: relative;
+  height: 200px;
+}
+
+.card-image-2 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-date-2 {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  opacity: 0.8;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.date-year-2 {
+  font-size: 0.75rem;
+}
+
+.date-day-2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card-content-2 {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* Hide overflow content */
+}
+
+.card-tag-2 {
+  color: #008384;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card-title-2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  /* Add a min-height to prevent collapse if title is very short */
+  min-height: 3em;
+  /* Adjust based on line-height and font-size (e.g., 2 lines * 1.5em line-height) */
+}
+
+.card-discover-link-2 {
+  /* Add styles for the link */
+  display: block;
+  /* Ensure it takes its own line */
+  margin-top: auto;
+  /* Push it to the bottom */
+  padding-top: 0.5rem;
+  /* Add some space above the link */
+  color: #03adad;
+  /* Style the link */
+  font-weight: 600;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.read-more-2 {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+  margin-top: auto;
+  /* Push to bottom */
+}
+
+.read-more-2:hover {
+  color: #374151;
+}
+
+.chevron-right-2 {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Swiper Customization */
+.swiper {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+  position: relative;
+}
+
+.swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  transition-timing-function: linear;
+  transition: visibility 0.3s ease-in-out;
+}
+
+.swiper-slide {
+  width: 300px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* Swiper Navigation Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 40px !important;
+  height: 40px !important;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50% !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.swiper-button-next {
+  right: 0;
+}
+
+.swiper-button-prev {
+  left: 0;
+}
+
+.swiper-button-next:hover {
+  background-color: #008384;
+}
+
+.swiper-button-prev:hover {
+  background-color: #008384;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px !important;
+  color: #333;
+  font-weight: bold;
+}
+
+.swiper-button-next:hover:after,
+.swiper-button-prev:hover:after {
+  color: #fff;
+}
+
+.swiper-button-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .category-tab-2 {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .card-2 {
+    height: 400px;
+    /* Slightly smaller on mobile */
+  }
+
+  .card-image-2 {
+    height: 180px;
+  }
+
+  .card-title-2 {
+    font-size: 1rem;
+  }
+
+  .card-slider-container-2 {
+    padding: 0 4rem;
+  }
+}
+
+.card-slider-2 {
+  transition: all 0.3s ease-in-out;
+}

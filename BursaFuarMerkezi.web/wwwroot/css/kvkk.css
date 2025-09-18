@@ -1,0 +1,258 @@
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-container {
+  background-color: white;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 25px 30px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: #6c757d;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: #e9ecef;
+  color: #2c3e50;
+}
+
+.modal-content {
+  padding: 30px;
+  overflow-y: auto;
+  max-height: calc(85vh - 80px);
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f8f9fa;
+  text-align: start;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 4px;
+}
+
+.terms-content,
+.privacy-content {
+  color: #2c3e50;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.terms-content h4,
+.privacy-content h4 {
+  color: #1a202c;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.terms-content p,
+.privacy-content p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+}
+
+.terms-content ul,
+.privacy-content ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.terms-content li,
+.privacy-content li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.terms-content strong,
+.privacy-content strong {
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.terms-content a,
+.privacy-content a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.terms-content a:hover,
+.privacy-content a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.modal-overlay-if {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-container-if {
+  background-color: white;
+  width: 90%;
+  max-width: 900px;
+  max-height: 85vh;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn-if 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes modalFadeIn-if {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header-if {
+  padding: 25px 30px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.modal-title-if {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.modal-content-if {
+  padding: 30px;
+  overflow-y: auto;
+  max-height: calc(85vh - 120px);
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f8f9fa;
+  text-align: start;
+  flex: 1 1 auto;
+}
+
+.modal-footer-if {
+  padding: 20px 30px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.close-button-if, .accept-button-if {
+  min-width: 120px;
+  font-size: 1rem;
+  border-radius: 6px;
+  padding: 8px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.close-button-if {
+  background: #e9ecef;
+  color: #2c3e50;
+}
+.close-button-if:hover {
+  background: #d1d5db;
+}
+.accept-button-if {
+  background: #2563eb;
+  color: #fff;
+}
+.accept-button-if:hover {
+  background: #1d4ed8;
+}
+
+.kvkk-content-if {
+  color: #2c3e50;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}

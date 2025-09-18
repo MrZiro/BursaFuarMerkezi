@@ -18,43 +18,44 @@ namespace BursaFuarMerkezi.Models
         [Required]
         [MaxLength(200)]
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [MaxLength(200)]
         [Display(Name = "Slug")]
-        public string Slug { get; set; }
+        public string Slug { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Content")]
-        public string Content { get; set; }
+        public string Content { get; set; } = string.Empty;
 
-        //[Display(Name = "Short Description")]
-        //[MaxLength(500)]
-        //public string ShortDescription { get; set; }
+        [Display(Name = "Short Description")]
+        [MaxLength(500)]
+        public string ShortDescription { get; set; } = string.Empty;
         [ValidateNever]
 
         [Display(Name = "Featured Image")]
-        public string CardImageUrl { get; set; }
+        [Required]
+        public string CardImageUrl { get; set; } = string.Empty;
 
         [Display(Name = "Created At")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Display(Name = "Updated At")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; } = DateTime.Now;
 
         [Display(Name = "Is Published")]
         public bool IsPublished { get; set; } = true;
 
         [Display(Name = "Author")]
-        public string Author { get; set; }
+        public string Author { get; set; } = string.Empty;
 
         [Display(Name = "Meta Description")]
         [MaxLength(200)]
-        public string MetaDescription { get; set; }
+        public string MetaDescription { get; set; } = string.Empty;
 
         [Display(Name = "Meta Keywords")]
         [MaxLength(200)]
-        public string MetaKeywords { get; set; }
+        public string MetaKeywords { get; set; } = string.Empty;
 
         // Foreign key
         [Display(Name = "Category")]

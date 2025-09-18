@@ -1,0 +1,56 @@
+/* Kalite Politikamız html */
+.commitment-box {
+  width: 100%;
+  max-width: 800px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  position: relative;
+  border: 2px solid #D4AF37;
+  overflow: hidden;
+}
+
+.commitment-box::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.commitment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.commitment-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.commitment-item:last-child {
+  border-bottom: none;
+}
+
+.commitment-icon {
+  color: #FF7F50;
+  margin-right: 15px;
+  font-size: 18px;
+  margin-top: 3px;
+}
+
+.commitment-text {
+  color: #333;
+  font-size: 14px;
+  line-height: 1.5;
+  flex: 1;
+}

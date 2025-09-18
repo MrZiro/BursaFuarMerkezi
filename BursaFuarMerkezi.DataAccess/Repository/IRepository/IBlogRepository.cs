@@ -10,5 +10,6 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
     public interface IBlogRepository : IRepository<Blog>
     {
         public void Update(Blog obj);
+        // No changes needed now; gallery handled via BlogImage repository
     }
 }

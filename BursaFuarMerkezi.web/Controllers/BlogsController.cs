@@ -29,6 +29,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         // GET: Blogs/slug
+        [Route("blogs/{slug}")]
         public IActionResult Details(string slug)
         {
             if (string.IsNullOrEmpty(slug))

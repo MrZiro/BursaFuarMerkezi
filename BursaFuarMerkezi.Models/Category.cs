@@ -10,7 +10,7 @@ namespace BursaFuarMerkezi.Models
         [Required]
         [MaxLength(30)]
         [DisplayName("Category Name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         [DisplayName("Display Order")]
         [Range(1,100,ErrorMessage = "Ekran siparişi 1-100 arasında olmalıdır")]
         public int DisplayOrder { get; set; }

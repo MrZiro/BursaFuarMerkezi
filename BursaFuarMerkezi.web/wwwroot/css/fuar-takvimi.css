@@ -1,0 +1,395 @@
+:root{
+  --primarycolor: #008384;
+}
+
+body {
+  background-color: #fff;
+  color: #333;
+}
+
+.view-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.view-buttons {
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+}
+
+.view-btn {
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  color: #777;
+}
+
+.view-btn.active {
+  background-color: var(--primarycolor);
+  color: white;
+  font-weight: bold;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.content-container {
+  min-height: 300px;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.view-content {
+  display: none;
+}
+
+.view-content.active {
+  display: block;
+}
+
+/* Liste Görünümü Stilleri */
+.fair-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fair-item {
+  display: flex;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.fair-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primarycolor);
+  color: white;
+  padding: 15px;
+  min-width: 100px;
+  text-align: center;
+}
+
+.fair-date .day {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.fair-date .month {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.fair-date .year {
+  font-size: 14px;
+}
+
+.fair-details {
+  padding: 15px;
+  flex-grow: 1;
+}
+
+.fair-details h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.fair-details p {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.fair-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  background-color: #f0f0f0;
+  color: #666;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* Aylık Görünüm Stilleri */
+.monthly-calendar {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.month-header {
+  background-color: #f5f5f5;
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.month-grid {
+  padding: 15px;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.weekdays div {
+  padding: 10px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.day {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.day.empty {
+  border: none;
+}
+
+.day.has-event {
+  background-color: #f36e6e;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.event-indicator {
+  position: absolute;
+  bottom: 5px;
+  width: 6px;
+  height: 6px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.event-popup {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+  width: 200px;
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.day.has-event:hover .event-popup {
+  display: block;
+}
+
+.month-events {
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.month-events h3 {
+  margin-bottom: 15px;
+}
+
+.month-event-item {
+  display: flex;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.event-date {
+  min-width: 120px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.event-details h4 {
+  margin-bottom: 5px;
+}
+
+/* Haftalık Görünüm Stilleri */
+.weekly-calendar {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.week-header {
+  background-color: #f5f5f5;
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  padding: 15px;
+}
+
+.day-column {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.day-column.has-event {
+  border-color: var(--primarycolor);
+}
+
+.day-header {
+  background-color: #f5f5f5;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-date {
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.day-events {
+  padding: 10px;
+  min-height: 100px;
+}
+
+.week-event {
+  background-color: #f8f8f8;
+  border-left: 3px solid var(--primarycolor);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.week-event h4 {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.week-event p {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 3px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .view-buttons {
+    width: 100%;
+  }
+
+  .view-btn {
+    flex: 1;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+
+  .fair-item {
+    flex-direction: column;
+  }
+
+  .fair-date {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+  }
+
+  .week-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .month-event-item {
+    flex-direction: column;
+  }
+
+  .event-date {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .view-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .days {
+    font-size: 12px;
+  }
+
+  .day {
+    height: 30px;
+  }
+}
+

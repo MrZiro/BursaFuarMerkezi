@@ -65,7 +65,7 @@ namespace BursaFuarMerkezi.DataAccess.Repository
 
         public async Task<(IEnumerable<T> data, int filteredTotal, int total)> GetPagedAsync(
             int start, int length, string orderColumn, string orderDirection, 
-            string searchValue, string includeProperties = null)
+            string searchValue, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             

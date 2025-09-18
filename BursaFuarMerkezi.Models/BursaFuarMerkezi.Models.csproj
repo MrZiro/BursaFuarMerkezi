@@ -11,5 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.3.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BursaFuarMerkezi.Utility\BursaFuarMerkezi.Utility.csproj" />
+  </ItemGroup>
 
 </Project>

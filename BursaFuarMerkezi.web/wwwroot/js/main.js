@@ -1,84 +1,3 @@
-// =====================================================================
-// Language Switching Logic (Top Level Scope)
-// =====================================================================
-let i18n_translations = {}; // Renamed to avoid potential global conflicts
-let i18n_currentLang = localStorage.getItem('language') || 'tr'; // Renamed
-
-// Helper function to get nested translation values
-function i18n_getTranslation(key) {
-    return key.split('.').reduce((obj, i) => (obj ? obj[i] : undefined), i18n_translations);
-}
-
-// Apply translations to the document
-function i18n_applyTranslations(lang) {
-    // Update HTML lang attribute
-    document.documentElement.lang = lang;
-
-    // Translate elements with data-translate
-    document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate');
-        const translation = i18n_getTranslation(key);
-        if (translation !== undefined) {
-            const icon = element.querySelector('i'); // Keep icon if present
-            if (icon) {
-                element.innerHTML = translation + ' ' + icon.outerHTML;
-            } else {
-                element.textContent = translation;
-            }
-        } else {
-            console.warn(`Translation key not found: ${key}`);
-        }
-    });
-
-    // Translate elements with data-translate-placeholder
-    document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-translate-placeholder');
-        const translation = i18n_getTranslation(key);
-        if (translation !== undefined) {
-            element.placeholder = translation;
-        } else {
-            console.warn(`Translation key not found for placeholder: ${key}`);
-        }
-    });
-
-    // Translate elements with data-translate-aria-label
-    document.querySelectorAll('[data-translate-aria-label]').forEach(element => {
-        const key = element.getAttribute('data-translate-aria-label');
-        const translation = i18n_getTranslation(key);
-        if (translation !== undefined) {
-            element.setAttribute('aria-label', translation);
-        } else {
-            console.warn(`Translation key not found for aria-label: ${key}`);
-        }
-    });
-
-    // Update active class on language buttons (assuming they are available)
-    document.querySelectorAll('.lang-switch a').forEach(button => {
-         if (button.getAttribute('data-lang') === lang) {
-             button.classList.add('active');
-         } else {
-             button.classList.remove('active');
-         }
-     });
-}
-
-// Load translation file and apply
-async function i18n_loadTranslations(lang) {
-    try {
-        const response = await fetch(`lang/${lang}.json`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        i18n_translations = await response.json();
-        i18n_applyTranslations(lang); // Apply immediately after loading
-    } catch (error) {
-        console.error("Could not load translations:", error);
-    }
-}
-
-// Initial language load triggered later by DOMContentLoaded
-// =====================================================================
-
 /*=============== Navbar js =============================== */
 document.addEventListener('DOMContentLoaded', () => {
   const menuToggleButtons = document.querySelectorAll('.nav-toggle-button'); // Menüyü açan/kapatan tüm butonlar/linkler
@@ -141,27 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
           closeMenu();
       }
   });
-});
-
-/*=============== Language Switcher Event Listener Setup =============================== */
-// Setup language button listeners and trigger initial load
-document.addEventListener('DOMContentLoaded', () => {
-    const languageButtons = document.querySelectorAll('.lang-switch a');
-
-    languageButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            const lang = button.getAttribute('data-lang');
-            if (lang && lang !== i18n_currentLang) {
-                i18n_currentLang = lang;
-                localStorage.setItem('language', lang); // Save selected language
-                i18n_loadTranslations(lang); // Use top-level function
-            }
-        });
-    });
-
-    // Initial language load
-    i18n_loadTranslations(i18n_currentLang); // Use top-level function and variable
 });
 
 /*================== Card-Slider-1 Js ======================*/
@@ -274,12 +172,45 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentTranslate = 0;
   let prevTranslate = 0;
   let animationID = 0;
+  // Autoplay variables
+  let autoplayIntervalId = null;
+  const AUTOPLAY_DELAY_MS = 1500;
+
+  function stopAutoplay() {
+      if (autoplayIntervalId) {
+          clearInterval(autoplayIntervalId);
+          autoplayIntervalId = null;
+      }
+  }
+
+  function startAutoplay() {
+      stopAutoplay();
+      autoplayIntervalId = setInterval(() => {
+          if (isDragging) return;
+          if (currentIndex < maxIndex) {
+              currentIndex++;
+              updateSlider();
+          } else {
+              // Jump back to start without animation, then continue
+              slider.style.transition = 'none';
+              currentIndex = 0;
+              currentTranslate = 0;
+              slider.style.transform = `translateX(${currentTranslate}px)`;
+              updateProgressBar();
+              // Force reflow, then restore transition for next moves
+              void slider.offsetHeight;
+              slider.style.transition = 'transform 0.5s ease';
+          }
+      }, AUTOPLAY_DELAY_MS);
+  }
 
   // Slider için mousedown event listener ekleyin
   slider.addEventListener('mousedown', dragStart);
   slider.addEventListener('mouseup', dragEnd);
   slider.addEventListener('mouseleave', dragEnd);
   slider.addEventListener('mousemove', drag);
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
 
   // Dokunmatik event listener'ları güncelleyin
   slider.addEventListener('touchstart', function(e) {
@@ -301,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Animasyonu durdur ve transition'ı kapat
       slider.style.transition = 'none';
       cancelAnimationFrame(animationID);
+      stopAutoplay();
   }
 
   function drag(e) {
@@ -333,6 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       // Slider'ı son pozisyona animasyonla getir
       updateSlider();
+      startAutoplay();
   }
 
   // Mevcut updateSlider fonksiyonunu güncelleyin
@@ -341,6 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
       slider.style.transform = `translateX(${currentTranslate}px)`;
       updateProgressBar();
   }
+
+  // Start autoplay after initial setup
+  startAutoplay();
 
   // ... mevcut diğer fonksiyonlar ...
   
@@ -351,274 +287,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-/*============== Fuar Takvim Js ================*/
-// DOM elements
-const yearFilter = document.getElementById("yearFilter")
-const monthFilter = document.getElementById("monthFilter")
-const sectorFilter = document.getElementById("sectorFilter")
-const locationFilter = document.getElementById("locationFilter")
-const eventsList = document.getElementById("eventsList")
-const paginationContainer = document.getElementById("pagination")
-
-// Pagination variables
-let currentPage = 1
-let filteredEvents = []
-
-// Initialize page
-document.addEventListener("DOMContentLoaded", () => {
-  // Fetch events from backend
-  fetchEvents(1)
-
-  // Add event listeners to filters
-  yearFilter.addEventListener("change", () => {
-    fetchEvents() // Reset to first page when filter changes
-  })
-  monthFilter.addEventListener("change", () => {
-    fetchEvents()
-  })
-  sectorFilter.addEventListener("change", () => {
-    fetchEvents()
-  })
-  locationFilter.addEventListener("change", () => {
-    fetchEvents()
-  })
-})
-
-// Fetch events from the backend API with server-side pagination and filtering
-async function fetchEvents(page = 1) {
-  currentPage = page
-  
-  try {
-    // Build query string with pagination and filter parameters
-    const params = new URLSearchParams({
-      PageNumber: page,
-      PageSize: 6
-    })
-    
-    // Add filters if they have values
-    if (yearFilter && yearFilter.value) params.append('Year', yearFilter.value)
-    if (monthFilter && monthFilter.value) params.append('Month', monthFilter.value)
-    if (sectorFilter && sectorFilter.value) params.append('Sector', sectorFilter.value)
-    if (locationFilter && locationFilter.value) params.append('Location', locationFilter.value)
-    
-    const url = `/fuartest/getfuars?${params.toString()}`
-    
-    // Make the API request
-    const response = await fetch(url)
-    const result = await response.json()
-    
-    
-    if (result.error) {
-      console.error('API error:', result.error)
-      eventsList.innerHTML = `<div class="alert alert-danger">Error: ${result.error}</div>`
-      return
-    }
-    
-    if (result.data) {
-      // Store the returned data
-      filteredEvents = result.data
-      
-      // Display events
-      displayEvents()
-      
-      // Setup pagination based on server response
-      setupPagination(result.totalPages)
-    }
-  } catch (error) {
-    console.error('Error fetching events:', error)
-    eventsList.innerHTML = '<div class="alert alert-danger">Etkinlik verileri yüklenirken bir hata oluştu.</div>'
-  }
-}
-
-// Display events in the DOM
-function displayEvents() {
-  eventsList.innerHTML = ""
-
-  if (!filteredEvents || filteredEvents.length === 0) {
-    eventsList.innerHTML = '<div class="alert alert-info">Seçilen kriterlere uygun etkinlik bulunamadı.</div>'
-    return
-  }
-
-  // Display the filtered events
-  filteredEvents.forEach((event) => {
-    const eventElement = document.createElement("div")
-    eventElement.className = "event-item"
-
-    eventElement.innerHTML = `
-            <a href="${event.url}" class="event-link">
-                <div class="event-title">${event.title}</div>
-                <div class="event-date">${event.date}</div>
-                <div class="event-organizer">${event.organizer}</div>
-            </a>
-        `
-
-    eventsList.appendChild(eventElement)
-  })
-}
-
-// Setup pagination with total pages from server
-function setupPagination(totalPages) {
-  paginationContainer.innerHTML = ""
-
-  if (totalPages <= 1) {
-    return // Don't show pagination if there's only one page
-  }
-
-  for (let i = 1; i <= totalPages; i++) {
-    const pageItem = document.createElement("li")
-    pageItem.className = `page-item ${i === currentPage ? "active" : ""}`
-
-    const pageLink = document.createElement("a")
-    pageLink.className = "page-link"
-    pageLink.href = "#"
-    pageLink.textContent = i
-
-    pageLink.addEventListener("click", (e) => {
-      e.preventDefault()
-      fetchEvents(i) // Fetch with new page number
-    })
-
-    pageItem.appendChild(pageLink)
-    paginationContainer.appendChild(pageItem)
-  }
-}
-
-/*============= Card-slider 2 JS ================= */
-document.addEventListener('DOMContentLoaded', function() {
-  const cardsData = {
-    gundem: [
-      { image: "./images/card-2-slider-1.png", date: "2024-05-01", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-2.png", date: "2024-05-02", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-6.png", date: "2024-05-02", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-4.png", date: "2024-05-02", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-5.png", date: "2024-05-02", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-6.png", date: "2024-05-02", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-7.png", date: "2024-05-02", tag: "Gündem", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-    ],
-    blog: [
-      { image: "./images/card-2-slider-8.png", date: "2024-03-07", tag: "Blog", title: "Tekstil sektörünün kalbi Bursa Textile Show Fuarı'nda attı.", link: "blog-single-page.html" },
-    ],
-    duyurular: [
-      { image: "./images/card-2-slider-10.jpg", date: "2024-05-04", tag: "Duyuru", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-      { image: "./images/card-2-slider-2.png", date: "2024-05-04", tag: "Duyuru", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-    ],
-    haberler: [
-      { image: "./images/card-2-slider-4.png", date: "2024-05-05", tag: "Haber", title: "Güneş Sektörünün Markalarını Dünya Liderleriyle Buluşturacak 17. SolarEX İstanbul İçin Geri Sayım Başladı!", link: "blog-single-page.html" },
-    ]
-  };
-
-  let swiperInstance = null;
-  const swiperWrapper = document.querySelector('.swiper-wrapper');
-  const cardTemplate = document.getElementById('card-template-2');
-  const categoryTabs = document.querySelectorAll('.category-tab-2');
-  const cardSlider = document.querySelector('.card-slider-2');
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return {
-      year: date.getFullYear(),
-      day: date.toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' })
-    };
-  }
-
-  function createCards(category) {
-    const fragment = document.createDocumentFragment();
-    cardsData[category].forEach(data => {
-      const clone = cardTemplate.content.cloneNode(true);
-      const formattedDate = formatDate(data.date);
-      
-      clone.querySelector('img').src = data.image;
-      clone.querySelector('.date-year-2').textContent = formattedDate.year;
-      clone.querySelector('.date-day-2').textContent = formattedDate.day;
-      clone.querySelector('.card-tag-2').textContent = data.tag;
-      clone.querySelector('.card-title-2').textContent = data.title;
-      clone.querySelector('.card-discover-link-2').href = data.link;
-      
-      fragment.appendChild(clone);
-    });
-    return fragment;
-  }
-
-  function initSwiper() {
-    swiperInstance = new Swiper('.swiper', {
-      slidesPerView: 'auto',
-      spaceBetween: 30,
-      grabCursor: true,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-        disabledClass: 'swiper-button-disabled',
-      },
-      observer: true,
-      observeParents: true,
-      observeSlideChildren: true,
-      mousewheel: {
-        forceToAxis: true,
-      },
-      touchEventsTarget: 'container',
-      touchRatio: 1,
-      touchAngle: 45,
-      grabCursor: true,
-      breakpoints: {
-        640: {
-          slidesPerView: 2,
-        },
-        1024: {
-          slidesPerView: 3,
-        },
-      }
-    });
-  }
-
-  function handleCategoryClick(e) {
-    const category = e.target.dataset.category;
-    
-    categoryTabs.forEach(tab => tab.classList.remove('active'));
-    e.target.classList.add('active');
-    
-    // Kartları gizle
-    cardSlider.style.display = 'none';
-    
-    // Yeni kartları oluştur
-    const newCards = createCards(category);
-    
-    // Eski kartları temizle ve yenilerini ekle
-    swiperWrapper.innerHTML = '';
-    swiperWrapper.appendChild(newCards);
-    
-    // Apply translations to the newly added cards
-    if (typeof i18n_applyTranslations === 'function') {
-        i18n_applyTranslations(i18n_currentLang); // Re-apply translations to the whole page
-    } else {
-        console.error("Translation function (i18n_applyTranslations) not accessible.");
-        // As a fallback, you might manually translate items within swiperWrapper if needed
-    }
-    
-    // Swiper'ı güncelle
-    if (swiperInstance) {
-      swiperInstance.update();
-      swiperInstance.slideTo(0, 0);
-    } else {
-      initSwiper(); // Initialize if it wasn't (should be initialized on load)
-    }
-    
-    // Kartları göster
-    requestAnimationFrame(() => {
-      cardSlider.style.display = 'block';
-    });
-  }
-
-  // Event Listeners
-  categoryTabs.forEach(tab => {
-    tab.addEventListener('click', handleCategoryClick);
-  });
-
-  // Initial Load
-  const initialCards = createCards('gundem');
-  swiperWrapper.appendChild(initialCards);
-  initSwiper();
-});
 /*====== index.html js end =============*/
 
 /*====== iletisim.html js start ====*/
@@ -689,3 +357,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*================ Hakkımızda Js ===============*/
 
+// Header scroll effect
+window.addEventListener('scroll', function() {
+  const header = document.querySelector('.main-header');
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+
+/* Search Functionality */
+document.addEventListener('DOMContentLoaded', function () {
+    // Arama butonunu seç
+    const searchToggleButton = document.querySelector('.search-toggle-button');
+    const searchOverlay = document.querySelector('.search-overlay');
+    const searchClose = document.querySelector('.search-close');
+    const searchInput = document.querySelector('.search-input');
+  
+    // Arama butonuna tıklandığında
+    searchToggleButton.addEventListener('click', function () {
+      searchOverlay.classList.add('active');
+      searchInput.focus();
+    });
+  
+    // Kapatma butonuna tıklandığında
+    searchClose.addEventListener('click', function () {
+      searchOverlay.classList.remove('active');
+    });
+  
+    // ESC tuşuna basıldığında
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+        searchOverlay.classList.remove('active');
+      }
+    });
+  
+    // Arama çubuğuna tıklandığında overlay'i kapatma
+    searchOverlay.addEventListener('click', function (e) {
+      if (e.target === searchOverlay) {
+        searchOverlay.classList.remove('active');
+      }
+    });
+  });
