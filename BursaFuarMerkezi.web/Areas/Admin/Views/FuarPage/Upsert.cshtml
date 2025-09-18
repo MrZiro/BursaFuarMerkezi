@@ -63,21 +63,57 @@
         <div class="row mb-3">
             <div class="col-md-8">
                 <div class="border p-3 mt-2 mb-3 rounded-2 ">
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.Title" class="form-label">Title</label>
-                        <input asp-for="FuarPage.Title" class="form-control" />
-                        <span asp-validation-for="FuarPage.Title" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.SubTitle" class="form-label">Sub Title</label>
-                        <input asp-for="FuarPage.SubTitle" class="form-control" />
-                        <span asp-validation-for="FuarPage.SubTitle" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.Slug" class="form-label">URL Slug</label>
-                        <input asp-for="FuarPage.Slug" class="form-control" placeholder="Leave blank to auto-generate" />
-                        <span asp-validation-for="FuarPage.Slug" class="text-danger"></span>
-                        <div class="form-text">Will be auto-generated from title if left blank.</div>
+                    <ul class="nav nav-tabs" id="langTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tr-tab" data-bs-toggle="tab" data-bs-target="#tr" type="button" role="tab" aria-controls="tr" aria-selected="true">TR</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="en-tab" data-bs-toggle="tab" data-bs-target="#en" type="button" role="tab" aria-controls="en" aria-selected="false">EN</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-3" id="langTabsContent">
+                        <div class="tab-pane fade show active" id="tr" role="tabpanel" aria-labelledby="tr-tab">
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.TitleTr" class="form-label">Title (TR)</label>
+                                <input asp-for="FuarPage.TitleTr" class="form-control" />
+                                <span asp-validation-for="FuarPage.TitleTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.SubTitleTr" class="form-label">Sub Title (TR)</label>
+                                <input asp-for="FuarPage.SubTitleTr" class="form-control" />
+                                <span asp-validation-for="FuarPage.SubTitleTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.SlugTr" class="form-label">URL Slug (TR)</label>
+                                <input asp-for="FuarPage.SlugTr" class="form-control" placeholder="Leave blank to auto-generate" />
+                                <span asp-validation-for="FuarPage.SlugTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.ContentTr" class="form-label">Content (TR)</label>
+                                <textarea asp-for="FuarPage.ContentTr" class="form-control Editor"></textarea>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="en" role="tabpanel" aria-labelledby="en-tab">
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.TitleEn" class="form-label">Title (EN)</label>
+                                <input asp-for="FuarPage.TitleEn" class="form-control" />
+                                <span asp-validation-for="FuarPage.TitleEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.SubTitleEn" class="form-label">Sub Title (EN)</label>
+                                <input asp-for="FuarPage.SubTitleEn" class="form-control" />
+                                <span asp-validation-for="FuarPage.SubTitleEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.SlugEn" class="form-label">URL Slug (EN)</label>
+                                <input asp-for="FuarPage.SlugEn" class="form-control" placeholder="Leave blank to auto-generate" />
+                                <span asp-validation-for="FuarPage.SlugEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="FuarPage.ContentEn" class="form-label">Content (EN)</label>
+                                <textarea asp-for="FuarPage.ContentEn" class="form-control Editor"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Fuar Künyesi (Fair Information) Section -->
@@ -108,19 +144,38 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label asp-for="FuarPage.Organizer" class="form-label">Organizatör</label>
-                        <input asp-for="FuarPage.Organizer" class="form-control" />
-                        <span asp-validation-for="FuarPage.Organizer" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.FairCategory" class="form-label">Fuar Konusu</label>
-                        <input asp-for="FuarPage.FairCategory" class="form-control" />
-                        <span asp-validation-for="FuarPage.FairCategory" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="FuarPage.FairLocation" class="form-label">Fuar Alanı</label>
-                        <input asp-for="FuarPage.FairLocation" class="form-control" />
-                        <span asp-validation-for="FuarPage.FairLocation" class="text-danger"></span>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#org-tr" type="button" role="tab">TR</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#org-en" type="button" role="tab">EN</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-3">
+                            <div class="tab-pane fade show active" id="org-tr" role="tabpanel">
+                                <label asp-for="FuarPage.OrganizerTr" class="form-label">Organizatör (TR)</label>
+                                <input asp-for="FuarPage.OrganizerTr" class="form-control" />
+                                <span asp-validation-for="FuarPage.OrganizerTr" class="text-danger"></span>
+                                <label asp-for="FuarPage.FairCategoryTr" class="form-label mt-3">Fuar Konusu (TR)</label>
+                                <input asp-for="FuarPage.FairCategoryTr" class="form-control" />
+                                <span asp-validation-for="FuarPage.FairCategoryTr" class="text-danger"></span>
+                                <label asp-for="FuarPage.FairLocationTr" class="form-label mt-3">Fuar Alanı (TR)</label>
+                                <input asp-for="FuarPage.FairLocationTr" class="form-control" />
+                                <span asp-validation-for="FuarPage.FairLocationTr" class="text-danger"></span>
+                            </div>
+                            <div class="tab-pane fade" id="org-en" role="tabpanel">
+                                <label asp-for="FuarPage.OrganizerEn" class="form-label">Organizer (EN)</label>
+                                <input asp-for="FuarPage.OrganizerEn" class="form-control" />
+                                <span asp-validation-for="FuarPage.OrganizerEn" class="text-danger"></span>
+                                <label asp-for="FuarPage.FairCategoryEn" class="form-label mt-3">Fair Category (EN)</label>
+                                <input asp-for="FuarPage.FairCategoryEn" class="form-control" />
+                                <span asp-validation-for="FuarPage.FairCategoryEn" class="text-danger"></span>
+                                <label asp-for="FuarPage.FairLocationEn" class="form-label mt-3">Fair Location (EN)</label>
+                                <input asp-for="FuarPage.FairLocationEn" class="form-control" />
+                                <span asp-validation-for="FuarPage.FairLocationEn" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label asp-for="FuarPage.City" class="form-label">Şehir</label>
@@ -134,12 +189,7 @@
                     </div>
                 </div>
 
-                <div class="border p-3 mt-2 mb-3 rounded-2">
-                    <div class="row">
-                        <label asp-for="FuarPage.Content" class="form-label"></label>
-                        <textarea asp-for="FuarPage.Content" class="form-control Editor"></textarea>
-                    </div>
-                </div>
+                
             </div>
 
             <div class="col-md-4">
@@ -261,15 +311,40 @@
 		<script src="~/admin/scripts/Dropzone.js"></script>
     }
     <script>
-        // Auto-generate slug from title if slug is empty
-        $('#FuarPage_Title').change(function () {
-            // Convert title to slug format
-            var slug = $(this).val().toLowerCase()
-                .replace(/[^\w\s-]/g, '') // Remove special characters
-                .replace(/\s+/g, '-')     // Replace spaces with hyphens
-                .replace(/-+/g, '-');     // Replace multiple hyphens with single hyphen
+        function turkishNormalize(text) {
+            return text
+                .replace(/ı/g, 'i').replace(/İ/g, 'i')
+                .replace(/ö/g, 'o').replace(/Ö/g, 'o')
+                .replace(/ş/g, 's').replace(/Ş/g, 's')
+                .replace(/ğ/g, 'g').replace(/Ğ/g, 'g')
+                .replace(/ü/g, 'u').replace(/Ü/g, 'u')
+                .replace(/ç/g, 'c').replace(/Ç/g, 'c');
+        }
+        function makeSlug(text) {
+            if (!text) return '';
+            const lower = turkishNormalize(text.toLowerCase());
+            const withoutDiacritics = lower.normalize('NFD').replace(/\p{Diacritic}+/gu, '');
+            return withoutDiacritics
+                .replace(/[^a-z0-9\s-]/g, '-')
+                .replace(/[\n\r\t_]+/g, ' ')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
 
-            $('#FuarPage_Slug').val(slug);
+        // TR
+        $('#FuarPage_TitleTr').on('change keyup', function () {
+            var slug = makeSlug($(this).val());
+            if (!$('#FuarPage_SlugTr').val()) {
+                $('#FuarPage_SlugTr').val(slug);
+            }
+        });
+        // EN
+        $('#FuarPage_TitleEn').on('change keyup', function () {
+            var slug = makeSlug($(this).val());
+            if (!$('#FuarPage_SlugEn').val()) {
+                $('#FuarPage_SlugEn').val(slug);
+            }
         });
         
         

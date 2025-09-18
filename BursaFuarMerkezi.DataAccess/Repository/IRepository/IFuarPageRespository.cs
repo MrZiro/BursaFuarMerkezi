@@ -10,8 +10,8 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
     public interface IFuarPageRepository : IRepository<FuarPage>
     {
         void Update(FuarPage obj);
-        Task<bool> IsSlugUniqueAsync(string slug, int? id = null);
-        Task<FuarPage> GetBySlugAsync(string slug);
+        Task<bool> IsSlugUniqueAsync(string slug, string language, int? id = null);
+        Task<FuarPage> GetBySlugAsync(string slug, string language);
 
     }
 }

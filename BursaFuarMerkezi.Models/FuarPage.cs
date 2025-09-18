@@ -13,19 +13,30 @@ namespace BursaFuarMerkezi.Models
         [Key]
         public int Id { get; set; }
 
+        // Multilingual fields
         [Required]
         [MaxLength(100)]
-        public string Title { get; set; } = string.Empty;
+        public string TitleTr { get; set; } = string.Empty;
         [Required]
         [MaxLength(100)]
-        public string SubTitle { get; set; } = string.Empty;
+        public string TitleEn { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(100)]
+        public string SubTitleTr { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(100)]
+        public string SubTitleEn { get; set; } = string.Empty;
 
         [MaxLength(100)]
-        [Required]
-        public string Slug { get; set; } = string.Empty;
+        public string? SlugTr { get; set; }
+        [MaxLength(100)]
+        public string? SlugEn { get; set; }
 
         [ValidateNever]
-        public string? Content { get; set; } = string.Empty;
+        public string? ContentTr { get; set; } = string.Empty;
+        [ValidateNever]
+        public string? ContentEn { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
@@ -42,15 +53,21 @@ namespace BursaFuarMerkezi.Models
         public string FairHall { get; set; } = "1";
 
         [MaxLength(100)]
-        public string Organizer { get; set; } = "Bursa Fuar Merkezi";
+        public string OrganizerTr { get; set; } = string.Empty;
+        [MaxLength(100)]
+        public string OrganizerEn { get; set; } = string.Empty;
 
         [MaxLength(50)]
         public string VisitingHours { get; set; } = "09:30-18:00";
 
         [MaxLength(200)]
-        public string FairLocation { get; set; } = "Bursa Uluslararası Fuar ve Kongre Merkezi";
+        public string FairLocationTr { get; set; } = string.Empty;
+        [MaxLength(200)]
+        public string FairLocationEn { get; set; } = string.Empty;
         [MaxLength(100)]
-        public string FairCategory { get; set; } = string.Empty;
+        public string FairCategoryTr { get; set; } = string.Empty;
+        [MaxLength(100)]
+        public string FairCategoryEn { get; set; } = string.Empty;
 
         [MaxLength(200)]
         public string WebsiteUrl { get; set; } = string.Empty;

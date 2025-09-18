@@ -23,18 +23,26 @@ namespace BursaFuarMerkezi.DataAccess.Repository
             var objFromDb = _db.FuarPages.FirstOrDefault(u => u.Id == obj.Id);
             if (objFromDb != null)
             {
-                objFromDb.Title = obj.Title;
-                objFromDb.SubTitle = obj.SubTitle;
-                objFromDb.Slug = obj.Slug;
-                objFromDb.Content = obj.Content;
+                // Assign multilingual fields
+                objFromDb.TitleTr = obj.TitleTr;
+                objFromDb.TitleEn = obj.TitleEn;
+                objFromDb.SubTitleTr = obj.SubTitleTr;
+                objFromDb.SubTitleEn = obj.SubTitleEn;
+                objFromDb.SlugTr = obj.SlugTr;
+                objFromDb.SlugEn = obj.SlugEn;
+                objFromDb.ContentTr = obj.ContentTr;
+                objFromDb.ContentEn = obj.ContentEn;
                 objFromDb.UpdatedAt = DateTime.Now;
                 objFromDb.StartDate = obj.StartDate;
                 objFromDb.EndDate = obj.EndDate;
                 objFromDb.FairHall = obj.FairHall;
-                objFromDb.Organizer = obj.Organizer;
+                objFromDb.OrganizerTr = obj.OrganizerTr;
+                objFromDb.OrganizerEn = obj.OrganizerEn;
                 objFromDb.VisitingHours = obj.VisitingHours;
-                objFromDb.FairCategory = obj.FairCategory;
-                objFromDb.FairLocation = obj.FairLocation;
+                objFromDb.FairCategoryTr = obj.FairCategoryTr;
+                objFromDb.FairCategoryEn = obj.FairCategoryEn;
+                objFromDb.FairLocationTr = obj.FairLocationTr;
+                objFromDb.FairLocationEn = obj.FairLocationEn;
                 objFromDb.WebsiteUrl = obj.WebsiteUrl;
                 objFromDb.IsPublished = obj.IsPublished;
                 if (obj.FeaturedImageUrl != null)
@@ -46,22 +54,29 @@ namespace BursaFuarMerkezi.DataAccess.Repository
 
             }
         }
-        public async Task<bool> IsSlugUniqueAsync(string slug, int? id = null)
+        // legacy slug methods removed
+
+        public async Task<bool> IsSlugUniqueAsync(string slug, string language, int? id = null)
         {
-            if (id.HasValue)
+            if (string.Equals(language, "en", StringComparison.OrdinalIgnoreCase))
             {
-                // Check if slug exists but not for this page (for updates)
-                return await _db.FuarPages.FirstOrDefaultAsync(p => p.Slug == slug && p.Id != id) == null;
+                return id.HasValue
+                    ? await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugEn == slug && p.Id != id) == null
+                    : await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugEn == slug) == null;
             }
-            else
-            {
-                // Check if slug exists at all (for new pages)
-                return await _db.FuarPages.FirstOrDefaultAsync(p => p.Slug == slug) == null;
-            }
+            // default tr
+            return id.HasValue
+                ? await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugTr == slug && p.Id != id) == null
+                : await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugTr == slug) == null;
         }
-        public async Task<FuarPage> GetBySlugAsync(string slug)
+
+        public async Task<FuarPage> GetBySlugAsync(string slug, string language)
         {
-            return await _db.FuarPages.FirstOrDefaultAsync(p => p.Slug == slug);
+            if (string.Equals(language, "en", StringComparison.OrdinalIgnoreCase))
+            {
+                return await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugEn == slug);
+            }
+            return await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugTr == slug);
         }
     }
 }

@@ -3,6 +3,7 @@ using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.Utility;
 using BursaFuarMerkezi.web.Services;
+using BursaFuarMerkezi.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,8 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
             _fileHelper = fileHelper;
         }
+
+        // Using shared SlugUtility
 
         public IActionResult Index()
         {
@@ -98,6 +101,37 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 try {
+                    // Generate TR/EN slugs if empty
+                    if (string.IsNullOrWhiteSpace(pageVM.FuarPage.SlugTr) && !string.IsNullOrWhiteSpace(pageVM.FuarPage.TitleTr))
+                    {
+                        pageVM.FuarPage.SlugTr = SlugUtility.GenerateSlug(pageVM.FuarPage.TitleTr);
+                    }
+                    if (string.IsNullOrWhiteSpace(pageVM.FuarPage.SlugEn) && !string.IsNullOrWhiteSpace(pageVM.FuarPage.TitleEn))
+                    {
+                        pageVM.FuarPage.SlugEn = SlugUtility.GenerateSlug(pageVM.FuarPage.TitleEn);
+                    }
+
+                    // Validate slug uniqueness (TR/EN)
+                    if (!string.IsNullOrWhiteSpace(pageVM.FuarPage.SlugTr))
+                    {
+                        var uniqueTr = await _unitOfWork.FuarPages.IsSlugUniqueAsync(pageVM.FuarPage.SlugTr, "tr", isNewRecord ? null : pageVM.FuarPage.Id);
+                        if (!uniqueTr)
+                        {
+                            ModelState.AddModelError("FuarPage.SlugTr", "TR slug already exists.");
+                        }
+                    }
+                    if (!string.IsNullOrWhiteSpace(pageVM.FuarPage.SlugEn))
+                    {
+                        var uniqueEn = await _unitOfWork.FuarPages.IsSlugUniqueAsync(pageVM.FuarPage.SlugEn, "en", isNewRecord ? null : pageVM.FuarPage.Id);
+                        if (!uniqueEn)
+                        {
+                            ModelState.AddModelError("FuarPage.SlugEn", "EN slug already exists.");
+                        }
+                    }
+                    if (!ModelState.IsValid)
+                    {
+                        return View(pageVM);
+                    }
                     // Only process the featured image if a new one is provided
                     if (pageVM.FeaturedImage != null)
                     {

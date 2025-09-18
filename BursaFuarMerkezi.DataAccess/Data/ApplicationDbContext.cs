@@ -22,6 +22,15 @@ namespace BursaFuarMerkezi.DataAccess.Data
         {
 
             base.OnModelCreating(modelBuilder);
+            // Unique indexes for bilingual slugs (ignore NULLs)
+            modelBuilder.Entity<FuarPage>()
+                .HasIndex(x => x.SlugTr)
+                .IsUnique()
+                .HasFilter("[SlugTr] IS NOT NULL");
+            modelBuilder.Entity<FuarPage>()
+                .HasIndex(x => x.SlugEn)
+                .IsUnique()
+                .HasFilter("[SlugEn] IS NOT NULL");
             modelBuilder.Entity<ContentType>().HasData(
                 new ContentType { Id = 1, Name = "BLOG" },
                 new ContentType { Id = 2, Name = "DUYURULAR" },
