@@ -24,6 +24,7 @@ namespace BursaFuarMerkezi.DataAccess.Repository
             if (objFromDb != null)
             {
                 objFromDb.Title = obj.Title;
+                objFromDb.SubTitle = obj.SubTitle;
                 objFromDb.Slug = obj.Slug;
                 objFromDb.Content = obj.Content;
                 objFromDb.UpdatedAt = DateTime.Now;
@@ -32,6 +33,7 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 objFromDb.FairHall = obj.FairHall;
                 objFromDb.Organizer = obj.Organizer;
                 objFromDb.VisitingHours = obj.VisitingHours;
+                objFromDb.FairCategory = obj.FairCategory;
                 objFromDb.FairLocation = obj.FairLocation;
                 objFromDb.WebsiteUrl = obj.WebsiteUrl;
                 objFromDb.IsPublished = obj.IsPublished;

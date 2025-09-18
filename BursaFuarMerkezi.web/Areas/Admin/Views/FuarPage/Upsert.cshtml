@@ -69,6 +69,11 @@
                         <span asp-validation-for="FuarPage.Title" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
+                        <label asp-for="FuarPage.SubTitle" class="form-label">Sub Title</label>
+                        <input asp-for="FuarPage.SubTitle" class="form-control" />
+                        <span asp-validation-for="FuarPage.SubTitle" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
                         <label asp-for="FuarPage.Slug" class="form-label">URL Slug</label>
                         <input asp-for="FuarPage.Slug" class="form-control" placeholder="Leave blank to auto-generate" />
                         <span asp-validation-for="FuarPage.Slug" class="text-danger"></span>
@@ -106,6 +111,11 @@
                         <label asp-for="FuarPage.Organizer" class="form-label">Organizatör</label>
                         <input asp-for="FuarPage.Organizer" class="form-control" />
                         <span asp-validation-for="FuarPage.Organizer" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FuarPage.FairCategory" class="form-label">Fuar Konusu</label>
+                        <input asp-for="FuarPage.FairCategory" class="form-control" />
+                        <span asp-validation-for="FuarPage.FairCategory" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label asp-for="FuarPage.FairLocation" class="form-label">Fuar Alanı</label>

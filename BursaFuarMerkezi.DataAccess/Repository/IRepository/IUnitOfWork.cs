@@ -8,8 +8,6 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
 {
     public interface IUnitOfWork
     {
-        ICategoryRepository Category { get; }
-        IProductRepository Product { get; }
         IFuarPageRepository FuarPages { get; }
         IContentTypeRepository ContentType { get; }
         IBlogRepository Blog { get; }

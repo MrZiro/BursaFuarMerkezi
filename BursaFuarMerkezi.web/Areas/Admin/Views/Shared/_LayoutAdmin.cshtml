@@ -58,7 +58,7 @@
                                 </a>
                             </li>
                             <li class="nav-item @GetActiveClass("Blogs")">
-                                <a asp-area="admin" asp-controller="Blogs" asp-action="Index" class="nav-link d-flex align-items-center">
+                                <a asp-area="admin" asp-controller="Blog" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">
                                         article
                                     </span>
@@ -73,20 +73,12 @@
                                     <span class="label ms-3">Content Type</span>
                                 </a>
                             </li>
-                            <li class="nav-item @GetActiveClass("Test")">
-                                <a asp-area="admin" asp-controller="Test" asp-action="Index" class="nav-link d-flex align-items-center">
+                            <li class="nav-item @GetActiveClass("FuarPage")">
+                                <a asp-area="admin" asp-controller="FuarPage" asp-action="Index" class="nav-link d-flex align-items-center">
                                     <span class="svv material-symbols-rounded">
-                                        add
+                                        event
                                     </span>
-                                    <span class="label ms-3">Test</span>
-                                </a>
-                            </li>
-                            <li class="nav-item @GetActiveClass("Product")">
-                                <a asp-area="admin" asp-controller="Product" asp-action="Index" class="nav-link d-flex align-items-center">
-                                    <span class="svv material-symbols-rounded">
-                                        shopping_cart
-                                    </span>
-                                    <span class="label ms-3">Product</span>
+                                    <span class="label ms-3">Fuar Page</span>
                                 </a>
                             </li>
                             <partial name="_AdminMenu" />

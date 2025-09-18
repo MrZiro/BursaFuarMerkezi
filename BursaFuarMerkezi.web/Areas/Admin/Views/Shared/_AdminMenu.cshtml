@@ -1,6 +1,13 @@
 @using Microsoft.AspNetCore.Identity
 @using BursaFuarMerkezi.Models
 @using BursaFuarMerkezi.Utility
+@{
+    string GetActiveClass(string controller)
+    {
+        var currentController = ViewContext.RouteData.Values["Controller"]?.ToString();
+        return controller.Equals(currentController, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    }
+}
 
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -13,7 +20,7 @@
 
 @if (isAdmin)
 {
-    <li class="nav-item">
+    <li class="nav-item @GetActiveClass("FuarPage")">
         <a asp-area="admin" asp-controller="FuarPage" asp-action="Index" class="nav-link d-flex align-items-center">
             <span class="svv material-symbols-rounded">
                 event
@@ -21,15 +28,7 @@
             <span class="label ms-3">Fuarlar</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a asp-area="admin" asp-controller="FuarTest" asp-action="Index" class="nav-link d-flex align-items-center">
-            <span class="svv material-symbols-rounded">
-                event
-            </span>
-            <span class="label ms-3">FuarlarTest</span>
-        </a>
-    </li>
-    <li class="nav-item">
+    <li class="nav-item @GetActiveClass("Users")">
         <a asp-area="admin" asp-controller="Users" asp-action="Index" class="nav-link d-flex align-items-center">
             <span class="svv material-symbols-rounded">
                 people

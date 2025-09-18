@@ -16,6 +16,9 @@ namespace BursaFuarMerkezi.Models
         [Required]
         [MaxLength(100)]
         public string Title { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(100)]
+        public string SubTitle { get; set; } = string.Empty;
 
         [MaxLength(100)]
         [Required]
@@ -46,6 +49,8 @@ namespace BursaFuarMerkezi.Models
 
         [MaxLength(200)]
         public string FairLocation { get; set; } = "Bursa Uluslararası Fuar ve Kongre Merkezi";
+        [MaxLength(100)]
+        public string FairCategory { get; set; } = string.Empty;
 
         [MaxLength(200)]
         public string WebsiteUrl { get; set; } = string.Empty;
