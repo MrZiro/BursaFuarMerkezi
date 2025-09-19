@@ -36,15 +36,22 @@
             transition: all 0.3s;
         }
 
-            .dropzone:hover {
-                border-color: #007bff;
-            }
+        .dropzone:hover {
+            border-color: #007bff;
+        }
 
-            .dropzone.dragover {
-                border-color: #28a745;
-                background-color: rgba(40, 167, 69, 0.1);
-            }
+        .dropzone.dragover {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        background: #edeff2 !important;
+        border-radius: 10px !important;
+        border: 1px solid #d4d7d7 !important;
+            
+        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 }
 
 <div class="container">
@@ -157,9 +164,13 @@
                                 <label asp-for="FuarPage.OrganizerTr" class="form-label">Organizatör (TR)</label>
                                 <input asp-for="FuarPage.OrganizerTr" class="form-control" />
                                 <span asp-validation-for="FuarPage.OrganizerTr" class="text-danger"></span>
-                                <label asp-for="FuarPage.FairCategoryTr" class="form-label mt-3">Fuar Konusu (TR)</label>
-                                <input asp-for="FuarPage.FairCategoryTr" class="form-control" />
-                                <span asp-validation-for="FuarPage.FairCategoryTr" class="text-danger"></span>
+                                <label asp-for="SelectedSectorIds" class="form-label mt-3">Fuar Konusu (Sectors)</label>
+                                <select asp-for="SelectedSectorIds" class="form-select js-sector-select" multiple>
+                                    @foreach (var s in Model.AllSectors)
+                                    {
+                                        <option value="@s.Id" selected="@(Model.SelectedSectorIds.Contains(s.Id))">@s.NameTr (@s.NameEn)</option>
+                                    }
+                                </select>
                                 <label asp-for="FuarPage.FairLocationTr" class="form-label mt-3">Fuar Alanı (TR)</label>
                                 <input asp-for="FuarPage.FairLocationTr" class="form-control" />
                                 <span asp-validation-for="FuarPage.FairLocationTr" class="text-danger"></span>
@@ -168,9 +179,13 @@
                                 <label asp-for="FuarPage.OrganizerEn" class="form-label">Organizer (EN)</label>
                                 <input asp-for="FuarPage.OrganizerEn" class="form-control" />
                                 <span asp-validation-for="FuarPage.OrganizerEn" class="text-danger"></span>
-                                <label asp-for="FuarPage.FairCategoryEn" class="form-label mt-3">Fair Category (EN)</label>
-                                <input asp-for="FuarPage.FairCategoryEn" class="form-control" />
-                                <span asp-validation-for="FuarPage.FairCategoryEn" class="text-danger"></span>
+                                <label class="form-label mt-3">Sectors (EN)</label>
+                                <select class="form-select js-sector-select" multiple disabled>
+                                    @foreach (var s in Model.AllSectors)
+                                    {
+                                        <option selected="@(Model.SelectedSectorIds.Contains(s.Id))">@s.NameEn</option>
+                                    }
+                                </select>
                                 <label asp-for="FuarPage.FairLocationEn" class="form-label mt-3">Fair Location (EN)</label>
                                 <input asp-for="FuarPage.FairLocationEn" class="form-control" />
                                 <span asp-validation-for="FuarPage.FairLocationEn" class="text-danger"></span>
@@ -309,6 +324,8 @@
         <script src="~/admin/scripts/Editor.js"></script>
         <partial name="_ValidationScriptsPartial" />
 		<script src="~/admin/scripts/Dropzone.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     }
     <script>
         function turkishNormalize(text) {
@@ -348,5 +365,12 @@
         });
         
         
+        $(function () {
+            $('.js-sector-select').select2({
+                width: '100%',
+                placeholder: 'Select sectors',
+                allowClear: true
+            });
+        });
     </script>
 }

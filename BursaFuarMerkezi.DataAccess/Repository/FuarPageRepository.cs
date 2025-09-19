@@ -39,8 +39,6 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 objFromDb.OrganizerTr = obj.OrganizerTr;
                 objFromDb.OrganizerEn = obj.OrganizerEn;
                 objFromDb.VisitingHours = obj.VisitingHours;
-                objFromDb.FairCategoryTr = obj.FairCategoryTr;
-                objFromDb.FairCategoryEn = obj.FairCategoryEn;
                 objFromDb.FairLocationTr = obj.FairLocationTr;
                 objFromDb.FairLocationEn = obj.FairLocationEn;
                 objFromDb.WebsiteUrl = obj.WebsiteUrl;
@@ -48,6 +46,10 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 if (obj.FeaturedImageUrl != null)
                 {
                     objFromDb.FeaturedImageUrl = obj.FeaturedImageUrl;
+                }
+                if (obj.CardImageUrl != null)
+                {
+                    objFromDb.CardImageUrl = obj.CardImageUrl;
                 }
                 objFromDb.MetaDescription = obj.MetaDescription;
                 objFromDb.MetaKeywords = obj.MetaKeywords;
@@ -77,6 +79,21 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 return await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugEn == slug);
             }
             return await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugTr == slug);
+        }
+
+        public void UpdateSectors(FuarPage obj, IEnumerable<int> sectorIds)
+        {
+            var page = _db.FuarPages
+                .Include(p => p.Sectors)
+                .FirstOrDefault(p => p.Id == obj.Id);
+            if (page == null) return;
+
+            page.Sectors.Clear();
+            var sectors = _db.Sectors.Where(s => sectorIds.Contains(s.Id)).ToList();
+            foreach (var sector in sectors)
+            {
+                page.Sectors.Add(sector);
+            }
         }
     }
 }

@@ -1,0 +1,38 @@
+@model List<Sector>
+@{
+    ViewData["Title"] = "Sectors";
+}
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">Sectors</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Sector" asp-action="Upsert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Sector
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_PartialReqScript" />
+    <script>
+        $(document).ready(() => {
+            initializeDataTableNoOption('Sector', [
+                { title: 'Name (TR)', data: 'nameTr', width: '40%' },
+                { title: 'Name (EN)', data: 'nameEn', width: '40%' }
+            ]);
+        });
+    </script>
+}
+
+

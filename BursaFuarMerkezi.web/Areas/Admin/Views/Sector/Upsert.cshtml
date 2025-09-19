@@ -1,0 +1,44 @@
+@model Sector
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create Sector" : "Edit Sector";
+}
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-12">
+            <h2 class="text-primary">@(Model.Id == 0 ? "Create" : "Update") Sector</h2>
+        </div>
+    </div>
+
+    <form method="post" asp-action="Upsert">
+        <input asp-for="Id" hidden />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="NameTr" class="form-label">Name (TR)</label>
+            <input asp-for="NameTr" class="form-control" />
+            <span asp-validation-for="NameTr" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NameEn" class="form-label">Name (EN)</label>
+            <input asp-for="NameEn" class="form-control" />
+            <span asp-validation-for="NameEn" class="text-danger"></span>
+        </div>
+
+        <div class="text-end mt-4">
+            <a asp-controller="Sector" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+            <button type="submit" class="btn btn-primary" style="width:150px">
+                <i class="bi bi-save"></i> @(Model.Id == 0 ? "Create" : "Update")
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ <partial name="_ValidationScriptsPartial" /> }
+}
+
+

@@ -10,6 +10,8 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
     {
         IFuarPageRepository FuarPages { get; }
         IContentTypeRepository ContentType { get; }
+        ISectorRepository Sector { get; }
+        ISliderRepository Slider { get; }
         IBlogRepository Blog { get; }
         IBlogImageRepository BlogImage { get; }
 

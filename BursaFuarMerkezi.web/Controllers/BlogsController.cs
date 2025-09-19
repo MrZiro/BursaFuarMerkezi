@@ -2,21 +2,29 @@
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
 using Microsoft.AspNetCore.Mvc;
+using BursaFuarMerkezi.web.Services;
 
 namespace BursaFuarMerkezi.web.Controllers
 {
+    [Route("{lang}")]
+
     public class BlogsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<BlogsController> _logger;
+        private readonly IUrlLocalizationService _urlService;
+        protected string Lang => (RouteData.Values["lang"]?.ToString() ?? "tr").ToLower();
 
-        public BlogsController(IUnitOfWork unitOfWork, ILogger<BlogsController> logger)
+        public BlogsController(IUnitOfWork unitOfWork, ILogger<BlogsController> logger, IUrlLocalizationService urlService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _urlService = urlService;
         }
 
         // GET: Blogs/Index
+        [HttpGet("all-news")]
+        [HttpGet("tum-haberler")]
         public IActionResult Index()
         {
             //// Get all published blogs with their content types
@@ -25,11 +33,15 @@ namespace BursaFuarMerkezi.web.Controllers
             //    .OrderByDescending(b => b.CreatedAt)
             //    .ToList();
             var contentTypes = _unitOfWork.ContentType.GetAll().ToList();
+            ViewBag.CanonicalUrl = _urlService.GetCanonicalUrl("Blogs", "Index", Lang);
+            ViewBag.AlternateUrls = _urlService.GetAlternateLanguageUrls("Blogs", "Index", Lang);
             return View(contentTypes);
         }
 
         // GET: Blogs/slug
-        [Route("blogs/{slug}")]
+        [HttpGet]
+        [Route("blog-detail/{slug}")]
+        [Route("blog-detay/{slug}")]
         public IActionResult Details(string slug)
         {
             if (string.IsNullOrEmpty(slug))

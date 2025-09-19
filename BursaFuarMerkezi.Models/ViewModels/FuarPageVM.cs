@@ -18,5 +18,10 @@ namespace BursaFuarMerkezi.Models.ViewModels
 
         [ValidateNever]
         public IFormFile? CardImage { get; set; }
+
+        [ValidateNever]
+        public IEnumerable<Sector> AllSectors { get; set; } = Enumerable.Empty<Sector>();
+
+        public List<int> SelectedSectorIds { get; set; } = new List<int>();
     }
 }

@@ -64,10 +64,8 @@ namespace BursaFuarMerkezi.Models
         public string FairLocationTr { get; set; } = string.Empty;
         [MaxLength(200)]
         public string FairLocationEn { get; set; } = string.Empty;
-        [MaxLength(100)]
-        public string FairCategoryTr { get; set; } = string.Empty;
-        [MaxLength(100)]
-        public string FairCategoryEn { get; set; } = string.Empty;
+        [ValidateNever]
+        public ICollection<Sector> Sectors { get; set; } = new List<Sector>();
 
         [MaxLength(200)]
         public string WebsiteUrl { get; set; } = string.Empty;

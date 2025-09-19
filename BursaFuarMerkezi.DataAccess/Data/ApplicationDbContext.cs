@@ -14,9 +14,11 @@ namespace BursaFuarMerkezi.DataAccess.Data
 
         public DbSet<FuarPage> FuarPages { get; set; }
         public DbSet<ContentType> ContentTypes { get; set; }
+        public DbSet<Sector> Sectors { get; set; }
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogImage> BlogImages { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,6 +33,8 @@ namespace BursaFuarMerkezi.DataAccess.Data
                 .HasIndex(x => x.SlugEn)
                 .IsUnique()
                 .HasFilter("[SlugEn] IS NOT NULL");
+            // many-to-many FuarPage <-> Sector uses EF Core conventions
+
             modelBuilder.Entity<ContentType>().HasData(
                 new ContentType { Id = 1, Name = "BLOG" },
                 new ContentType { Id = 2, Name = "DUYURULAR" },

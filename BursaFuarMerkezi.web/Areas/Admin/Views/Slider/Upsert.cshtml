@@ -1,0 +1,138 @@
+@model SliderVM
+
+@{
+    ViewData["Title"] = Model.Slider.Id == 0 ? "Create Slider" : "Edit Slider";
+}
+
+@section Styles {
+    <style>
+        .img-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .img-preview {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .img-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+            color: #dc3545;
+        }
+
+        .dropzone {
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dropzone:hover {
+            border-color: #007bff;
+        }
+
+        .dropzone.dragover {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.1);
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-12">
+            <h2 class="text-primary">@(Model.Slider.Id == 0 ? "Create" : "Update") Slider</h2>
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="Slider.Id" hidden />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-md-8">
+                
+
+                <div class="border p-3 mt-2 rounded-2">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Slider.DisplayOrder" class="form-label">Display Order</label>
+                            <input asp-for="Slider.DisplayOrder" type="number" class="form-control" />
+                            <span asp-validation-for="Slider.DisplayOrder" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 mb-3 d-flex align-items-center">
+                            <div class="form-check mt-4">
+                                <input asp-for="Slider.IsActive" class="form-check-input" />
+                                <label asp-for="Slider.IsActive" class="form-check-label">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="border p-3 mt-2 rounded-2">
+                    <label class="form-label">Image</label>
+                    <div class="dropzone" id="slider-image-dropzone" enabled="true">
+                        <input type="file" id="sliderImageInput" asp-for="Image" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
+                        <div id="slider-dropzone-content">
+                            <i class="bi bi-cloud-arrow-up fs-3"></i>
+                            <p class="mb-1">Drag and drop an image here, or click to select</p>
+                            <p class="text-muted small mb-0">Accepted: JPG, JPEG, PNG, GIF, WEBP (Max 5MB)</p>
+                        </div>
+                    </div>
+                    <span class="text-danger d-block mt-2"></span>
+                </div>
+                <div class="mb-3 text-center" id="slider-image-preview-container">
+                    @if (!string.IsNullOrEmpty(Model.Slider.ImageUrl))
+                    {
+                        <div class="img-container">
+                            <input asp-for="Slider.ImageUrl" hidden />
+                            <img src="@Model.Slider.ImageUrl" id="sliderImagePreview" class="img-preview" />
+                        </div>
+                        <p class="text-muted small">Current image. Replace by uploading a new one.</p>
+                    }
+                    else
+                    {
+                        <div class="img-container" style="display:none;">
+                            <img src="" id="sliderImagePreview" class="img-preview" />
+                        </div>
+                        <p class="text-muted small" id="slider-preview-caption" style="display:none;">Image preview. Submit to save changes.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="text-end mt-3">
+            <a asp-controller="Slider" asp-action="Index" class="btn btn-secondary" style="width:150px">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+            <button type="submit" class="btn btn-primary" style="width:150px">
+                <i class="bi bi-save"></i> @(Model.Slider.Id == 0 ? "Create" : "Update")
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{ <partial name="_ValidationScriptsPartial" /> 
+        <script src="~/admin/scripts/Dropzone.js"></script>
+    }
+    
+}
+
+

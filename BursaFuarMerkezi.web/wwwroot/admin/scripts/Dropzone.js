@@ -14,6 +14,13 @@ const cardPreviewContainer = document.querySelector('#card-image-preview-contain
 const cardPreviewCaption = document.getElementById('card-preview-caption');
 const removeCardImageBtn = document.getElementById('removeCardImage');
 
+// Setup drag and drop for Slider Image
+const sliderDropzone = document.getElementById('slider-image-dropzone');
+const sliderImageInput = document.getElementById('sliderImageInput');
+const sliderImagePreview = document.getElementById('sliderImagePreview');
+const sliderPreviewContainer = document.querySelector('#slider-image-preview-container .img-container');
+const sliderPreviewCaption = document.getElementById('slider-preview-caption');
+
 
 
 // Helper function to setup drag and drop events
@@ -123,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if dropzones have the 'enabled' attribute set to 'true'
     const cardDropzoneEnabled = cardDropzone && cardDropzone.getAttribute('enabled') === 'true';
     const featuredDropzoneEnabled = featuredDropzone && featuredDropzone.getAttribute('enabled') === 'true';
+    const sliderDropzoneEnabled = sliderDropzone && sliderDropzone.getAttribute('enabled') === 'true';
     
     if (featuredDropzoneEnabled) {
         console.log('Featured dropzone is enabled');
@@ -149,6 +157,20 @@ document.addEventListener('DOMContentLoaded', function() {
             cardPreviewCaption,
             removeCardImageBtn,
             true // Is a card image
+        );
+    }
+
+    if (sliderDropzoneEnabled) {
+        console.log('Slider dropzone is enabled');
+        // Setup Slider Image dropzone
+        setupDropzone(
+            sliderDropzone,
+            sliderImageInput,
+            sliderImagePreview,
+            sliderPreviewContainer,
+            sliderPreviewCaption,
+            null,
+            false
         );
     }
 });

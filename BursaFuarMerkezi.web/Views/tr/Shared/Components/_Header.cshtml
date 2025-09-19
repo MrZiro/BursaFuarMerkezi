@@ -1,9 +1,9 @@
   <!-- Header Start -->
   <header class="main-header">
     <div class="container-navbar">
-      <a href="index.html" class="logo mt-5">
+      <a href="/tr" class="logo mt-5">
         <!-- Gerçek logo dosyanızın yolunu buraya ekleyin -->
-        <img src="./images/logo-beyaz.png" class="" alt="">
+        <img src="/images/logo-beyaz.png" class="" alt="">
       </a>
 
       <nav class="main-nav">
@@ -11,27 +11,27 @@
           <li class="nav-item">
             <a href="#" class="nav-link">BFM'yi Keşfedin <i class="fas fa-chevron-down"></i></a>
             <ul class="dropdown-menu">
-              <li><a href="hakkimizda.html">Hakkımızda</a></li>
-              <li><a href="fuar-takvimi.html">BFM Fuar Takvimi</a></li>
-              <li><a href="toplanti-salonlari.html">Hazır Ofis Ve Toplantı Salonları</a></li>
+              <li><a href="/tr/hakkimizda">Hakkımızda</a></li>
+              <li><a href="/tr/fuar-takvimi">BFM Fuar Takvimi</a></li>
+              <li><a href="/tr/toplanti-salonlari">Hazır Ofis Ve Toplantı Salonları</a></li>
             </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">BFM'de Fuar Organize Edin <i class="fas fa-chevron-down"></i></a>
             <ul class="dropdown-menu">
-          <li><a href="organizator.html">E-Broşürler</a></li>
-          <li><a href="diger-hizmetler.html">Ek Ve Diğer Hizmetler</a></li>
-          <li><a href="planlar.html">Planlar</a></li>
-          <li><a href="toplanti-salonlari.html">Toplantı Salonları</a></li>
+          <li><a href="/tr/organizator">E-Broşürler</a></li>
+          <li><a href="/tr/diger-hizmetler">Ek Ve Diğer Hizmetler</a></li>
+          <li><a href="/tr/planlar">Planlar</a></li>
+          <li><a href="/tr/toplanti-salonlari">Toplantı Salonları</a></li>
         </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">BFM'yi Ziyaret Edin <i class="fas fa-chevron-down"></i></a>
             <ul class="dropdown-menu">
-              <li><a href="ulasim.html">Ulaşım</a></li>
-              <li><a href="konaklama.html">Konaklama</a></li>
-              <li><a href="restoran-ve-kafeler.html">Restoran ve Kafeler</a></li>
-              <li><a href="hizmetler.html">Hizmetler</a></li>
+              <li><a href="/tr/ulasim">Ulaşım</a></li>
+              <li><a href="/tr/konaklama">Konaklama</a></li>
+              <li><a href="/tr/restoran-ve-kafeler">Restoran ve Kafeler</a></li>
+              <li><a href="/tr/hizmetler">Hizmetler</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -41,7 +41,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="iletisim.html" class="nav-link">Bize Ulaşın</a>
+            <a href="/tr/iletisim" class="nav-link">Bize Ulaşın</a>
           </li>
         </ul>
       </nav>
@@ -54,14 +54,24 @@
               <i class="fas fa-search"></i>
             </button>
           </div>
+                    <!-- Dil Dropdown Başlangıç -->
+          @* <div class="lang-dropdown">
+            <button class="lang-dropdown-toggle" id="langDropdownBtn">
+              <span id="selectedLang">TR</span> <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="lang-dropdown-menu" id="langDropdownMenu">
+              <a href="index.html" class="lang-option" data-lang="tr">TR</a>
+              <a href="../en/home.html" class="lang-option" data-lang="en">EN</a>
+            </div>
+          </div> *@
           <div class="lang-dropdown">
-            <button class="lang-dropdown-btn">
-              <span class="selected-lang">TR</span>
+            <button class="lang-dropdown-btn" id="langDropdownBtn">
+              <span class="selected-lang" id="selectedLang">TR</span>
               <i class="fas fa-chevron-down"></i>
             </button>
-            <div class="lang-dropdown-content">
-              <a href="index.html" class="active">TR</a>
-              <a href="../en/home.html">EN</a>
+            <div class="lang-dropdown-content" id="langDropdownMenu">
+              <a href="index.html" class="active" data-lang="tr" data-translate="lang.tr">TR</a>
+              <a href="../en/home.html" data-lang="en" data-translate="lang.en">EN</a>
             </div>
           </div>
         </div>
@@ -93,15 +103,15 @@
   <!-- Tam Ekran Overlay Menü -->
   <div class="fullscreen-menu">
     <div class="menu-header">
-      <a href="index.html" class="logo-menu">
+      <a href="/tr" class="logo-menu">
         <!-- Menüdeki logo -->
-        <img src="./images/logo-beyaz.png" alt="" class="fs-2">
+        <img src="/images/logo-beyaz.png" alt="" class="fs-2">
       </a>
 
       <div class="menu-header-actions-fs">
         <div class="lang-switch">
           <a href="#" class="active" data-lang="tr" data-translate="lang.tr">TR</a>
-          <a href="../en/home.html" data-lang="en" data-translate="lang.en">EN</a>
+          <a href="" data-lang="en" data-translate="lang.en">EN</a>
         </div>
         <button class="close-menu-btn" aria-label="Menüyü Kapat">
           <i class="fas fa-times"></i>
@@ -114,27 +124,27 @@
         <!-- Başlığa tıklanınca menüyü kapatmak için nav-toggle-button ekledik -->
         <h3 class="nav-toggle-button">BFM'yi Keşfedin</h3>
         <ul>
-          <li><a href="hakkimizda.html">Hakkımızda</a></li>
-          <li><a href="fuar-takvimi.html">BFM Fuar Takvimi</a></li>
-          <li><a href="toplanti-salonlari.html">Hazır Ofis Ve Toplantı Salonları</a></li>
+          <li><a href="/tr/hakkimizda">Hakkımızda</a></li>
+          <li><a href="/tr/fuar-takvimi">BFM Fuar Takvimi</a></li>
+          <li><a href="/tr/toplanti-salonlari">Hazır Ofis Ve Toplantı Salonları</a></li>
         </ul>
       </div>
       <div class="menu-column">
         <h3 class="nav-toggle-button">BFM'de Fuar Organize Edin</h3>
         <ul class="dropdown-menu">
-          <li><a href="organizator.html">E-Broşürler</a></li>
-          <li><a href="diger-hizmetler.html">Ek Ve Diğer Hizmetler</a></li>
-          <li><a href="planlar.html">Planlar</a></li>
-          <li><a href="toplanti-salonlari.html">Toplantı Salonları</a></li>
+          <li><a href="/tr/organizator">E-Broşürler</a></li>
+          <li><a href="/tr/diger-hizmetler">Ek Ve Diğer Hizmetler</a></li>
+          <li><a href="/tr/planlar">Planlar</a></li>
+          <li><a href="/tr/toplanti-salonlari">Toplantı Salonları</a></li>
         </ul>
       </div>
       <div class="menu-column">
         <h3 class="nav-toggle-button" data-translate="menu.visitBFM">BFM'yi Ziyaret Edin</h3>
         <ul>
-          <li><a href="ulasim.html">Ulaşım</a></li>
-          <li><a href="konaklama.html">Konaklama</a></li>
-          <li><a href="restoran-ve-kafeler.html">Restoran ve Kafeler</a></li>
-          <li><a href="hizmetler.html">Hizmetler</a></li>
+          <li><a href="/tr/ulasim">Ulaşım</a></li>
+          <li><a href="/tr/konaklama">Konaklama</a></li>
+          <li><a href="/tr/restoran-ve-kafeler">Restoran ve Kafeler</a></li>
+          <li><a href="/tr/hizmetler">Hizmetler</a></li>
         </ul>
       </div>
       <div class="menu-column">
@@ -146,7 +156,7 @@
       <div class="menu-column">
         <h3 class="nav-toggle-button">Bize Ulaşın</h3>
         <ul>
-          <li><a href="iletisim.html">İletişim Bilgileri</a></li>
+          <li><a href="/tr/iletisim">İletişim Bilgileri</a></li>
         </ul>
       </div>
     </div>

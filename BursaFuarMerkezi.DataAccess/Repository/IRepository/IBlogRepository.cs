@@ -11,5 +11,7 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
     {
         public void Update(Blog obj);
         // No changes needed now; gallery handled via BlogImage repository
+        public Task<List<Blog>> GetLatestBlogsAsync(int count);
+        public Task<List<object>> GetLatestBlogsWithFieldsAsync(int count, string language);
     }
 }

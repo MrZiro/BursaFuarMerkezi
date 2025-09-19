@@ -1,0 +1,38 @@
+@model List<Slider>
+@{
+    ViewData["Title"] = "Sliders";
+}
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">Sliders</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Slider" asp-action="Upsert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Slider
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_PartialReqScript" />
+    <script>
+        $(document).ready(() => {
+            initializeDataTableNoOption('Slider', [
+                { title: 'Order', data: 'displayOrder', width: '15%' },
+                { title: 'Active', data: 'isActive', width: '15%' }
+            ]);
+        });
+    </script>
+}
+
+

@@ -40,14 +40,17 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 // Create new page
+                pageVM.AllSectors = _unitOfWork.Sector.GetAll();
                 return View(pageVM);
             }
                 // Edit existing page
-            pageVM.FuarPage = _unitOfWork.FuarPages.Get(u => u.Id == id);
+            pageVM.FuarPage = _unitOfWork.FuarPages.Get(u => u.Id == id, includeProperties: "Sectors");
             if (pageVM.FuarPage == null)
             {
                 return NotFound();
             }
+            pageVM.AllSectors = _unitOfWork.Sector.GetAll();
+            pageVM.SelectedSectorIds = pageVM.FuarPage.Sectors.Select(s => s.Id).ToList();
             return View(pageVM);
         }
 
@@ -181,6 +184,9 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                     _unitOfWork.FuarPages.Update(pageVM.FuarPage);
                     TempData["success"] = "Page updated successfully.";
                 }
+                // Update sectors after we have an Id
+                _unitOfWork.Save();
+                _unitOfWork.FuarPages.UpdateSectors(pageVM.FuarPage, pageVM.SelectedSectorIds ?? new List<int>());
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
