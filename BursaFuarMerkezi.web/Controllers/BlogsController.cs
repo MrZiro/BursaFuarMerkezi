@@ -49,9 +49,9 @@ namespace BursaFuarMerkezi.web.Controllers
                 return NotFound();
             }
 
-            // Find blog by slug with ContentType included
+            // Find blog by slug (TR/EN) with ContentType included
             var blog = _unitOfWork.Blog.GetAll(includeProperties: "ContentType")
-                .FirstOrDefault(b => b.Slug == slug && b.IsPublished);
+                .FirstOrDefault(b => (Lang == "en" ? b.SlugEn : b.SlugTr) == slug && b.IsPublished);
 
             if (blog == null)
             {
@@ -78,7 +78,14 @@ namespace BursaFuarMerkezi.web.Controllers
                 // Apply category filter if provided
                 if (!string.IsNullOrEmpty(filterParams.Category) && filterParams.Category != "all")
                 {
-                    query = query.Where(b => b.ContentType != null && b.ContentType.Name == filterParams.Category);
+                    if (Lang == "en")
+                    {
+                        query = query.Where(b => b.ContentType != null && b.ContentType.NameEn == filterParams.Category);
+                    }
+                    else
+                    {
+                        query = query.Where(b => b.ContentType != null && b.ContentType.NameTr == filterParams.Category);
+                    }
                 }
 
                 // Order by creation date (newest first)
@@ -95,14 +102,14 @@ namespace BursaFuarMerkezi.web.Controllers
                 var mappedItems = paginatedBlogs.Items.Select(b => new
                 {
                     id = b.Id,
-                    title = b.Title,
-                    category = b.ContentType?.Name ?? "Uncategorized",
+                    title = Lang == "en" ? b.TitleEn : b.TitleTr,
+                    category = Lang == "en" ? (b.ContentType?.NameEn ?? "Uncategorized") : (b.ContentType?.NameTr ?? "Kategorisiz"),
                     date = b.CreatedAt.Day.ToString("D2"),
                     month = b.CreatedAt.ToString("MMM"),
-                    author = b.Author,
+                    author = "", // removed author from model
                     image = b.CardImageUrl,
-                    slug = b.Slug,
-                    url = $"/blogs/{b.Slug}"
+                    slug = Lang == "en" ? b.SlugEn : b.SlugTr,
+                    url = Lang == "en" ? $"/en/blog-detail/{b.SlugEn}" : $"/tr/blog-detay/{b.SlugTr}"
                 }).ToList();
 
                 return Json(new

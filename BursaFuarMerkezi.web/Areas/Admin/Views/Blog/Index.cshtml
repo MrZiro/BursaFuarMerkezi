@@ -1,4 +1,4 @@
-﻿@model List<Blog>
+﻿﻿
 @section Styles {
     <link rel="stylesheet" href="//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css" />
 }
@@ -36,22 +36,35 @@
         $(document).ready(() => {
             initializeDataTableWithOption('Blog', [
                 {
-                    title: 'Title',
-                    data: 'title',
-                    width: '25%'
-                },
-                {
-                    title: 'Content Type',
-                    data: 'contentType.name',
-                    width: '15%',
-                    render: function (data) {
-                        return data || 'None';
+                    title: 'Title (TR/EN)',
+                    data: null,
+                    width: '25%',
+                    render: function (data, type, row) {
+                        const tr = row.titleTr || '';
+                        const en = row.titleEn || '';
+                        return `<div><div>${tr}</div><div class="text-muted small">${en}</div></div>`;
                     }
                 },
                 {
-                    title: 'Slug',
-                    data: 'slug',
-                    width: '15%'
+                    title: 'Content Type (TR/EN)',
+                    data: null,
+                    width: '18%',
+                    render: function (data, type, row) {
+                        const tr = row.contentType ? row.contentType.nameTr : '';
+                        const en = row.contentType ? row.contentType.nameEn : '';
+                        if (!tr && !en) return 'None';
+                        return `<div><div>${tr}</div><div class="text-muted small">${en}</div></div>`;
+                    }
+                },
+                {
+                    title: 'Slug (TR/EN)',
+                    data: null,
+                    width: '20%',
+                    render: function (data, type, row) {
+                        const tr = row.slugTr || '';
+                        const en = row.slugEn || '';
+                        return `<div><div>${tr}</div><div class="text-muted small">${en}</div></div>`;
+                    }
                 },
                 {
                     title: 'Status',

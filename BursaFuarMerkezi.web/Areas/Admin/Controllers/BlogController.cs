@@ -36,7 +36,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 Blog = new Blog(),
                 ContentTypeList = _unitOfWork.ContentType.GetAll().Select(c => new SelectListItem
                 {
-                    Text = c.Name,
+                    Text = c.NameTr,
                     Value = c.Id.ToString()
                 })
             };
@@ -65,7 +65,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
             pageVM.ContentTypeList = _unitOfWork.ContentType.GetAll().Select(c => new SelectListItem
             {
-                Text = c.Name,
+                Text = c.NameTr,
                 Value = c.Id.ToString()
             });
 

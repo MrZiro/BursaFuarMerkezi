@@ -352,16 +352,12 @@
         // TR
         $('#FuarPage_TitleTr').on('change keyup', function () {
             var slug = makeSlug($(this).val());
-            if (!$('#FuarPage_SlugTr').val()) {
                 $('#FuarPage_SlugTr').val(slug);
-            }
         });
         // EN
         $('#FuarPage_TitleEn').on('change keyup', function () {
             var slug = makeSlug($(this).val());
-            if (!$('#FuarPage_SlugEn').val()) {
                 $('#FuarPage_SlugEn').val(slug);
-            }
         });
         
         

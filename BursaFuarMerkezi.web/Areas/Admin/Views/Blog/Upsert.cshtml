@@ -1,5 +1,4 @@
 ﻿@model BlogVM
-
 @section Styles {
     <style>
         .img-container {
@@ -64,39 +63,72 @@
         <div class="row mb-3">
             <div class="col-md-8">
                 <div class="border p-3 mt-2 mb-3 rounded-2">
-                    <div class="mb-3">
-                        <label asp-for="Blog.Title" class="form-label">Title</label>
-                        <input asp-for="Blog.Title" class="form-control" />
-                        <span asp-validation-for="Blog.Title" class="text-danger"></span>
+                    <ul class="nav nav-tabs" id="langTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tr-tab" data-bs-toggle="tab" data-bs-target="#tr" type="button" role="tab" aria-controls="tr" aria-selected="true">TR</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="en-tab" data-bs-toggle="tab" data-bs-target="#en" type="button" role="tab" aria-controls="en" aria-selected="false">EN</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-3" id="langTabsContent">
+                        <div class="tab-pane fade show active" id="tr" role="tabpanel" aria-labelledby="tr-tab">
+                            <div class="mb-3">
+                                <label asp-for="Blog.TitleTr" class="form-label">Title (TR)</label>
+                                <input asp-for="Blog.TitleTr" class="form-control" />
+                                <span asp-validation-for="Blog.TitleTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Blog.SlugTr" class="form-label">URL Slug (TR)</label>
+                                <input asp-for="Blog.SlugTr" class="form-control" placeholder="Leave blank to auto-generate" />
+                                <span asp-validation-for="Blog.SlugTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Blog.ShortDescriptionTr" class="form-label">Short Description (TR)</label>
+                                <textarea asp-for="Blog.ShortDescriptionTr" class="form-control" rows="3"></textarea>
+                                <span asp-validation-for="Blog.ShortDescriptionTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Content (TR)</label>
+                                <textarea asp-for="Blog.ContentTr" class="form-control Editor" rows="12"></textarea>
+                                <span asp-validation-for="Blog.ContentTr" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="en" role="tabpanel" aria-labelledby="en-tab">
+                            <div class="mb-3">
+                                <label asp-for="Blog.TitleEn" class="form-label">Title (EN)</label>
+                                <input asp-for="Blog.TitleEn" class="form-control" />
+                                <span asp-validation-for="Blog.TitleEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Blog.SlugEn" class="form-label">URL Slug (EN)</label>
+                                <input asp-for="Blog.SlugEn" class="form-control" placeholder="Leave blank to auto-generate" />
+                                <span asp-validation-for="Blog.SlugEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Blog.ShortDescriptionEn" class="form-label">Short Description (EN)</label>
+                                <textarea asp-for="Blog.ShortDescriptionEn" class="form-control" rows="3"></textarea>
+                                <span asp-validation-for="Blog.ShortDescriptionEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Content (EN)</label>
+                                <textarea asp-for="Blog.ContentEn" class="form-control Editor" rows="12"></textarea>
+                                <span asp-validation-for="Blog.ContentEn" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label asp-for="Blog.Slug" class="form-label">URL Slug</label>
-                        <input asp-for="Blog.Slug" class="form-control" placeholder="Leave blank to auto-generate" />
-                        <span asp-validation-for="Blog.Slug" class="text-danger"></span>
-                        <div class="form-text">Will be auto-generated from title if left blank.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Blog.Author" class="form-label">Author</label>
-                        <input asp-for="Blog.Author" class="form-control" />
-                        <span asp-validation-for="Blog.Author" class="text-danger"></span>
-                    </div>
+                </div>
+
+                <div class="border p-3 mt-2 mb-3 rounded-2">
                     <div class="mb-3">
                         <label asp-for="Blog.ContentTypeId" class="form-label">Content Type</label>
-                        <select asp-for="@Model.Blog.ContentTypeId" class="form-select" 
+                        <select asp-for="Blog.ContentTypeId" class="form-select" 
                                 asp-items="@Model.ContentTypeList">
-                            @* <option value="">-- Select Content Type --</option> *@
                         </select>
                         <span asp-validation-for="Blog.ContentTypeId" class="text-danger"></span>
                     </div>
                 </div>
 
-                <div class="border p-3 mt-2 mb-3 rounded-2">
-                    <div class="row">
-                        <label asp-for="Blog.Content" class="form-label">Content</label>
-                        <textarea asp-for="Blog.Content" class="form-control Editor" rows="15"></textarea>
-                        <span asp-validation-for="Blog.Content" class="text-danger"></span>
-                    </div>
-                </div>
             </div>
 
             <div class="col-md-4">
@@ -141,17 +173,43 @@
                 </div>
 
                 <div class="border p-3 mt-2 rounded-2">
-                    <div class="mb-3">
-                        <label asp-for="Blog.MetaDescription" class="form-label">Meta Description</label>
-                        <textarea asp-for="Blog.MetaDescription" class="form-control" rows="3" 
-                                  placeholder="Brief description for search engines"></textarea>
-                        <span asp-validation-for="Blog.MetaDescription" class="text-danger"></span>
-                        <div class="form-text">Recommended: 150-160 characters</div>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Blog.MetaKeywords" class="form-label">Meta Keywords</label>
-                        <input asp-for="Blog.MetaKeywords" class="form-control" placeholder="Comma-separated keywords" />
-                        <span asp-validation-for="Blog.MetaKeywords" class="text-danger"></span>
+                    <ul class="nav nav-tabs" id="seoLangTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="seo-tr-tab" data-bs-toggle="tab" data-bs-target="#seo-tr" type="button" role="tab" aria-controls="seo-tr" aria-selected="true">SEO (TR)</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="seo-en-tab" data-bs-toggle="tab" data-bs-target="#seo-en" type="button" role="tab" aria-controls="seo-en" aria-selected="false">SEO (EN)</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-3" id="seoLangTabsContent">
+                        <div class="tab-pane fade show active" id="seo-tr" role="tabpanel" aria-labelledby="seo-tr-tab">
+                            <div class="mb-3">
+                                <label asp-for="Blog.MetaDescriptionTr" class="form-label">Meta Description (TR)</label>
+                                <textarea asp-for="Blog.MetaDescriptionTr" class="form-control" rows="3"
+                                          placeholder="Brief description for search engines"></textarea>
+                                <span asp-validation-for="Blog.MetaDescriptionTr" class="text-danger"></span>
+                                <div class="form-text">Recommended: 150-160 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Blog.MetaKeywordsTr" class="form-label">Meta Keywords (TR)</label>
+                                <input asp-for="Blog.MetaKeywordsTr" class="form-control" placeholder="Comma-separated keywords" />
+                                <span asp-validation-for="Blog.MetaKeywordsTr" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="seo-en" role="tabpanel" aria-labelledby="seo-en-tab">
+                            <div class="mb-3">
+                                <label asp-for="Blog.MetaDescriptionEn" class="form-label">Meta Description (EN)</label>
+                                <textarea asp-for="Blog.MetaDescriptionEn" class="form-control" rows="3"
+                                          placeholder="Brief description for search engines"></textarea>
+                                <span asp-validation-for="Blog.MetaDescriptionEn" class="text-danger"></span>
+                                <div class="form-text">Recommended: 150-160 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Blog.MetaKeywordsEn" class="form-label">Meta Keywords (EN)</label>
+                                <input asp-for="Blog.MetaKeywordsEn" class="form-control" placeholder="Comma-separated keywords" />
+                                <span asp-validation-for="Blog.MetaKeywordsEn" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -212,16 +270,36 @@
         <script src="~/admin/scripts/Dropzone.js"></script>
     }
     <script>
-        // Auto-generate slug from title if slug is empty
-        $('#Blog_Title').change(function () {
-            // Convert title to slug format
-            var slug = $(this).val().toLowerCase()
-                .replace(/[^\w\s-]/g, '') // Remove special characters
-                .replace(/\s+/g, '-')     // Replace spaces with hyphens
-                .replace(/-+/g, '-');     // Replace multiple hyphens with single hyphen
-            console.log(slug);
+        function turkishNormalize(text) {
+            return text
+                .replace(/ı/g, 'i').replace(/İ/g, 'i')
+                .replace(/ö/g, 'o').replace(/Ö/g, 'o')
+                .replace(/ş/g, 's').replace(/Ş/g, 's')
+                .replace(/ğ/g, 'g').replace(/Ğ/g, 'g')
+                .replace(/ü/g, 'u').replace(/Ü/g, 'u')
+                .replace(/ç/g, 'c').replace(/Ç/g, 'c');
+        }
+        function makeSlug(text) {
+            if (!text) return '';
+            const lower = turkishNormalize(text.toLowerCase());
+            const withoutDiacritics = lower.normalize('NFD').replace(/\p{Diacritic}+/gu, '');
+            return withoutDiacritics
+                .replace(/[^a-z0-9\s-]/g, '-')
+                .replace(/[\n\r\t_]+/g, ' ')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
 
-            $('#Blog_Slug').val(slug);
+        // TR
+        $('#Blog_TitleTr').on('change keyup', function () {
+            var slug = makeSlug($(this).val());
+            $('#Blog_SlugTr').val(slug);
+        });
+        // EN
+        $('#Blog_TitleEn').on('change keyup', function () {
+            var slug = makeSlug($(this).val());
+            $('#Blog_SlugEn').val(slug);
         });
 
         function deleteGalleryImage(id) {
@@ -248,5 +326,24 @@
                 }
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var mainTrTab = document.querySelector('#tr-tab');
+            var mainEnTab = document.querySelector('#en-tab');
+            var seoTrTab = new bootstrap.Tab(document.querySelector('#seo-tr-tab'));
+            var seoEnTab = new bootstrap.Tab(document.querySelector('#seo-en-tab'));
+
+            if (mainTrTab) {
+                mainTrTab.addEventListener('shown.bs.tab', function () {
+                    seoTrTab.show();
+                });
+            }
+
+            if (mainEnTab) {
+                mainEnTab.addEventListener('shown.bs.tab', function () {
+                    seoEnTab.show();
+                });
+            }
+        });
     </script>
 }

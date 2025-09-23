@@ -24,9 +24,13 @@ namespace BursaFuarMerkezi.DataAccess.Repository
             var objFromDb = _db.Blogs.FirstOrDefault(u => u.Id == obj.Id);
             if (objFromDb != null)
             {
-                objFromDb.Title = obj.Title;
-                objFromDb.Slug = obj.Slug;
-                objFromDb.Content = obj.Content;
+                // Multilingual fields
+                objFromDb.TitleTr = obj.TitleTr;
+                objFromDb.TitleEn = obj.TitleEn;
+                objFromDb.SlugTr = obj.SlugTr;
+                objFromDb.SlugEn = obj.SlugEn;
+                objFromDb.ContentTr = obj.ContentTr;
+                objFromDb.ContentEn = obj.ContentEn;
                 objFromDb.UpdatedAt = DateTime.Now;
                 objFromDb.CreatedAt = obj.CreatedAt;
                 objFromDb.IsPublished = obj.IsPublished;
@@ -34,9 +38,11 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 {
                     objFromDb.CardImageUrl = obj.CardImageUrl;
                 }
-                objFromDb.MetaDescription = obj.MetaDescription;
-                objFromDb.MetaKeywords = obj.MetaKeywords;
-                objFromDb.Author = obj.Author;
+                // SEO
+                objFromDb.MetaDescriptionTr = obj.MetaDescriptionTr;
+                objFromDb.MetaDescriptionEn = obj.MetaDescriptionEn;
+                objFromDb.MetaKeywordsTr = obj.MetaKeywordsTr;
+                objFromDb.MetaKeywordsEn = obj.MetaKeywordsEn;
                 objFromDb.ContentTypeId = obj.ContentTypeId;
 
             }
@@ -52,6 +58,9 @@ namespace BursaFuarMerkezi.DataAccess.Repository
 
         public async Task<List<object>> GetLatestBlogsWithFieldsAsync(int count, string language)
         {
+            var lang = (language ?? string.Empty).Trim().ToLowerInvariant();
+            var useTr = lang == "tr";
+
             return await _db.Blogs
                 .Include(b => b.ContentType)
                 .Where(b => b.IsPublished)
@@ -59,15 +68,16 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 .Take(count)
                 .Select(b => new
                 {
-                    slug = b.Slug,
-                    contentType = b.ContentType != null ? b.ContentType.Name : null,
+                    slug = useTr ? b.SlugTr : b.SlugEn,
+                    contentType = b.ContentType != null ? (useTr ? b.ContentType.NameTr : b.ContentType.NameEn) : null,
                     createdAt = b.CreatedAt,
                     cardImage = b.CardImageUrl,
-                    title = b.Title,
-                    language = language
+                    title = useTr ? b.TitleTr : b.TitleEn,
+                    language = useTr ? "tr" : "en"
                 })
                 .Cast<object>()
                 .ToListAsync();
         }
+
     }
 }
