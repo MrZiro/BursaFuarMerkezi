@@ -10,7 +10,12 @@ namespace BursaFuarMerkezi.Models
         
         [Required]
         [MaxLength(50)]
-        [DisplayName("Content Type")]
-        public string Name { get; set; }
+        [DisplayName("Content Type (Turkish)")]
+        public string NameTr { get; set; } = string.Empty;
+        
+        [Required]
+        [MaxLength(50)]
+        [DisplayName("Content Type (English)")]
+        public string NameEn { get; set; } = string.Empty;
     }
 } 

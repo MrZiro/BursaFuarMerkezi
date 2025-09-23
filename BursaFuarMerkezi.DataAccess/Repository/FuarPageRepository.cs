@@ -72,7 +72,7 @@ namespace BursaFuarMerkezi.DataAccess.Repository
                 : await _db.FuarPages.FirstOrDefaultAsync(p => p.SlugTr == slug) == null;
         }
 
-        public async Task<FuarPage> GetBySlugAsync(string slug, string language)
+        public async Task<FuarPage?> GetBySlugAsync(string slug, string language)
         {
             if (string.Equals(language, "en", StringComparison.OrdinalIgnoreCase))
             {

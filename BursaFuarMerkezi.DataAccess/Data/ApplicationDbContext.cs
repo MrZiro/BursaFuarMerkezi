@@ -1,4 +1,4 @@
-﻿using BursaFuarMerkezi.Models;
+﻿﻿using BursaFuarMerkezi.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +24,8 @@ namespace BursaFuarMerkezi.DataAccess.Data
         {
 
             base.OnModelCreating(modelBuilder);
-            // Unique indexes for bilingual slugs (ignore NULLs)
+            
+            // Unique indexes for bilingual slugs on FuarPage (ignore NULLs)
             modelBuilder.Entity<FuarPage>()
                 .HasIndex(x => x.SlugTr)
                 .IsUnique()
@@ -33,12 +34,22 @@ namespace BursaFuarMerkezi.DataAccess.Data
                 .HasIndex(x => x.SlugEn)
                 .IsUnique()
                 .HasFilter("[SlugEn] IS NOT NULL");
+                
+            // Unique indexes for bilingual slugs on Blog (ignore NULLs)
+            modelBuilder.Entity<Blog>()
+                .HasIndex(x => x.SlugTr)
+                .IsUnique()
+                .HasFilter("[SlugTr] IS NOT NULL");
+            modelBuilder.Entity<Blog>()
+                .HasIndex(x => x.SlugEn)
+                .IsUnique()
+                .HasFilter("[SlugEn] IS NOT NULL");
             // many-to-many FuarPage <-> Sector uses EF Core conventions
 
             modelBuilder.Entity<ContentType>().HasData(
-                new ContentType { Id = 1, Name = "BLOG" },
-                new ContentType { Id = 2, Name = "DUYURULAR" },
-                new ContentType { Id = 3, Name = "HABERLER" }
+                new ContentType { Id = 1, NameTr = "BLOG", NameEn = "BLOG" },
+                new ContentType { Id = 2, NameTr = "DUYURULAR", NameEn = "ANNOUNCEMENTS" },
+                new ContentType { Id = 3, NameTr = "HABERLER", NameEn = "NEWS" }
                 );
 
 

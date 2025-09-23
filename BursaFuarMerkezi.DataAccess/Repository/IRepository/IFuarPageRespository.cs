@@ -11,7 +11,7 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
     {
         void Update(FuarPage obj);
         Task<bool> IsSlugUniqueAsync(string slug, string language, int? id = null);
-        Task<FuarPage> GetBySlugAsync(string slug, string language);
+        Task<FuarPage?> GetBySlugAsync(string slug, string language);
         void UpdateSectors(FuarPage obj, IEnumerable<int> sectorIds);
 
     }

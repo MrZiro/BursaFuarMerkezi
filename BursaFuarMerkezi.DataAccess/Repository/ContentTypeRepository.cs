@@ -15,7 +15,23 @@ namespace BursaFuarMerkezi.DataAccess.Repository
         
         public void Update(ContentType obj)
         {
-            _db.ContentTypes.Update(obj);
+            var objFromDb = _db.ContentTypes.FirstOrDefault(u => u.Id == obj.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.NameTr = obj.NameTr;
+                objFromDb.NameEn = obj.NameEn;
+            }
+        }
+
+        public string GetNameByLanguage(ContentType contentType, string language)
+        {
+            if (contentType == null) return string.Empty;
+            
+            return language?.ToLower() switch
+            {
+                "en" => contentType.NameEn ?? contentType.NameTr,
+                "tr" or _ => contentType.NameTr ?? contentType.NameEn
+            };
         }
     }
 } 

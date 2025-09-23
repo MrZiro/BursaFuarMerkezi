@@ -3,7 +3,6 @@ using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.Utility;
 using BursaFuarMerkezi.web.Services;
-using BursaFuarMerkezi.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -186,20 +186,6 @@ function deleteCard(id) {
   return false
 }
 
-// Example of how to add a new card with a custom link
-function addNewCard() {
-  const newCard = {
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-05-13%20132125-nP40jDkGttrnbERZLfFx5lBCwSGjW0.png",
-    date: "30",
-    category: "Blog",
-    title: "Yeni Etkinlik: Teknoloji Fuarı 2025 İstanbul'da Gerçekleşecek!",
-    text: "Teknoloji dünyasının en yeni gelişmeleri bu fuarda sergilenecek...",
-    link: "/etkinlikler/teknoloji-fuari-2025",
-  }
-
-  addCard(newCard)
-}
 
 // Initialize the page with cards and add click handlers
 document.addEventListener("DOMContentLoaded", () => {

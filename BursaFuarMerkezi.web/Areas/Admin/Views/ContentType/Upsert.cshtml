@@ -17,10 +17,31 @@
         <input asp-for="Id" hidden />
         <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div class="mb-3">
-            <label asp-for="Name" class="form-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="border p-3 mt-2 mb-3 rounded-2">
+            <ul class="nav nav-tabs" id="langTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tr-tab" data-bs-toggle="tab" data-bs-target="#tr" type="button" role="tab" aria-controls="tr" aria-selected="true">Turkish</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="en-tab" data-bs-toggle="tab" data-bs-target="#en" type="button" role="tab" aria-controls="en" aria-selected="false">English</button>
+                </li>
+            </ul>
+            <div class="tab-content pt-3" id="langTabsContent">
+                <div class="tab-pane fade show active" id="tr" role="tabpanel" aria-labelledby="tr-tab">
+                    <div class="mb-3">
+                        <label asp-for="NameTr" class="form-label"></label>
+                        <input asp-for="NameTr" class="form-control" />
+                        <span asp-validation-for="NameTr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="en" role="tabpanel" aria-labelledby="en-tab">
+                    <div class="mb-3">
+                        <label asp-for="NameEn" class="form-label"></label>
+                        <input asp-for="NameEn" class="form-control" />
+                        <span asp-validation-for="NameEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="text-end mt-4">

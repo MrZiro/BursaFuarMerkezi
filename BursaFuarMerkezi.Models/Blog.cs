@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿﻿﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,22 +15,43 @@ namespace BursaFuarMerkezi.Models
         [Key]
         public int Id { get; set; }
 
+        // Multilingual fields - Turkish
         [Required]
         [MaxLength(200)]
-        [Display(Name = "Title")]
-        public string Title { get; set; } = string.Empty;
+        [Display(Name = "Title (Turkish)")]
+        public string TitleTr { get; set; } = string.Empty;
 
         [MaxLength(200)]
-        [Display(Name = "Slug")]
-        public string Slug { get; set; } = string.Empty;
+        [Display(Name = "Slug (Turkish)")]
+        public string SlugTr { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Content")]
-        public string Content { get; set; } = string.Empty;
+        [Display(Name = "Content (Turkish)")]
+        public string ContentTr { get; set; } = string.Empty;
 
-        [Display(Name = "Short Description")]
+        [Display(Name = "Short Description (Turkish)")]
         [MaxLength(500)]
-        public string ShortDescription { get; set; } = string.Empty;
+        public string ShortDescriptionTr { get; set; } = string.Empty;
+
+        // Multilingual fields - English
+        [Required]
+        [MaxLength(200)]
+        [Display(Name = "Title (English)")]
+        public string TitleEn { get; set; } = string.Empty;
+
+        [MaxLength(200)]
+        [Display(Name = "Slug (English)")]
+        public string SlugEn { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "Content (English)")]
+        public string ContentEn { get; set; } = string.Empty;
+
+        [Display(Name = "Short Description (English)")]
+        [MaxLength(500)]
+        public string ShortDescriptionEn { get; set; } = string.Empty;
+
+
         [ValidateNever]
 
         [Display(Name = "Featured Image")]
@@ -46,16 +67,27 @@ namespace BursaFuarMerkezi.Models
         [Display(Name = "Is Published")]
         public bool IsPublished { get; set; } = true;
 
-        [Display(Name = "Author")]
-        public string Author { get; set; } = string.Empty;
 
-        [Display(Name = "Meta Description")]
-        [MaxLength(200)]
-        public string MetaDescription { get; set; } = string.Empty;
 
-        [Display(Name = "Meta Keywords")]
+        // SEO fields - Turkish
+        [Display(Name = "Meta Description (Turkish)")]
         [MaxLength(200)]
-        public string MetaKeywords { get; set; } = string.Empty;
+        public string MetaDescriptionTr { get; set; } = string.Empty;
+
+        [Display(Name = "Meta Keywords (Turkish)")]
+        [MaxLength(200)]
+        public string MetaKeywordsTr { get; set; } = string.Empty;
+
+        // SEO fields - English
+        [Display(Name = "Meta Description (English)")]
+        [MaxLength(200)]
+        public string MetaDescriptionEn { get; set; } = string.Empty;
+
+        [Display(Name = "Meta Keywords (English)")]
+        [MaxLength(200)]
+        public string MetaKeywordsEn { get; set; } = string.Empty;
+
+
 
         // Foreign key
         [Display(Name = "Category")]
@@ -64,5 +96,7 @@ namespace BursaFuarMerkezi.Models
         [ForeignKey("ContentTypeId")]
         [ValidateNever]
         public ContentType ContentType { get; set; }
+
+
     }
 }
