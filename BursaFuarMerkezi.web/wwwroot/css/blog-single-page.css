@@ -2,7 +2,7 @@
 .news-container {
   max-width: 920px;
   margin: 0 auto;
-  padding: 35px;
+  padding: 65px;
   border: 1px solid #e0e0e0;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   background: white;
@@ -11,15 +11,59 @@
 .news-title {
   font-size: 30px;
   color: #2c3e50;
-  margin-bottom: 35px;
+  margin-bottom: 15px;
   font-weight: bold;
   letter-spacing: -0.5px;
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 25px;
+    color: #6c757d; /* text-muted color */
+    font-size: 0.9rem;
+}
+
+.news-meta small {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.news-meta i {
+    color: var(--primarycolor);
+}
+
+.news-body {
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
 }
 
 .news-content {
   font-size: 17px;
   line-height: 1.85;
   color: #444;
+}
+
+.news-content ul,
+.news-content ol {
+    padding-left: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.news-content li {
+    margin-bottom: 8px;
+    line-height: 1.8;
+}
+
+.news-content ul li {
+    list-style-type: disc;
+}
+
+.news-content ol li {
+    list-style-type: decimal;
 }
 
 .highlight-section {

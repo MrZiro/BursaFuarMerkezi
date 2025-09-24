@@ -1,0 +1,171 @@
+@model BursaFuarMerkezi.Models.ViewModels.FuarPageVM
+@{
+    ViewData["Title"] = Model.FuarPage.TitleTr;
+    ViewData["Description"] = Model.FuarPage.MetaDescription;
+    ViewData["Keywords"] = Model.FuarPage.MetaKeywords;
+}
+<link rel="stylesheet" href="~/css/fuar-single-page.css">
+<body>
+  <!-- Header is static, will be replaced by _Layout later -->
+  
+  <div class="banner" style="background-image: url('@Model.FuarPage.FeaturedImageUrl');">
+  </div>
+
+  <div class="container mt-4">
+    <!-- Fuar Başlık Bölümü -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="organizer-info">@Model.FuarPage.OrganizerTr</div>
+        <h1 class="fair-title">@Model.FuarPage.TitleTr</h1>
+
+        <div class="d-flex justify-content-end align-items-center mt-3">
+          <button class="btn btn-outline-danger rounded-circle me-2 share-btn">
+            <i class="fas fa-share-alt"></i>
+          </button>
+          <button class="btn btn-danger takvim-ekle-btn"
+                  data-title="@Model.FuarPage.TitleTr"
+                  data-start-date="@Model.FuarPage.StartDate.ToString("yyyy-MM-dd")"
+                  data-end-date="@Model.FuarPage.EndDate.ToString("yyyy-MM-dd")"
+                  data-location="@Model.FuarPage.FairLocationTr"
+                  data-description="@Model.FuarPage.SubTitleTr">
+            <i class="far fa-calendar-plus me-2"></i>
+            Takvime Ekle
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Sol Kolon - Fuar Açıklaması ve Takvim -->
+      <div class="col-lg-8 mb-4">
+        <div class="fair-description mb-4">
+          <h2>@Model.FuarPage.SubTitleTr</h2>
+          @Html.Raw(Model.FuarPage.ContentTr)
+        </div>
+
+        <!-- Fuar Takvimi Bölümü -->
+        <div class="fair-calendar mb-4">
+            <h2 class="calendar-title">Fuar Takvimi
+                <span class="calendar-dates">
+                    @Model.FuarPage.StartDate.ToString("dd MMMM yyyy") — @Model.FuarPage.EndDate.ToString("dd MMMM yyyy")
+                </span>
+            </h2>
+            @{
+                var startDate = Model.FuarPage.StartDate;
+                var endDate = Model.FuarPage.EndDate;
+
+                void RenderCalendar(DateTime monthToDisplay, string culture)
+                {
+                    var daysInMonth = DateTime.DaysInMonth(monthToDisplay.Year, monthToDisplay.Month);
+                    var firstDayOfMonth = new DateTime(monthToDisplay.Year, monthToDisplay.Month, 1);
+                    int startingDayOfWeek = ((int)firstDayOfMonth.DayOfWeek + 6) % 7; // Monday=0
+
+                    <h4 class="calendar-month-title">@firstDayOfMonth.ToString("MMMM yyyy", new System.Globalization.CultureInfo(culture))</h4>
+                    <div class="calendar-table-wrapper">
+                        <table class="calendar-table">
+                            <thead>
+                                <tr>
+                                    <th>Pzt</th>
+                                    <th>Sal</th>
+                                    <th>Çar</th>
+                                    <th>Per</th>
+                                    <th>Cum</th>
+                                    <th>Cmt</th>
+                                    <th>Paz</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int dayCounter = 1;
+                                    for (int i = 0; i < 6; i++) // Max 6 weeks
+                                    {
+                                        if (dayCounter > daysInMonth) { break; }
+                                        <tr>
+                                            @for (int j = 0; j < 7; j++)
+                                            {
+                                                if ((i == 0 && j < startingDayOfWeek) || dayCounter > daysInMonth)
+                                                {
+                                                    <td></td>
+                                                }
+                                                else
+                                                {
+                                                    var currentDate = new DateTime(monthToDisplay.Year, monthToDisplay.Month, dayCounter);
+                                                    var isSelected = (currentDate.Date >= startDate.Date && currentDate.Date <= endDate.Date);
+                                                    <td class="@(isSelected ? "selected" : "")">@dayCounter</td>
+                                                    dayCounter++;
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+                RenderCalendar(startDate, "tr-TR");
+
+                if (startDate.Month != endDate.Month)
+                {
+                    RenderCalendar(endDate, "tr-TR");
+                }
+            }
+            <div class="calendar-legend mt-2">
+                <span class="legend-box selected"></span> Fuar Günü
+            </div>
+        </div>
+      </div>
+      <!-- Sağ Kolon - Fuar Künyesi -->
+      <div class="col-lg-4">
+        <div class="fair-info-panel">
+          <h3>Fuar Künyesi</h3>
+
+          <div class="info-item">
+            <div class="info-label">Başlangıç Tarihi:</div>
+            <div class="info-value">@Model.FuarPage.StartDate.ToString("dd.MM.yyyy")</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Bitiş Tarihi:</div>
+            <div class="info-value">@Model.FuarPage.EndDate.ToString("dd.MM.yyyy")</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Fuar Salonu:</div>
+            <div class="info-value">@Model.FuarPage.FairHall</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Fuar Konusu:</div>
+            <div class="info-value">@string.Join(", ", Model.FuarPage.Sectors.Select(s => s.NameTr))</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Organizatör:</div>
+            <div class="info-value">@Model.FuarPage.OrganizerTr</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Ziyaret Saatleri:</div>
+            <div class="info-value">@Model.FuarPage.VisitingHours</div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-label">Fuar Alanı:</div>
+            <div class="info-value">@Model.FuarPage.FairLocationTr</div>
+          </div>
+          @if (!string.IsNullOrEmpty(Model.FuarPage.WebsiteUrl))
+          {
+            <div class="info-item">
+              <div class="info-label">Web:</div>
+              <div class="info-value"><a href="@Model.FuarPage.WebsiteUrl" target="_blank">@Model.FuarPage.WebsiteUrl</a></div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="~/js/fuarsinglepage.js"></script>
+</body>
+

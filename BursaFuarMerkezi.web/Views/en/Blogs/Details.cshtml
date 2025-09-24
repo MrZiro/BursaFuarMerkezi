@@ -1,7 +1,9 @@
+@model BursaFuarMerkezi.Models.Blog
 @{
-    ViewData["Title"] = "Blog Details";
-    ViewData["Description"] = "Blog Details - Bursa Fair Center";
+    ViewData["Title"] = Model.TitleEn;
+    ViewData["Description"] = Model.ShortDescriptionEn;
     ViewData["Keywords"] = "BFM, Blog, Fair Center";
+    var culture = new System.Globalization.CultureInfo("en-US");
 }
 
 @section styles{
@@ -16,14 +18,25 @@
         <div class="breadcrumb justify-content-center">
             <a href="/en">Home</a> /
             <a href="/en/all-news">All News</a> /
-            <span id="breadcrumbTitle">Blog Details</span>
+            <span id="breadcrumbTitle">@Model.TitleEn</span>
         </div>
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="news-container">
-
-                    <div class="news-content" id="blogContent">
-                        <!-- Content will be loaded here -->
+                    <h2 class="blog-first-title">@Model.TitleEn</h2>
+                     <div class="news-content" id="blogContent">
+                        @Html.Raw(Model.ContentEn)
+                    </div>
+                     <div class="mt-5">
+                        <small class="text-muted">
+                            <i class="far fa-calendar-alt"></i> @Model.CreatedAt.ToString("MMMM dd, yyyy", culture)
+                        </small>
+                        @if (Model.ContentType != null)
+                        {
+                            <small class="text-muted ml-2">
+                                <i class="fas fa-tag"></i> @Model.ContentType.NameEn
+                            </small>
+                        }
                     </div>
                 </div>
             </div>
@@ -40,13 +53,13 @@
             </div>
 
             <button class="gallery-nav-bspg prev-bspg" id="prevBtn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </button>
             <button class="gallery-nav-bspg next-bspg" id="nextBtn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -58,7 +71,7 @@
             <div class="lightbox-content-bspg">
                 <img src="/placeholder.svg" alt="" id="lightboxImage">
                 <button class="close-lightbox-bspg" id="closeLightbox">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <svg width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -70,39 +83,13 @@
 
 @section scripts{
     <script>
-        // Get slug from URL
-        const urlParts = window.location.pathname.split('/');
-        const slug = urlParts[urlParts.length - 1];
+        const galleryImages = @Html.Raw(Json.Serialize((Model.BlogImages ?? new List<BursaFuarMerkezi.Models.BlogImage>()).OrderBy(i => i.DisplayOrder).Select(img => new { imageUrl = img.ImageUrl })));
 
-        // Load blog on page load
         document.addEventListener('DOMContentLoaded', function() {
-            loadBlog(slug);
+            if (galleryImages && galleryImages.length > 0) {
+                loadGallery(galleryImages);
+            }
         });
-
-        function loadBlog(slug) {
-            fetch(`/en/blog/details/${slug}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update page title
-                        document.title = data.data.title + ' - BFM';
-                        
-                        // Update breadcrumb
-                        document.getElementById('breadcrumbTitle').textContent = data.data.title;
-                        
-                        // Update content
-                        document.getElementById('blogContent').innerHTML = data.data.content;
-                        
-                        // Load gallery images
-                        if (data.data.galleryImages && data.data.galleryImages.length > 0) {
-                            loadGallery(data.data.galleryImages);
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading blog:', error);
-                });
-        }
 
         function loadGallery(images) {
             const galleryWrapper = document.getElementById('galleryWrapper');

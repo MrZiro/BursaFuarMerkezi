@@ -17,6 +17,8 @@ namespace BursaFuarMerkezi.DataAccess.Repository
         public ISliderRepository Slider { get; private set; }
         public IBlogRepository Blog { get; private set; }
         public IBlogImageRepository BlogImage { get; private set; }
+        public IStandRequestRepository StandRequest { get; private set; }
+        public IContactRepository Contact { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -27,6 +29,8 @@ namespace BursaFuarMerkezi.DataAccess.Repository
             Slider = new SliderRepository(_db);
             Blog = new BlogRepository(_db);
             BlogImage = new BlogImageRepository(_db);
+            StandRequest = new StandRequestRepository(_db);
+            Contact = new ContactRepository(_db);
         }
 
         public void Save()

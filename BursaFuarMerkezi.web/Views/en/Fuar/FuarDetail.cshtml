@@ -1,0 +1,168 @@
+@model BursaFuarMerkezi.Models.ViewModels.FuarPageVM
+@{
+    ViewData["Title"] = Model.FuarPage.TitleEn;
+    ViewData["Description"] = Model.FuarPage.MetaDescription;
+    ViewData["Keywords"] = Model.FuarPage.MetaKeywords;
+}
+<link rel="stylesheet" href="~/css/fuar-single-page.css">
+
+<div class="banner" style="background-image: url('@Model.FuarPage.FeaturedImageUrl');">
+</div>
+
+<div class="container mt-4">
+    <!-- Fuar Başlık Bölümü -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="organizer-info">@Model.FuarPage.OrganizerEn</div>
+            <h1 class="fair-title">@Model.FuarPage.TitleEn</h1>
+
+            <div class="d-flex justify-content-end align-items-center mt-3">
+                <button class="btn btn-outline-danger rounded-circle me-2 share-btn">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <button class="btn btn-danger takvim-ekle-btn"
+                        data-title="@Model.FuarPage.TitleEn"
+                        data-start-date="@Model.FuarPage.StartDate.ToString("yyyy-MM-dd")"
+                        data-end-date="@Model.FuarPage.EndDate.ToString("yyyy-MM-dd")"
+                        data-location="@Model.FuarPage.FairLocationEn"
+                        data-description="@Model.FuarPage.SubTitleEn">
+                    <i class="far fa-calendar-plus me-2"></i>
+                    Add to Calendar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Sol Kolon - Fuar Açıklaması ve Takvim -->
+        <div class="col-lg-8 mb-4">
+            <div class="fair-description mb-4">
+                <h2>@Model.FuarPage.SubTitleEn</h2>
+                @Html.Raw(Model.FuarPage.ContentEn)
+            </div>
+
+            <!-- Fuar Takvimi Bölümü -->
+            <div class="fair-calendar mb-4">
+                <h2 class="calendar-title">Fair Calendar 
+                    <span class="calendar-dates">
+                        @Model.FuarPage.StartDate.ToString("MMMM dd, yyyy") — @Model.FuarPage.EndDate.ToString("MMMM dd, yyyy")
+                    </span>
+                </h2>
+                @{
+                    var startDate = Model.FuarPage.StartDate;
+                    var endDate = Model.FuarPage.EndDate;
+
+                    void RenderCalendar(DateTime monthToDisplay, string culture)
+                    {
+                        var daysInMonth = DateTime.DaysInMonth(monthToDisplay.Year, monthToDisplay.Month);
+                        var firstDayOfMonth = new DateTime(monthToDisplay.Year, monthToDisplay.Month, 1);
+                        int startingDayOfWeek = ((int)firstDayOfMonth.DayOfWeek + 6) % 7; // Monday=0
+
+                        <h4 class="calendar-month-title">@firstDayOfMonth.ToString("MMMM yyyy", new System.Globalization.CultureInfo(culture))</h4>
+                        <div class="calendar-table-wrapper">
+                            <table class="calendar-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mon</th>
+                                        <th>Tue</th>
+                                        <th>Wed</th>
+                                        <th>Thu</th>
+                                        <th>Fri</th>
+                                        <th>Sat</th>
+                                        <th>Sun</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int dayCounter = 1;
+                                        for (int i = 0; i < 6; i++) // Max 6 weeks
+                                        {
+                                            if (dayCounter > daysInMonth) { break; }
+                                            <tr>
+                                                @for (int j = 0; j < 7; j++)
+                                                {
+                                                    if ((i == 0 && j < startingDayOfWeek) || dayCounter > daysInMonth)
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        var currentDate = new DateTime(monthToDisplay.Year, monthToDisplay.Month, dayCounter);
+                                                        var isSelected = (currentDate.Date >= startDate.Date && currentDate.Date <= endDate.Date);
+                                                        <td class="@(isSelected ? "selected" : "")">@dayCounter</td>
+                                                        dayCounter++;
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                    RenderCalendar(startDate, "en-US");
+
+                    if (startDate.Month != endDate.Month)
+                    {
+                        RenderCalendar(endDate, "en-US");
+                    }
+                }
+                <div class="calendar-legend mt-2">
+                    <span class="legend-box selected"></span> Fair Day
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Kolon - Fuar Künyesi -->
+        <div class="col-lg-4">
+            <div class="fair-info-panel">
+                <h3>Fair Imprint</h3>
+
+                <div class="info-item">
+                    <div class="info-label">Start Date:</div>
+                    <div class="info-value">@Model.FuarPage.StartDate.ToString("dd.MM.yyyy")</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">End Date:</div>
+                    <div class="info-value">@Model.FuarPage.EndDate.ToString("dd.MM.yyyy")</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Fair Hall:</div>
+                    <div class="info-value">@Model.FuarPage.FairHall</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Fair Topic:</div>
+                    <div class="info-value">@string.Join(", ", Model.FuarPage.Sectors.Select(s => s.NameEn))</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Organizer:</div>
+                    <div class="info-value">@Model.FuarPage.OrganizerEn</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Visiting hours:</div>
+                    <div class="info-value">@Model.FuarPage.VisitingHours</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Fair Location:</div>
+                    <div class="info-value">@Model.FuarPage.FairLocationEn</div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.FuarPage.WebsiteUrl))
+                {
+                    <div class="info-item">
+                        <div class="info-label">Web:</div>
+                        <div class="info-value"><a href="@Model.FuarPage.WebsiteUrl" target="_blank">@Model.FuarPage.WebsiteUrl</a></div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/fuarsinglepage.js"></script>
+

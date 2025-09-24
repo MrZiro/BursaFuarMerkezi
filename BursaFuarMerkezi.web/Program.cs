@@ -38,7 +38,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // Add localization services
 builder.Services.Configure<LocalizedRoutesConfig>(builder.Configuration.GetSection(LocalizedRoutesConfig.SectionName));
-
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 
 // Add repository/services

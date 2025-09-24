@@ -1,0 +1,121 @@
+@model StandRequestVM
+@{
+    ViewData["Title"] = "Stant Talebi";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/css/stant-talebi.css">
+    <style>
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1050;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .custom-toast.success {
+            background-color: #28a745;
+        }
+
+        .custom-toast.error {
+            background-color: #dc3545;
+        }
+
+        .custom-toast.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+}
+
+
+@if (TempData["success"] != null)
+{
+    <div id="toast-success" class="custom-toast success" role="alert" aria-live="assertive" aria-atomic="true">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div id="toast-error" class="custom-toast error" role="alert" aria-live="assertive" aria-atomic="true">
+        @TempData["error"]
+    </div>
+}
+
+<div class="banner">
+</div>
+
+<div class="form-container">
+    <h2>Stant Talebi</h2>
+    <form asp-action="Index" method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label asp-for="Exhibition">Fuar Seçiniz</label>
+            <select asp-for="Exhibition" asp-items="@Model.FuarList" class="form-control" required>
+                <option value="">Lütfen bir fuar seçiniz</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Company">Firma Ünvanı</label>
+            <input asp-for="Company" class="form-control" required>
+        </div>
+
+        <div class="name-group">
+            <div class="form-group">
+                <label asp-for="Name">Adınız</label>
+                <input asp-for="Name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname">Soyadınız</label>
+                <input asp-for="Surname" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email">E-posta Adresiniz</label>
+            <input asp-for="Email" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Phone">Cep Telefonu Numaranız</label>
+            <input asp-for="Phone" class="form-control" pattern="[0-9]{10}" required>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Message">Talep/ Soru/ Görüş</label>
+            <textarea asp-for="Message" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Gönder</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toastSuccess = document.getElementById('toast-success');
+            const toastError = document.getElementById('toast-error');
+
+            function showToast(toastEl) {
+                if (toastEl) {
+                    toastEl.classList.add('show');
+                    setTimeout(() => {
+                        toastEl.classList.remove('show');
+                    }, 5000); // Hide after 5 seconds
+                }
+            }
+
+            showToast(toastSuccess);
+            showToast(toastError);
+        });
+    </script>
+}
+

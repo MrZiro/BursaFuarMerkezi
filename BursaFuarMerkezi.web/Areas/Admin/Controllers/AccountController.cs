@@ -29,10 +29,10 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Login(string returnUrl=null)
+        public IActionResult Login(string? returnUrl=null)
         {
 
-            if(User.Identity.IsAuthenticated)
+            if(User.Identity != null && User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home", new { area = "Admin" });
             }
@@ -57,11 +57,9 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-
-
-                    if (string.IsNullOrEmpty(loginVM.RedirectUrl))
+                    if (string.IsNullOrEmpty(loginVM.RedirectUrl) || loginVM.RedirectUrl == "/")
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
                     }
                     else
                     {

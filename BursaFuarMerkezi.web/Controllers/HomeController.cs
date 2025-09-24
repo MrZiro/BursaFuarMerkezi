@@ -64,7 +64,7 @@ public class HomeController : Controller
                     endDate = f.EndDate.ToString("dd MMMM yyyy"),
                     fairHall = f.FairHall,
                     organizer = useTr ? f.OrganizerTr : f.OrganizerEn,
-                    detailUrl = "#" // TODO: Create FuarController for fair details
+                    detailUrl = useTr ? $"/tr/fuar-detay/{f.SlugTr}" : $"/en/fair-detail/{f.SlugEn}"
                 })
                 .ToList();
 
@@ -107,7 +107,7 @@ public class HomeController : Controller
                     endDate = f.EndDate.ToString("dd MMMM yyyy"),
                     fairHall = f.FairHall,
                     organizer = useTr ? f.OrganizerTr : f.OrganizerEn,
-                    detailUrl = "#" // TODO: Create FuarController for fair details
+                    detailUrl = useTr ? $"/tr/fuar-detay/{f.SlugTr}" : $"/en/fair-detail/{f.SlugEn}"
                 })
                 .ToList();
 

@@ -59,7 +59,7 @@ namespace BursaFuarMerkezi.web.Controllers
                 return NotFound();
             }
 
-        return View();
+        return View(blog);
     }
 
     // GET: /Blogs/GetBlogDetails/{slug}

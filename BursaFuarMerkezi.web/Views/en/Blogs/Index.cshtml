@@ -117,19 +117,18 @@
             }
             
             const blogsHtml = blogs.map(blog => `
-                <div class="card-blogs">
+                <div class="card-blogs" onclick="window.location.href='${blog.detailUrl}'">
                     <div class="card-image-blogs">
-                        <img src="${blog.cardImageUrl}" alt="${blog.title}" onerror="this.src='/images/default-blog.jpg'">
-                        <div class="card-category-blogs">${blog.category}</div>
+                        <img src="${blog.cardImageUrl || '/images/default-blog.jpg'}" alt="${blog.title}" onerror="this.src='/images/default-blog.jpg'">
+                        <div class="card-date-blogs">${blog.createdAt}</div>
                     </div>
                     <div class="card-content-blogs">
+                        <div class="card-category-blogs">${blog.category}</div>
                         <h3 class="card-title-blogs">${blog.title}</h3>
-                        <p class="card-description-blogs">${blog.shortDescription}</p>
                         <div class="card-footer-blogs">
-                            <span class="card-date-blogs">${blog.createdAt}</span>
-                            <a href="${blog.detailUrl}" class="card-link-blogs">
+                            <span class="card-link-blogs">
                                 Read More
-                            </a>
+                            </span>
                         </div>
                     </div>
                 </div>

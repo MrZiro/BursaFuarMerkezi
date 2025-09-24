@@ -19,6 +19,8 @@ namespace BursaFuarMerkezi.DataAccess.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogImage> BlogImages { get; set; }
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<StandRequest> StandRequests { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

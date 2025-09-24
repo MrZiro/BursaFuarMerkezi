@@ -14,6 +14,8 @@ namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
         ISliderRepository Slider { get; }
         IBlogRepository Blog { get; }
         IBlogImageRepository BlogImage { get; }
+        IStandRequestRepository StandRequest { get; }
+        IContactRepository Contact { get; }
 
         void Save();
     }

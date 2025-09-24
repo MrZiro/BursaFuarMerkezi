@@ -41,15 +41,6 @@ namespace BursaFuarMerkezi.web.Controllers
             return View();
         }
 
-        [HttpGet("contact")]
-        [HttpGet("iletisim")]
-        public IActionResult Contact()
-        {
-            ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "Contact", Lang);
-            ViewData["AlternateUrls"] = _urlService.GetAlternateLanguageUrls("Pages", "Contact", Lang);
-            return View();
-        }
-
         [HttpGet("extra-services")]
         [HttpGet("ekstra-hizmetler")]
         public IActionResult ExtraServices()
@@ -221,14 +212,6 @@ namespace BursaFuarMerkezi.web.Controllers
             return View();
         }
 
-        [HttpGet("stand-request")]
-        [HttpGet("stand-talebi")]
-        public IActionResult StandRequest()
-        {
-            ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "StandRequest", Lang);
-            ViewData["AlternateUrls"] = _urlService.GetAlternateLanguageUrls("Pages", "StandRequest", Lang);
-            return View();
-        }
 
         [HttpGet("transportation")]
         [HttpGet("ulasim")]

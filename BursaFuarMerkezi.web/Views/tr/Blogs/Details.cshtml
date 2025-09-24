@@ -1,7 +1,9 @@
+@model BursaFuarMerkezi.Models.Blog
 @{
-    ViewData["Title"] = "Blog Detayı";
-    ViewData["Description"] = "Blog Detayı - Bursa Fuar Merkezi";
+    ViewData["Title"] = Model.TitleTr;
+    ViewData["Description"] = Model.ShortDescriptionTr;
     ViewData["Keywords"] = "BFM, Blog, Fuar Merkezi";
+    var culture = new System.Globalization.CultureInfo("tr-TR");
 }
 
 @section styles{
@@ -16,14 +18,24 @@
         <div class="breadcrumb justify-content-center">
             <a href="/tr">Ana Sayfa</a> /
             <a href="/tr/tum-haberler">Tüm Haberler</a> /
-            <span id="breadcrumbTitle">Blog Detayı</span>
+            <span id="breadcrumbTitle">@Model.TitleTr</span>
         </div>
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="news-container">
-
                     <div class="news-content" id="blogContent">
-                        <!-- Content will be loaded here -->
+                        @Html.Raw(Model.ContentTr)
+                    </div>
+                     <div class="mt-5">
+                        <small class="text-muted">
+                            <i class="far fa-calendar-alt"></i> @Model.CreatedAt.ToString("dd MMMM yyyy", culture)
+                        </small>
+                        @if (Model.ContentType != null)
+                        {
+                            <small class="text-muted ml-2">
+                                <i class="fas fa-tag"></i> @Model.ContentType.NameTr
+                            </small>
+                        }
                     </div>
                 </div>
             </div>
@@ -70,39 +82,13 @@
 
 @section scripts{
     <script>
-        // Get slug from URL
-        const urlParts = window.location.pathname.split('/');
-        const slug = urlParts[urlParts.length - 1];
+        const galleryImages = @Html.Raw(Json.Serialize((Model.BlogImages ?? new List<BursaFuarMerkezi.Models.BlogImage>()).OrderBy(i => i.DisplayOrder).Select(img => new { imageUrl = img.ImageUrl })));
 
-        // Load blog on page load
         document.addEventListener('DOMContentLoaded', function() {
-            loadBlog(slug);
+            if (galleryImages && galleryImages.length > 0) {
+                loadGallery(galleryImages);
+            }
         });
-
-        function loadBlog(slug) {
-            fetch(`/tr/blog/details/${slug}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update page title
-                        document.title = data.data.title + ' - BFM';
-                        
-                        // Update breadcrumb
-                        document.getElementById('breadcrumbTitle').textContent = data.data.title;
-                        
-                        // Update content
-                        document.getElementById('blogContent').innerHTML = data.data.content;
-                        
-                        // Load gallery images
-                        if (data.data.galleryImages && data.data.galleryImages.length > 0) {
-                            loadGallery(data.data.galleryImages);
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading blog:', error);
-                });
-        }
 
         function loadGallery(images) {
             const galleryWrapper = document.getElementById('galleryWrapper');

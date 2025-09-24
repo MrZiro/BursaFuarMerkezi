@@ -1,0 +1,113 @@
+@model StandRequest
+
+@{
+    ViewData["Title"] = "Talep Detayları";
+}
+@section Styles {
+    <style>
+        .details-card {
+            border-radius: 0.75rem;
+        }
+
+        .details-card .card-header {
+            background-color: #6c757d;
+            color: white;
+            font-weight: 600;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+        }
+
+        .details-card .card-body {
+            font-size: 1.1rem;
+        }
+
+        .details-card dt {
+            font-weight: 600;
+        }
+
+        .details-card dd {
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            font-size: 1.2rem;
+            padding: 0.5em 0.8em;
+        }
+
+        .message-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            white-space: pre-wrap;
+        }
+    </style>
+}
+<div class="card shadow border-0 my-4 details-card">
+    <div class="card-header py-3">
+        <h2 class="text-white mb-0">Talep Detayları</h2>
+    </div>
+    <div class="card-body p-4">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Firma Bilgileri</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-4">Firma:</dt>
+                    <dd class="col-sm-8">@Model.Company</dd>
+
+                    <dt class="col-sm-4">Ad Soyad:</dt>
+                    <dd class="col-sm-8">@Model.Name @Model.Surname</dd>
+
+                    <dt class="col-sm-4">E-posta:</dt>
+                    <dd class="col-sm-8"><a href="mailto:@Model.Email">@Model.Email</a></dd>
+
+                    <dt class="col-sm-4">Telefon:</dt>
+                    <dd class="col-sm-8">@Model.Phone</dd>
+                </dl>
+            </div>
+            <div class="col-lg-6">
+                <h4>Fuar Bilgileri</h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-4">Talep Tarihi:</dt>
+                    <dd class="col-sm-8">@Model.CreatedAt.ToString("g")</dd>
+
+                    <dt class="col-sm-4">Fuar:</dt>
+                    <dd class="col-sm-8">@Model.Exhibition</dd>
+
+                    <dt class="col-sm-4">E-posta Durumu:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.IsEmailSent)
+                        {
+                            <span class="badge bg-success status-badge">Gönderildi</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger status-badge">Gönderilemedi</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <h4 class="mt-4">Mesaj</h4>
+        <hr />
+        <div class="message-box">
+            @Model.Message
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-end">
+                <a asp-action="Index" class="btn btn-secondary me-2">
+                    <i class="bi bi-arrow-left-circle"></i> Listeye Geri Dön
+                </a>
+                <form asp-action="Details" asp-route-id="@Model.Id" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bu talebi silmek istediğinizden emin misiniz?')">
+                        <i class="bi bi-trash-fill"></i> Sil
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

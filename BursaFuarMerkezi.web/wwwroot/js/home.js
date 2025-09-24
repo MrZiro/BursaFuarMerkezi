@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const swiperWrapper = document.querySelector('.swiper-wrapper');
     const cardTemplate = document.getElementById('card-template-2');
-    const categoryTabs = document.querySelectorAll('.category-tab-2');
+    const categoryTabsContainer = document.getElementById('category-tabs-2');
     const cardSlider = document.querySelector('.card-slider-2');
     const upcomingFairsSlider = document.querySelector('.slider');
     const yearFilter = document.getElementById('yearFilter');
@@ -54,13 +54,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update category tabs with database data
     function updateCategoryTabs() {
-        categoryTabs.forEach((tab, index) => {
-            if (index < categories.length) {
-                tab.textContent = categories[index].name.toUpperCase();
-                tab.dataset.category = categories[index].key;
-                if (index === 0) {
-                    tab.classList.add('active');
-                }
+        if (!categoryTabsContainer) return;
+
+        // Remove previously added dynamic tabs to prevent duplication
+        categoryTabsContainer.querySelectorAll('.dynamic-category-tab').forEach(tab => tab.remove());
+
+        const allPostsLink = categoryTabsContainer.querySelector('a.category-tab-2:not(.dynamic-category-tab)');
+
+        categories.forEach((category, index) => {
+            const tab = document.createElement('a');
+            tab.href = '#';
+            tab.className = 'category-tab-2 dynamic-category-tab';
+            tab.style.marginRight = '15px'; // Add some spacing
+            tab.textContent = category.name.toUpperCase();
+            tab.dataset.category = category.key;
+
+            if (index === 0) {
+                tab.classList.add('active');
+            }
+
+            // Insert new tabs before the "all posts" link
+            if (allPostsLink) {
+                categoryTabsContainer.insertBefore(tab, allPostsLink);
+            } else {
+                categoryTabsContainer.appendChild(tab);
             }
         });
     }
@@ -596,22 +613,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle category tab clicks
     function handleCategoryClick(e) {
-        if (!e.target.dataset.category) return;
-        
-        const category = e.target.dataset.category;
-        
-        categoryTabs.forEach(tab => tab.classList.remove('active'));
-        e.target.classList.add('active');
-        
+        const clickedTab = e.target.closest('.category-tab-2[data-category]');
+        if (!clickedTab) {
+            return; // Exit if the click is not on a category tab
+        }
+    
+        e.preventDefault();
+        const category = clickedTab.dataset.category;
+
+        // Update active state on tabs
+        if(categoryTabsContainer) {
+            categoryTabsContainer.querySelectorAll('.dynamic-category-tab').forEach(tab => tab.classList.remove('active'));
+        }
+        clickedTab.classList.add('active');
+
         currentCategory = category;
         loadBlogs(category);
     }
 
 
     // Event Listeners
-    categoryTabs.forEach(tab => {
-        tab.addEventListener('click', handleCategoryClick);
-    });
+    if (categoryTabsContainer) {
+        categoryTabsContainer.addEventListener('click', handleCategoryClick);
+    }
 
     // Initialize page
     initializePage();

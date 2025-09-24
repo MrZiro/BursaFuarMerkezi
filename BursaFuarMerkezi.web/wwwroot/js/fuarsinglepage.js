@@ -2,20 +2,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Takvime Ekle butonu işlevselliği
     const takvimEkleBtn = document.querySelector('.takvim-ekle-btn');
     
-    takvimEkleBtn.addEventListener('click', function() {
-        // Fuar bilgilerini al
-        const fairTitle = document.querySelector('.fair-title').textContent;
-        const startDate = '2025-04-24';
-        const endDate = '2025-04-26';
-        const location = 'İstanbul Fuar Merkezi';
-        const description = document.querySelector('.fair-description p').textContent;
-        
-        // Google Calendar için URL oluştur
-        const googleCalendarUrl = createGoogleCalendarUrl(fairTitle, startDate, endDate, location, description);
-        
-        // Takvim seçeneklerini göster
-        showCalendarOptions(googleCalendarUrl);
-    });
+    if (takvimEkleBtn) {
+        takvimEkleBtn.addEventListener('click', function () {
+            // Fuar bilgilerini data attribute'larından al
+            const fairTitle = this.dataset.title;
+            const startDate = this.dataset.startDate;
+            const endDate = this.dataset.endDate;
+            const location = this.dataset.location;
+            const description = this.dataset.description;
+
+            // Google Calendar için URL oluştur
+            const googleCalendarUrl = createGoogleCalendarUrl(fairTitle, startDate, endDate, location, description);
+
+            // Takvim seçeneklerini göster
+            showCalendarOptions(googleCalendarUrl);
+        });
+    }
     
     // Paylaş butonu işlevselliği
     const shareBtn = document.querySelector('.share-btn');

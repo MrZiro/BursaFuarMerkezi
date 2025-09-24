@@ -27,6 +27,11 @@ namespace BursaFuarMerkezi.web.Models.Configuration
         {
             return GetTemplate("Contact", language);
         }
+
+        public EmailTemplate? GetStandRequestTemplate(string language)
+        {
+            return GetTemplate("StandRequest", language);
+        }
     }
 
     /// <summary>
@@ -35,6 +40,7 @@ namespace BursaFuarMerkezi.web.Models.Configuration
     public class EmailTemplate
     {
         public string SubjectPrefix { get; set; } = string.Empty;
+        public string AdminSubject { get; set; } = string.Empty;
         public string ConfirmationSubject { get; set; } = string.Empty;
         public string SuccessMessage { get; set; } = string.Empty;
         public string ErrorMessage { get; set; } = string.Empty;

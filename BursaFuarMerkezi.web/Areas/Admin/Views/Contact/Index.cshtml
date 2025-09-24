@@ -1,0 +1,77 @@
+@model IEnumerable<Contact>
+
+@{
+    ViewData["Title"] = "İletişim Mesajları";
+}
+@section Styles {
+    <style>
+        .card-header h2 {
+            font-weight: 600;
+        }
+        .table thead th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .status-icon {
+            font-size: 1.5rem;
+        }
+    </style>
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">İletişim Mesajları</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Ad Soyad</th>
+                    <th>E-posta</th>
+                    <th>Tarih</th>
+                    <th>E-posta Gönderildi</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@item.CreatedAt.ToString("g")</td>
+                        <td class="text-center">
+                            @if (item.IsEmailSent)
+                            {
+                                <i class="bi bi-check-circle-fill text-success status-icon"></i>
+                            }
+                            else
+                            {
+                                <i class="bi bi-x-circle-fill text-danger status-icon"></i>
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">
+                                    <i class="bi bi-search"></i> İncele
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

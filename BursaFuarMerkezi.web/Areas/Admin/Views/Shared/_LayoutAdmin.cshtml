@@ -81,6 +81,22 @@
                                     <span class="label ms-3">Fuar Page</span>
                                 </a>
                             </li>
+                            <li class="nav-item @GetActiveClass("StandReq")">
+                                <a asp-area="admin" asp-controller="StandReq" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        storefront
+                                    </span>
+                                    <span class="label ms-3">Stant Talepleri</span>
+                                </a>
+                            </li>
+                             <li class="nav-item @GetActiveClass("Contact")">
+                                <a asp-area="admin" asp-controller="Contact" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        mail
+                                    </span>
+                                    <span class="label ms-3">İletişim Mesajları</span>
+                                </a>
+                            </li>
                             <partial name="_AdminMenu" />
                         </ul>
                     </aside>

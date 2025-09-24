@@ -20,5 +20,6 @@ namespace BursaFuarMerkezi.Utility
         public const int TempFileMaxAgeMinutes = 120;         // Delete files older than 2 hours
 
         public const string siteUrl = "https://www.bursafuarmerkezi.com";
+        public const string AdminEmail = "test@test.com";
     }
 }
