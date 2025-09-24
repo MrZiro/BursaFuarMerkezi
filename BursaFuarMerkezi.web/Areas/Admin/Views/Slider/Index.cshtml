@@ -1,12 +1,13 @@
-@model List<Slider>
-@{
-    ViewData["Title"] = "Sliders";
+@section Styles {
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css" />
 }
 
 <div class="container">
     <div class="row pt-4 pb-3">
         <div class="col-6">
-            <h2 class="text-primary">Sliders</h2>
+            <h2 class="text-primary">
+                Slider Management
+            </h2>
         </div>
         <div class="col-6 text-end">
             <a asp-controller="Slider" asp-action="Upsert" class="btn btn-primary">
@@ -16,23 +17,120 @@
     </div>
 
     <div class="table-container">
-        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
-            <thead></thead>
-            <tbody></tbody>
+        <table id="tblData" class="">
+            <thead>
+                <!-- DataTable will populate headers -->
+            </thead>
+            <tbody>
+                <!-- DataTable will populate data -->
+            </tbody>
         </table>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_PartialReqScript" />
+
     <script>
         $(document).ready(() => {
-            initializeDataTableNoOption('Slider', [
-                { title: 'Order', data: 'displayOrder', width: '15%' },
-                { title: 'Active', data: 'isActive', width: '15%' }
+            initializeDataTableWithOption('Slider', [
+                {
+                    title: 'Preview',
+                    data: null,
+                    width: '15%',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        const imageUrl = row.imageUrl || '/images/placeholder.jpg';
+                        return `<img src="${imageUrl}" alt="Slider preview" style="width: 80px; height: 45px; object-fit: cover; border-radius: 4px;">`;
+                    }
+                },
+                {
+                    title: 'Title (TR/EN)',
+                    data: null,
+                    width: '25%',
+                    render: function (data, type, row) {
+                        const tr = row.titleTr || 'No title';
+                        const en = row.titleEn || 'No title';
+                        return `<div><div>${tr}</div><div class="text-muted small">${en}</div></div>`;
+                    }
+                },
+                {
+                    title: 'Display Order',
+                    data: 'displayOrder',
+                    width: '10%',
+                    className: 'text-center'
+                },
+                {
+                    title: 'Status',
+                    data: null,
+                    width: '15%',
+                    className: 'text-center',
+                    render: function (data, type, row) {
+                        const isActive = row.isActive;
+                        const statusClass = isActive ? 'bg-success' : 'bg-secondary';
+                        const statusText = isActive ? 'Active' : 'Inactive';
+                        const buttonClass = isActive ? 'btn-outline-secondary' : 'btn-outline-success';
+                        const buttonText = isActive ? 'Deactivate' : 'Activate';
+                        
+                        return `
+                            <div>
+                                <span class="badge ${statusClass}">${statusText}</span>
+                                <br>
+                                <button class="btn ${buttonClass} btn-sm mt-1" onclick="toggleActive(${row.id})">
+                                    ${buttonText}
+                                </button>
+                            </div>
+                        `;
+                    }
+                },
+                {
+                    title: 'Created At',
+                    data: null,
+                    width: '15%',
+                    render: function (data, type, row) {
+                        const date = new Date(row.createdAt);
+                        return date.toLocaleDateString('tr-TR');
+                    }
+                },
+                {
+                    title: 'Actions',
+                    data: null,
+                    width: '20%',
+                    orderable: false,
+                    className: 'text-center',
+                    render: function (data, type, row) {
+                        return `
+                            <div class="btn-group" role="group">
+                                <a href="/Admin/Slider/Upsert?id=${row.id}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a href="/Admin/Slider/Delete?id=${row.id}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </div>
+                        `;
+                    }
+                }
             ]);
         });
+
+        function toggleActive(id) {
+            $.ajax({
+                url: '/Admin/Slider/ToggleActive',
+                type: 'POST',
+                data: { id: id },
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        $('#tblData').DataTable().ajax.reload();
+                    } else {
+                        toastr.error(data.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occurred while updating slider status');
+                }
+            });
+        }
     </script>
 }
-
-

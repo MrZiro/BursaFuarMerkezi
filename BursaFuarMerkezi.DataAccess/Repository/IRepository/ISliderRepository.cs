@@ -1,11 +1,16 @@
+using BursaFuarMerkezi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace BursaFuarMerkezi.DataAccess.Repository.IRepository
 {
-    using BursaFuarMerkezi.Models;
-
     public interface ISliderRepository : IRepository<Slider>
     {
-        void Update(Slider obj);
+        public void Update(Slider obj);
+        public Task<List<Slider>> GetActiveSlidersByOrderAsync();
+        public Task<Slider?> GetSliderByIdAsync(int id);
     }
 }
-
-

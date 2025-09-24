@@ -1,9 +1,4 @@
 @model SliderVM
-
-@{
-    ViewData["Title"] = Model.Slider.Id == 0 ? "Create Slider" : "Edit Slider";
-}
-
 @section Styles {
     <style>
         .img-container {
@@ -15,7 +10,15 @@
         .img-preview {
             width: 100%;
             max-height: 300px;
-            object-fit: contain;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .mobile-img-preview {
+            width: 200px;
+            max-height: 350px;
+            object-fit: cover;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
@@ -48,91 +51,220 @@
             border-color: #28a745;
             background-color: rgba(40, 167, 69, 0.1);
         }
+
+        .required-asterisk {
+            color: red;
+        }
     </style>
 }
 
 <div class="container">
     <div class="row pt-4 pb-3">
         <div class="col-12">
-            <h2 class="text-primary">@(Model.Slider.Id == 0 ? "Create" : "Update") Slider</h2>
+            <h2 class="text-primary">
+                @(Model.Slider.Id == 0 ? "Create" : "Update") Slider
+            </h2>
         </div>
     </div>
 
     <form method="post" enctype="multipart/form-data">
         <input asp-for="Slider.Id" hidden />
+        <input asp-for="Slider.ImageUrl" hidden />
+        <input asp-for="Slider.MobileImageUrl" hidden />
+        <input asp-for="Slider.CreatedAt" hidden />
         <div asp-validation-summary="All" class="text-danger"></div>
 
         <div class="row">
             <div class="col-md-8">
-                
-
-                <div class="border p-3 mt-2 rounded-2">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Slider.DisplayOrder" class="form-label">Display Order</label>
-                            <input asp-for="Slider.DisplayOrder" type="number" class="form-control" />
-                            <span asp-validation-for="Slider.DisplayOrder" class="text-danger"></span>
+                <!-- Multilingual Content -->
+                <div class="border p-3 mt-2 mb-3 rounded-2">
+                    <ul class="nav nav-tabs" id="langTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tr-tab" data-bs-toggle="tab" data-bs-target="#tr" type="button" role="tab" aria-controls="tr" aria-selected="true">TR</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="en-tab" data-bs-toggle="tab" data-bs-target="#en" type="button" role="tab" aria-controls="en" aria-selected="false">EN</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-3" id="langTabsContent">
+                        <div class="tab-pane fade show active" id="tr" role="tabpanel" aria-labelledby="tr-tab">
+                            <div class="mb-3">
+                                <label asp-for="Slider.TitleTr" class="form-label">Title (TR)</label>
+                                <input asp-for="Slider.TitleTr" class="form-control" placeholder="Optional slide title in Turkish" />
+                                <span asp-validation-for="Slider.TitleTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Slider.DescriptionTr" class="form-label">Description (TR)</label>
+                                <textarea asp-for="Slider.DescriptionTr" class="form-control" rows="3" placeholder="Optional slide description in Turkish"></textarea>
+                                <span asp-validation-for="Slider.DescriptionTr" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Slider.ButtonTextTr" class="form-label">Button Text (TR)</label>
+                                <input asp-for="Slider.ButtonTextTr" class="form-control" placeholder="Optional button text in Turkish" />
+                                <span asp-validation-for="Slider.ButtonTextTr" class="text-danger"></span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3 d-flex align-items-center">
-                            <div class="form-check mt-4">
-                                <input asp-for="Slider.IsActive" class="form-check-input" />
-                                <label asp-for="Slider.IsActive" class="form-check-label">Active</label>
+                        <div class="tab-pane fade" id="en" role="tabpanel" aria-labelledby="en-tab">
+                            <div class="mb-3">
+                                <label asp-for="Slider.TitleEn" class="form-label">Title (EN)</label>
+                                <input asp-for="Slider.TitleEn" class="form-control" placeholder="Optional slide title in English" />
+                                <span asp-validation-for="Slider.TitleEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Slider.DescriptionEn" class="form-label">Description (EN)</label>
+                                <textarea asp-for="Slider.DescriptionEn" class="form-control" rows="3" placeholder="Optional slide description in English"></textarea>
+                                <span asp-validation-for="Slider.DescriptionEn" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Slider.ButtonTextEn" class="form-label">Button Text (EN)</label>
+                                <input asp-for="Slider.ButtonTextEn" class="form-control" placeholder="Optional button text in English" />
+                                <span asp-validation-for="Slider.ButtonTextEn" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
-                    
+                </div>
+
+                <!-- Link Settings -->
+                <div class="border p-3 mt-2 mb-3 rounded-2">
+                    <h5>Link Settings</h5>
+                    <div class="mb-3">
+                        <label asp-for="Slider.LinkUrl" class="form-label">Link URL</label>
+                        <input asp-for="Slider.LinkUrl" class="form-control" placeholder="Optional URL to redirect when slide is clicked" />
+                        <span asp-validation-for="Slider.LinkUrl" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input asp-for="Slider.OpenInNewTab" class="form-check-input" type="checkbox" />
+                            <label asp-for="Slider.OpenInNewTab" class="form-check-label">
+                                Open link in new tab
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Settings -->
+                <div class="border p-3 mt-2 mb-3 rounded-2">
+                    <h5>Display Settings</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Slider.DisplayOrder" class="form-label">Display Order <span class="required-asterisk">*</span></label>
+                                <input asp-for="Slider.DisplayOrder" class="form-control" type="number" min="1" />
+                                <span asp-validation-for="Slider.DisplayOrder" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="Slider.AltText" class="form-label">Alt Text</label>
+                                <input asp-for="Slider.AltText" class="form-control" placeholder="Image description for accessibility" />
+                                <span asp-validation-for="Slider.AltText" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input asp-for="Slider.IsActive" class="form-check-input" type="checkbox" />
+                            <label asp-for="Slider.IsActive" class="form-check-label">
+                                Is Active
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="border p-3 mt-2 rounded-2">
-                    <label class="form-label">Image</label>
-                    <div class="dropzone" id="slider-image-dropzone" enabled="true">
-                        <input type="file" id="sliderImageInput" asp-for="Image" class="d-none" accept=".jpg,.jpeg,.png,.gif,.webp" />
-                        <div id="slider-dropzone-content">
-                            <i class="bi bi-cloud-arrow-up fs-3"></i>
-                            <p class="mb-1">Drag and drop an image here, or click to select</p>
-                            <p class="text-muted small mb-0">Accepted: JPG, JPEG, PNG, GIF, WEBP (Max 5MB)</p>
-                        </div>
-                    </div>
-                    <span class="text-danger d-block mt-2"></span>
-                </div>
-                <div class="mb-3 text-center" id="slider-image-preview-container">
+                <!-- Desktop Image -->
+                <div class="border p-3 mt-2 mb-3 rounded-2">
+                    <h5>Desktop Image <span class="required-asterisk">*</span></h5>
+                    
                     @if (!string.IsNullOrEmpty(Model.Slider.ImageUrl))
                     {
                         <div class="img-container">
-                            <input asp-for="Slider.ImageUrl" hidden />
-                            <img src="@Model.Slider.ImageUrl" id="sliderImagePreview" class="img-preview" />
+                            <img src="@Model.Slider.ImageUrl" alt="Current desktop image" class="img-preview" />
+                            <small class="text-muted">Current desktop image</small>
                         </div>
-                        <p class="text-muted small">Current image. Replace by uploading a new one.</p>
                     }
-                    else
+                    
+                    <div class="mb-3">
+                        <label asp-for="DesktopImage" class="form-label">Upload New Desktop Image</label>
+                        <input asp-for="DesktopImage" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="DesktopImage" class="text-danger"></span>
+                        <small class="form-text text-muted">Recommended size: 1920x1080px</small>
+                    </div>
+                </div>
+
+                <!-- Mobile Image -->
+                <div class="border p-3 mt-2 mb-3 rounded-2">
+                    <h5>Mobile Image</h5>
+                    
+                    @if (!string.IsNullOrEmpty(Model.Slider.MobileImageUrl))
                     {
-                        <div class="img-container" style="display:none;">
-                            <img src="" id="sliderImagePreview" class="img-preview" />
+                        <div class="img-container">
+                            <img src="@Model.Slider.MobileImageUrl" alt="Current mobile image" class="mobile-img-preview" />
+                            <small class="text-muted">Current mobile image</small>
                         </div>
-                        <p class="text-muted small" id="slider-preview-caption" style="display:none;">Image preview. Submit to save changes.</p>
                     }
+                    
+                    <div class="mb-3">
+                        <label asp-for="MobileImage" class="form-label">Upload Mobile Image</label>
+                        <input asp-for="MobileImage" class="form-control" type="file" accept="image/*" />
+                        <span asp-validation-for="MobileImage" class="text-danger"></span>
+                        <small class="form-text text-muted">Recommended size: 750x1334px (optional)</small>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="text-end mt-3">
-            <a asp-controller="Slider" asp-action="Index" class="btn btn-secondary" style="width:150px">
-                <i class="bi bi-arrow-left"></i> Back to List
-            </a>
-            <button type="submit" class="btn btn-primary" style="width:150px">
-                <i class="bi bi-save"></i> @(Model.Slider.Id == 0 ? "Create" : "Update")
-            </button>
+        <div class="row">
+            <div class="col-12">
+                <div class="mt-3">
+                    @if (Model.Slider.Id != 0)
+                    {
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Update Slider
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Create Slider
+                        </button>
+                    }
+                    <a asp-controller="Slider" asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
         </div>
     </form>
 </div>
 
-@section Scripts{
-    @{ <partial name="_ValidationScriptsPartial" /> 
-        <script src="~/admin/scripts/Dropzone.js"></script>
-    }
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     
+    <script>
+        // Image preview functionality
+        function setupImagePreview(inputId, previewClass) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const preview = document.querySelector(`.${previewClass}`);
+                            if (preview) {
+                                preview.src = e.target.result;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        }
+
+        // Setup image previews
+        setupImagePreview('Slider_ImageFile', 'img-preview');
+        setupImagePreview('Slider_MobileImageFile', 'mobile-img-preview');
+    </script>
 }
-
-
