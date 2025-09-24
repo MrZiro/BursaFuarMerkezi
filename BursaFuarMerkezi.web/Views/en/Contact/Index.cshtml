@@ -3,8 +3,48 @@
     ViewData["Title"] = "Contact";
 }
 <link rel="stylesheet" href="~/css/iletisim.css">
-<partial name="_Notification" />
+<style>
+    .custom-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #333;
+        color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 1050;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
 
+    .custom-toast.success {
+        background-color: #28a745;
+    }
+
+    .custom-toast.error {
+        background-color: #dc3545;
+    }
+
+    .custom-toast.show {
+        display: block;
+        opacity: 1;
+    }
+</style>
+
+@if (TempData["success"] != null)
+{
+    <div id="toast-success" class="custom-toast success" role="alert" aria-live="assertive" aria-atomic="true">
+        @TempData["success"]
+    </div>
+}
+
+@if (TempData["error"] != null)
+{
+    <div id="toast-error" class="custom-toast error" role="alert" aria-live="assertive" aria-atomic="true">
+        @TempData["error"]
+    </div>
+}
 <div class="banner">
 </div>
 
@@ -49,8 +89,10 @@
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="kvkk" required>
-                        <label class="form-check-label" for="kvkk"><a href="/en/kvkk-documents" target="_blank">I have read and accept the terms and conditions page of the website</a></label>
+                        <input type="checkbox" class="form-check-input-if" id="terms-if" required>
+                        <label class="form-check-label-if" for="terms-if">
+                           <a href="/en/kvkk-documents" target="_blank">I have read and accept the terms and conditions page of the website</a> *
+                        </label>
                     </div>
                     <div class="row mb-3">
                         <div class="col-4">
@@ -70,3 +112,95 @@
         </div>
     </div>
 </div>
+
+<!-- KVKK Modal for Form (kvkk-if) -->
+<div class="modal-overlay-if" id="kvkkModal-if">
+    <div class="modal-container-if">
+        <div class="modal-header-if">
+            <h3 class="modal-title-if">INFORMATION REGARDING THE LAW ON THE PROTECTION OF PERSONAL DATA NO. 6698</h3>
+        </div>
+        <div class="modal-content-if">
+            <div class="kvkk-content-if">
+               <h3>INFORMATION PURSUANT TO THE LAW ON THE PROTECTION OF PERSONAL DATA NO. 6698</h3>
+                <p><strong>Identity of the data controller and, if any, its representative;</strong><br>
+                    This information is provided within the scope of the Law on the Protection of Personal Data No. 6698 ("KVKK") by "KFA Fuarcılık A.Ş" (Mersis No: 0548143315700001) as the Data Controller to fulfill its obligation to inform its business partners, customers, fair visitors, and the natural or legal persons with whom it communicates.</p>
+
+                <p><strong>For what purpose personal data will be processed;</strong><br>
+                    Your personal data may be processed by the data controller or the legal/natural persons it appoints under the following circumstances and conditions;</p>
+                <ul>
+                    <li>To improve, develop, and diversify our products and services and to offer them to or inform the legal/natural persons with whom we have a commercial relationship,</li>
+                    <li>To increase the benefit and quality that our exhibitors and visitors who come to see these products and services at our fairs will get from these organizations,</li>
+                    <li>To plan the scope of the fairs in accordance with the expectations of exhibitors and visitors, to monitor its effectiveness, and to ensure its continuity,</li>
+                    <li>To increase the awareness of the fairs among participants, visitors, the press, relevant non-governmental organizations, and relevant public institutions and organizations, to create business partnerships among them, and to enrich their commercial or social activities,</li>
+                    <li>To evaluate new products and services developed and to determine and implement our company's commercial or business strategies,</li>
+                    <li>To increase the performance level and employee satisfaction of our employees' data, to determine their training and career plans, or to ensure job security,</li>
+                    <li>In addition, for purposes such as carrying out our necessary quality and standard audits or fulfilling our reporting and other obligations determined by laws and regulations,</li>
+                    <li>Also, within the scope of the requirements and obligations determined to ensure the fulfillment of legal obligations specified in the KVKK with regulatory and supervisory institutions, as required or mandated by legal regulations.</li>
+                </ul>
+
+                <p><strong>To whom and for what purpose the processed personal data can be transferred,</strong><br>
+                    Your processed personal data may be transferred within the scope of the above purposes and the conditions determined by the KVKK;</p>
+                <ul>
+                    <li>To our company's business partnerships or subsidiaries, in order to carry out and ensure the continuity of commercial activities,</li>
+                    <li>To our suppliers, limited to the purpose of providing outsourced products and services,</li>
+                    <li>To audit firms within the scope of relevant contracts for the audit of our commercial activities in accordance with the relevant legislative provisions,</li>
+                    <li>To our shareholders, limited to the purpose of designing strategies related to our company's commercial activities,</li>
+                    <li>To legally authorized public institutions and organizations, limited to the scope of their requests within their legal authority,</li>
+                    <li>To the institutions and organizations designated to ensure the fulfillment of legal obligations specified in the KVKK,</li>
+                </ul>
+                <p>it may be transferred within the framework of your explicit consent or the conditions determined by law.</p>
+
+                <p><strong>Method and legal reason for collecting personal data,</strong><br>
+                    Your personal data is collected by our company or by natural or legal persons who process data on behalf of our company; through the website, various contracts, all kinds of interest information forms, surveys, job application forms, employment contracts, social media applications, call centers, and, but not limited to, verbal, written, or electronic channels with your explicit consent.</p>
+
+                <p>This information is obtained for the purpose of carrying out our commercial and administrative activities within the framework of the laws regulating business and social life, and in this context, for our company to continue its commercial life and to fulfill its legal responsibilities completely and accurately.</p>
+
+                <p><strong>Rights of the Data Subject,</strong><br>
+                    Within the scope of the KVKK, you have the following rights regarding your personal data:</p>
+                <ul>
+                    <li>To learn whether personal data is processed,</li>
+                    <li>To request information if personal data has been processed,</li>
+                    <li>To learn the purpose of processing personal data and whether they are used in accordance with their purpose,</li>
+                    <li>To know the third parties to whom personal data is transferred at home or abroad,</li>
+                    <li>To request the correction of personal data if it is incomplete or incorrectly processed,</li>
+                    <li>To request the deletion or destruction of data in the event that the reasons requiring the processing of your personal data disappear,</li>
+                    <li>To request that your corrected or deleted information be notified to the third parties to whom personal data has been transferred, if any,</li>
+                    <li>To object to the emergence of a result against the person himself by analyzing the processed data exclusively through automated systems,</li>
+                    <li>To demand the compensation of the damage in case of damage due to the unlawful processing of personal data.</li>
+                </ul>
+
+                <p>To exercise your rights mentioned above, you can send your written request with the necessary information to identify you and your explanations regarding the right you want to use to "[…]" address with a wet signature and/or to our […] registered e-mail address with a secure electronic signature.</p>
+
+                <p>In the application you will make to exercise your rights as a personal data owner and which includes your explanations regarding the right you request to use; the matter you request must be clear and understandable, the subject you request must be related to you or if you are acting on behalf of someone else, you must be specifically authorized in this regard and document your authority, the application must contain identity and address information, and documents certifying your identity must be attached to the application.</p>
+
+                <p>Applications made in this context will be concluded as soon as possible and within 30 days at the latest.</p> <br>
+            </div>
+        </div>
+        <div class="modal-footer-if">
+            <button class="btn btn-secondary close-button-if" id="closeKvkkModal-if">Close</button>
+            <button class="btn btn-primary accept-button-if" id="acceptKvkkModal-if">I Accept</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/kvkk.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toastSuccess = document.getElementById('toast-success');
+            const toastError = document.getElementById('toast-error');
+
+            function showToast(toastEl) {
+                if (toastEl) {
+                    toastEl.classList.add('show');
+                    setTimeout(() => {
+                        toastEl.classList.remove('show');
+                    }, 5000); // Hide after 5 seconds
+                }
+            }
+
+            showToast(toastSuccess);
+            showToast(toastError);
+        });
+    </script>
+}

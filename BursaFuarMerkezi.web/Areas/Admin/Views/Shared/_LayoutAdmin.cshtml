@@ -97,6 +97,30 @@
                                     <span class="label ms-3">İletişim Mesajları</span>
                                 </a>
                             </li>
+                            <li class="nav-item @GetActiveClass("Sector")">
+                                <a asp-area="admin" asp-controller="Sector" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        business_center
+                                    </span>
+                                    <span class="label ms-3">Sektörler</span>
+                                </a>
+                            </li>
+                            <li class="nav-item @GetActiveClass("Slider")">
+                                <a asp-area="admin" asp-controller="Slider" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        collections
+                                    </span>
+                                    <span class="label ms-3">Slider</span>
+                                </a>
+                            </li>
+                            <li class="nav-item @GetActiveClass("Users")">
+                                <a asp-area="admin" asp-controller="Users" asp-action="Index" class="nav-link d-flex align-items-center">
+                                    <span class="svv material-symbols-rounded">
+                                        group
+                                    </span>
+                                    <span class="label ms-3">Kullanıcılar</span>
+                                </a>
+                            </li>
                             <partial name="_AdminMenu" />
                         </ul>
                     </aside>
