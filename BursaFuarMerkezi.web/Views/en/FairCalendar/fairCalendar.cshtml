@@ -19,9 +19,12 @@
         .GroupBy(f => CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(f.StartDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday))
         .OrderBy(g => g.First().StartDate);
 }
-
-<link href="/assets/fuar-takvimi.css" rel="stylesheet"/>
-<link href="/assets/arama-cubugu.css" rel="stylesheet"/>
+@section Styles{
+    <link href="/css/fuar-takvimi.css" rel="stylesheet"/>
+}
+@section Scripts{
+    <script src="/js/fuar-takvimi.js"></script>
+}
 
 <div class="banner">
 </div>
@@ -65,7 +68,7 @@
                             </div>
                             <div class="fair-details">
                                 <h3>
-                                    <a href="/en/fair/@fair.SlugEn">@fair.TitleEn</a>
+                                    <a href="/en/fair-detail/@fair.SlugEn">@fair.TitleEn</a>
                                 </h3>
                                 <p class="location">
                                     <strong>Location:</strong> @fair.FairLocationEn
@@ -221,4 +224,3 @@
     </div>
 </div>
 
-<script src="/js/fuar-takvimi.js"></script>
