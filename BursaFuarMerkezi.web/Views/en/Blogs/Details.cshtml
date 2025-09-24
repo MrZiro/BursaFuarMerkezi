@@ -1,0 +1,166 @@
+@{
+    ViewData["Title"] = "Blog Details";
+    ViewData["Description"] = "Blog Details - Bursa Fair Center";
+    ViewData["Keywords"] = "BFM, Blog, Fair Center";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/css/blog-single-page.css">
+}
+
+    <div class="banner">
+
+    </div>
+
+    <div class="container py-5">
+        <div class="breadcrumb justify-content-center">
+            <a href="/en">Home</a> /
+            <a href="/en/all-news">All News</a> /
+            <span id="breadcrumbTitle">Blog Details</span>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="news-container">
+
+                    <div class="news-content" id="blogContent">
+                        <!-- Content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-bspg">
+        <h2>Blog Images</h2>
+
+        <!-- Galeri Slider -->
+        <div class="gallery-container-bspg">
+            <div class="gallery-wrapper-bspg" id="galleryWrapper">
+                <!-- JavaScript ile eklenecek -->
+            </div>
+
+            <button class="gallery-nav-bspg prev-bspg" id="prevBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="gallery-nav-bspg next-bspg" id="nextBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Lightbox -->
+        <div class="lightbox-bspg" id="lightbox">
+            <div class="lightbox-content-bspg">
+                <img src="/placeholder.svg" alt="" id="lightboxImage">
+                <button class="close-lightbox-bspg" id="closeLightbox">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+@section scripts{
+    <script>
+        // Get slug from URL
+        const urlParts = window.location.pathname.split('/');
+        const slug = urlParts[urlParts.length - 1];
+
+        // Load blog on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBlog(slug);
+        });
+
+        function loadBlog(slug) {
+            fetch(`/en/blog/details/${slug}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update page title
+                        document.title = data.data.title + ' - BFM';
+                        
+                        // Update breadcrumb
+                        document.getElementById('breadcrumbTitle').textContent = data.data.title;
+                        
+                        // Update content
+                        document.getElementById('blogContent').innerHTML = data.data.content;
+                        
+                        // Load gallery images
+                        if (data.data.galleryImages && data.data.galleryImages.length > 0) {
+                            loadGallery(data.data.galleryImages);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading blog:', error);
+                });
+        }
+
+        function loadGallery(images) {
+            const galleryWrapper = document.getElementById('galleryWrapper');
+            
+            const galleryHtml = images.map((image, index) => `
+                <div class="gallery-item-bspg">
+                    <div class="gallery-item-inner-bspg">
+                        <img src="${image.imageUrl}" alt="Blog Image ${index + 1}" 
+                             data-index="${index}" onclick="openLightbox('${image.imageUrl}', 'Blog Image ${index + 1}')">
+                    </div>
+                </div>
+            `).join('');
+            
+            galleryWrapper.innerHTML = galleryHtml;
+        }
+
+        // Lightbox functionality based on blog-single-page.js
+        function openLightbox(src, alt) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            lightbox.style.display = 'flex';
+
+            // Animation with setTimeout
+            setTimeout(() => {
+                lightbox.classList.add('active-bspg');
+            }, 10);
+        }
+
+        function closeLightboxFunc() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active-bspg');
+
+            // Hide after animation completes
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+            }, 400);
+        }
+
+        // Event listeners for lightbox
+        document.getElementById('closeLightbox')?.addEventListener('click', closeLightboxFunc);
+
+        document.getElementById('lightbox')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightboxFunc();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightboxFunc();
+                }
+            }
+        });
+    </script>
+}

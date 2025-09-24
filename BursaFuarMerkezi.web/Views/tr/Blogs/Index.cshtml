@@ -1,0 +1,213 @@
+@model List<BursaFuarMerkezi.Models.ContentType>
+
+@{
+    ViewData["Title"] = "BFM Gündem";
+    ViewData["Description"] = "BFM Gündem - Bursa Fuar Merkezi Gündem";
+    ViewData["Keywords"] = "BFM, Gündem, Fuar Merkezi";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/css/tum-haberler.css">
+}
+
+    <div class="banner">
+
+    </div>
+
+    <div class="container-blogs">
+        <h2 class="heading-blogs">BFM Gündem</h2>
+        <div class="filter-buttons-blogs" id="filterButtons-blogs">
+            <button class="filter-button-blogs active-blogs" data-category="all">Tümü</button>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var contentType in Model)
+                {
+                    <button class="filter-button-blogs" data-category="@contentType.NameTr">@contentType.NameTr</button>
+                }
+            }
+        </div>
+        <div class="card-grid-blogs" id="cardGrid-blogs">
+            <!-- Cards will be loaded here dynamically via AJAX -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p>Yükleniyor...</p>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination-container" id="paginationContainer" style="display: none;">
+            <div class="pagination-info">
+                <span id="paginationInfo"></span>
+            </div>
+            <div class="pagination-buttons" id="paginationButtons">
+                <!-- Pagination buttons will be added here dynamically -->
+            </div>
+        </div>
+    </div>
+
+
+@section scripts{
+    <script>
+        let currentPage = 1;
+        let currentCategory = 'all';
+        const pageSize = 9;
+
+        // Load blogs on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBlogs();
+            setupFilterButtons();
+        });
+
+        // Setup filter button event listeners
+        function setupFilterButtons() {
+            const filterButtons = document.querySelectorAll('.filter-button-blogs');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active-blogs'));
+                    // Add active class to clicked button
+                    this.classList.add('active-blogs');
+                    
+                    currentCategory = this.dataset.category;
+                    currentPage = 1;
+                    loadBlogs();
+                });
+            });
+        }
+
+        // Load blogs via AJAX
+        function loadBlogs() {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const cardGrid = document.getElementById('cardGrid-blogs');
+            const paginationContainer = document.getElementById('paginationContainer');
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'block';
+            paginationContainer.style.display = 'none';
+            
+            const url = `/tr/blog/getblogs?Category=${currentCategory}&PageNumber=${currentPage}&PageSize=${pageSize}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    loadingSpinner.style.display = 'none';
+                    
+                    if (data.success) {
+                        displayBlogs(data.data);
+                        setupPagination(data);
+                    } else {
+                        showError(data.message || 'Error loading blogs');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    loadingSpinner.style.display = 'none';
+                    showError('Bloglar yüklenirken hata oluştu');
+                });
+        }
+
+        // Display blogs in the grid
+        function displayBlogs(blogs) {
+            const cardGrid = document.getElementById('cardGrid-blogs');
+            
+            if (blogs.length === 0) {
+                cardGrid.innerHTML = `
+                    <div class="no-blogs-message">
+                        <p>Blog bulunamadı</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Debug: Log the first blog's URL
+            if (blogs.length > 0) {
+                console.log('Sample blog URL:', blogs[0].detailUrl);
+            }
+            
+            const blogsHtml = blogs.map(blog => `
+                <div class="card-blogs" onclick="window.location.href='${blog.detailUrl}'" style="cursor: pointer;">
+                    <div class="card-image-blogs">
+                        <img src="${blog.cardImageUrl}" alt="${blog.title}" onerror="this.src='/images/default-blog.png'">
+                        <div class="card-category-blogs">${blog.category}</div>
+                    </div>
+                    <div class="card-content-blogs">
+                        <h3 class="card-title-blogs">${blog.title}</h3>
+                        <p class="card-description-blogs">${blog.shortDescription}</p>
+                        <div class="card-footer-blogs">
+                            <span class="card-date-blogs">${blog.createdAt}</span>
+                            <a href="${blog.detailUrl}" class="card-link-blogs" onclick="event.stopPropagation();">
+                                Devamını Oku
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            cardGrid.innerHTML = blogsHtml;
+        }
+
+        // Setup pagination
+        function setupPagination(data) {
+            const paginationContainer = document.getElementById('paginationContainer');
+            const paginationInfo = document.getElementById('paginationInfo');
+            const paginationButtons = document.getElementById('paginationButtons');
+            
+            if (data.totalPages <= 1) {
+                paginationContainer.style.display = 'none';
+                return;
+            }
+            
+            // Update pagination info
+            const startItem = (data.currentPage - 1) * data.pageSize + 1;
+            const endItem = Math.min(data.currentPage * data.pageSize, data.totalCount);
+            paginationInfo.textContent = `${data.totalCount} sonuçtan ${startItem}-${endItem} arası gösteriliyor`;
+            
+            // Generate pagination buttons
+            let buttonsHtml = '';
+            
+            // Previous button
+            if (data.currentPage > 1) {
+                buttonsHtml += `<button class="pagination-btn" onclick="changePage(${data.currentPage - 1})">
+                    Önceki
+                </button>`;
+            }
+            
+            // Page number buttons
+            const startPage = Math.max(1, data.currentPage - 2);
+            const endPage = Math.min(data.totalPages, data.currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                buttonsHtml += `<button class="pagination-btn ${i === data.currentPage ? 'active' : ''}" 
+                    onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            // Next button
+            if (data.currentPage < data.totalPages) {
+                buttonsHtml += `<button class="pagination-btn" onclick="changePage(${data.currentPage + 1})">
+                    Sonraki
+                </button>`;
+            }
+            
+            paginationButtons.innerHTML = buttonsHtml;
+            paginationContainer.style.display = 'block';
+        }
+
+        // Change page
+        function changePage(page) {
+            currentPage = page;
+            loadBlogs();
+            // Scroll to top of blog list
+            document.querySelector('.container-blogs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show error message
+        function showError(message) {
+            const cardGrid = document.getElementById('cardGrid-blogs');
+            cardGrid.innerHTML = `
+                <div class="error-message">
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+    </script>
+}

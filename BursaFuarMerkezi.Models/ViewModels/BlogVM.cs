@@ -11,7 +11,7 @@ namespace BursaFuarMerkezi.Models.ViewModels
 {
     public class BlogVM
     {
-        public Blog Blog { get; set; }
+        public Blog Blog { get; set; } = new();
 
         [ValidateNever]
         public IFormFile? CardImage { get; set; }
@@ -22,6 +22,10 @@ namespace BursaFuarMerkezi.Models.ViewModels
         
         [ValidateNever]
         public IEnumerable<BlogImage>? ExistingImages { get; set; }
+        
+        // For deleting existing gallery images
+        [ValidateNever]
+        public List<int>? DeleteImageIds { get; set; }
         
         [ValidateNever]
         public IEnumerable<SelectListItem>? ContentTypeList { get; set; }

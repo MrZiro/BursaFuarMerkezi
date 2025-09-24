@@ -62,7 +62,6 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(BlogVM pageVM)
         {
-
             pageVM.ContentTypeList = _unitOfWork.ContentType.GetAll().Select(c => new SelectListItem
             {
                 Text = c.NameTr,
@@ -70,10 +69,13 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             });
 
             bool isNewRecord = pageVM.Blog.Id == 0;
+            
+            // Validation for featured image
             if (isNewRecord && pageVM.CardImage == null)
             {
                 ModelState.AddModelError("CardImage", "Please select a card image.");
-            } else if (pageVM.CardImage != null)
+            } 
+            else if (pageVM.CardImage != null)
             {
                 // Check file size (5MB max)
                 if (pageVM.CardImage.Length > 5 * 1024 * 1024)
@@ -91,77 +93,101 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                try {
+                try 
+                {
+                    // 1. Handle featured image
                     if (pageVM.CardImage != null)
                     {
-                        string oldImageUrl = pageVM.Blog.CardImageUrl;
-                        pageVM.Blog.CardImageUrl = await _fileHelper.SaveFileAsync(
+                        var savedImageUrl = await _fileHelper.SaveFileAsync(
                             pageVM.CardImage, pageVM.Blog.CardImageUrl, "Blogs");
-                        if (pageVM.Blog.CardImageUrl == null)
+                        if (string.IsNullOrEmpty(savedImageUrl))
                         {
-                            // If image saving failed but validation passed, something went wrong
                             ModelState.AddModelError("CardImage", "Failed to upload image. Please try again.");
                             return View(pageVM);
                         }
+                        pageVM.Blog.CardImageUrl = savedImageUrl;
                     }
-                    else if (isNewRecord)
+
+                    // 2. Save/update blog
+                    if (isNewRecord)
                     {
-                        // This is a safety check - shouldn't happen due to validation above
-                        ModelState.AddModelError("CardImage", "Please select an image.");
-                        return View(pageVM);
+                        _unitOfWork.Blog.Add(pageVM.Blog);
+                        TempData["success"] = "Blog created successfully.";
                     }
+                    else
+                    {
+                        _unitOfWork.Blog.Update(pageVM.Blog);
+                        TempData["success"] = "Blog updated successfully.";
+                    }
+                    _unitOfWork.Save();
+
+                    // 3. Handle gallery deletions
+                    if (pageVM.DeleteImageIds != null && pageVM.DeleteImageIds.Any())
+                    {
+                        await DeleteGalleryImages(pageVM.DeleteImageIds);
+                    }
+
+                    // 4. Handle new gallery images
+                    if (pageVM.GalleryImages != null && pageVM.GalleryImages.Any())
+                    {
+                        await AddGalleryImages(pageVM.Blog.Id, pageVM.GalleryImages);
+                    }
+
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "Error: " + ex.Message);
                     return View(pageVM);
                 }
-
-                if (isNewRecord)
-                {
-                    _unitOfWork.Blog.Add(pageVM.Blog);
-                    TempData["success"] = "Page created successfully.";
-                }
-                else
-                {
-                    _unitOfWork.Blog.Update(pageVM.Blog);
-                    TempData["success"] = "Page updated successfully.";
-                }
-                _unitOfWork.Save();
-
-                // Save gallery images after we have Blog.Id
-                if (pageVM.GalleryImages != null && pageVM.GalleryImages.Count > 0)
-                {
-                    int nextOrder = _unitOfWork.BlogImage.GetAll()
-                        .Where(x => x.BlogId == pageVM.Blog.Id)
-                        .Select(x => x.DisplayOrder)
-                        .DefaultIfEmpty(0)
-                        .Max();
-
-                    foreach (var file in pageVM.GalleryImages)
-                    {
-                        var imageUrl = await _fileHelper.SaveFileAsync(file, null, "BlogGallery");
-                        if (!string.IsNullOrEmpty(imageUrl))
-                        {
-                            nextOrder++;
-                            _unitOfWork.BlogImage.Add(new BlogImage
-                            {
-                                BlogId = pageVM.Blog.Id,
-                                ImageUrl = imageUrl,
-                                DisplayOrder = nextOrder
-                            });
-                        }
-                    }
-                    _unitOfWork.Save();
-                }
-                return RedirectToAction("Index");
             }
             return View(pageVM);
         }
 
+        // Helper method to delete gallery images
+        private async Task DeleteGalleryImages(List<int> imageIds)
+        {
+            var imagesToDelete = _unitOfWork.BlogImage.GetAll()
+                .Where(x => imageIds.Contains(x.Id)).ToList();
+                
+            foreach (var img in imagesToDelete)
+            {
+                if (!string.IsNullOrEmpty(img.ImageUrl))
+                {
+                    await _fileHelper.DeleteFileAsync(img.ImageUrl);
+                }
+                _unitOfWork.BlogImage.Remove(img);
+            }
+            _unitOfWork.Save();
+        }
 
+        // Helper method to add new gallery images
+        private async Task AddGalleryImages(int blogId, List<IFormFile> images)
+        {
+            int nextOrder = _unitOfWork.BlogImage.GetAll()
+                .Where(x => x.BlogId == blogId)
+                .Select(x => x.DisplayOrder)
+                .DefaultIfEmpty(0)
+                .Max();
 
-         [HttpDelete]
+            foreach (var file in images)
+            {
+                var imageUrl = await _fileHelper.SaveFileAsync(file, null, "BlogGallery");
+                if (!string.IsNullOrEmpty(imageUrl))
+                {
+                    nextOrder++;
+                    _unitOfWork.BlogImage.Add(new BlogImage
+                    {
+                        BlogId = blogId,
+                        ImageUrl = imageUrl,
+                        DisplayOrder = nextOrder
+                    });
+                }
+            }
+            _unitOfWork.Save();
+        }
+
+        [HttpDelete]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)

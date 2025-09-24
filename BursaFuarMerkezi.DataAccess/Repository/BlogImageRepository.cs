@@ -20,7 +20,6 @@ namespace BursaFuarMerkezi.DataAccess.Repository
             if (fromDb != null)
             {
                 fromDb.ImageUrl = obj.ImageUrl;
-                fromDb.Caption = obj.Caption;
                 fromDb.DisplayOrder = obj.DisplayOrder;
             }
         }

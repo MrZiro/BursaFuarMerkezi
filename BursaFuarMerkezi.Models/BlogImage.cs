@@ -21,9 +21,6 @@ namespace BursaFuarMerkezi.Models
         [MaxLength(500)]
         public string ImageUrl { get; set; } = string.Empty;
 
-        [MaxLength(200)]
-        public string? Caption { get; set; }
-
         public int DisplayOrder { get; set; } = 0;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;

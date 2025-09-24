@@ -65,6 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
 /*================== Card-Slider-1 Js ======================*/
 document.addEventListener('DOMContentLoaded', function() {
   const slider = document.querySelector('.slider');
+  
+  // Skip if this is the upcoming fairs slider (managed by home.js)
+  if (slider && slider.closest('.card-1-section')) {
+    return;
+  }
+  
   const cards = document.querySelectorAll('.card');
   const prevBtn = document.querySelector('.prev-btn');
   const nextBtn = document.querySelector('.next-btn');

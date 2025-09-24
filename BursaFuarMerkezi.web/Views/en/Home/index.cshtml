@@ -115,86 +115,7 @@
     </div>
     <div class="slider-container">
       <div class="slider">
-        <!-- Kart 1 -->
-        <div class="card" style="background-image: url('/images/junioshow.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer" data-translate="upcomingFairs.card1.category">Textile & Clothing</div>
-              <h2 class="card-title" data-translate="upcomingFairs.card1.title">The Heart of Baby and Children's
-                Ready-to-Wear Sector Beats in Bursa with "JUNISHOW"</h2>
-              <a href="#" class="card-link" data-translate="upcomingFairs.card1.details">Fair Detail<i
-                  class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">28</div>
-                <div class="date-month">30</div>
-                <div class="date-info" data-translate="upcomingFairs.card1.month">Jan</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kart 2 -->
-        <div class="card" style="background-image: url('/images/meexx_banner.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer" data-translate="upcomingFairs.card2.category">Machinery & Technology</div>
-              <h2 class="card-title" data-translate="upcomingFairs.card2.title">All Innovations in Home Textiles are at
-                HOMETEX 2025 Again, Don't Miss the Big Meeting!</h2>
-              <a href="meex-fair-single-page.html" class="card-link" data-translate="upcomingFairs.card2.details">Fair
-                Detail<i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">02</div>
-                <div class="date-month">05</div>
-                <div class="date-info">Dec</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kart 3 -->
-        <div class="card" style="background-image: url('images/rising.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer" data-translate="upcomingFairs.card3.category">Construction</div>
-              <h2 class="card-title" data-translate="upcomingFairs.card3.title">Rising City & Building and Life Fair
-                that makes Bursa's voice heard</h2>
-              <a href="fair-single-page.html" class="card-link" data-translate="upcomingFairs.card3.details">Fair Detail
-                <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">23</div>
-                <div class="date-month">26</div>
-                <div class="date-info" data-translate="upcomingFairs.card3.month">Apr</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kart 4 -->
-        <div class="card" style="background-image: url('images/food_point_banner.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer">Food</div>
-              <h2 class="card-title">The Meeting Point of the Food Industry: Food Point Food Products and Technologies
-                Fair
-              </h2>
-              <a href="food-point.html" class="card-link">Fair Details
-                <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">23</div>
-                <div class="date-month">25</div>
-                <div class="date-info">October</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Upcoming fairs will be loaded dynamically from database -->
       </div>
 
       <!-- Slider Kontrolleri -->
@@ -216,51 +137,26 @@
     <div class="row mb-4">
       <div class="col-md-3 mb-3">
         <select id="yearFilter" class="form-select custom-select">
-          <option value="" data-translate="filter.selectYear">Select Year</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
+          <option value="">Select Year</option>
+          <!-- Years will be loaded dynamically from database -->
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <select id="monthFilter" class="form-select custom-select">
-          <option value="" data-translate="filter.selectMonth">Select Month</option>
-          <option value="January" data-translate="filter.month.january">January</option>
-          <option value="February" data-translate="filter.month.february">February</option>
-          <option value="March" data-translate="filter.month.march">March</option>
-          <option value="April" data-translate="filter.month.april">April</option>
-          <option value="May" data-translate="filter.month.may">May</option>
-          <option value="June" data-translate="filter.month.june">June</option>
-          <option value="July" data-translate="filter.month.july">July</option>
-          <option value="August" data-translate="filter.month.august">August</option>
-          <option value="September" data-translate="filter.month.september">September</option>
-          <option value="October" data-translate="filter.month.october">October</option>
-          <option value="November" data-translate="filter.month.november">November</option>
-          <option value="December" data-translate="filter.month.december">December</option>
+          <option value="">Select Month</option>
+          <!-- Months will be loaded dynamically from database -->
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <select id="sectorFilter" class="form-select custom-select">
           <option value="">Select Sector</option>
-          <option value="Jewelry">Jewelry</option>
-          <option value="Technology">Technology</option>
-          <option value="Machinery">Machinery</option>
-          <option value="Textile">Textile</option>
-          <option value="Poultry Farming">Poultry Farming</option>
-          <option value="Food">Food</option>
-          <option value="Building">Building</option>
-          <option value="Automotive">Automotive</option>
-          <option value="Tourism">Tourism</option>
-          <option value="Furniture">Furniture</option>
+          <!-- Sectors will be loaded dynamically from database -->
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <select id="locationFilter" class="form-select custom-select">
-          <option value="" data-translate="filter.selectLocation">Select Location</option>
-          <option value="İstanbul" data-translate="filter.location.istanbul">İstanbul</option>
-          <option value="Ankara" data-translate="filter.location.ankara">Ankara</option>
-          <option value="Bursa" data-translate="filter.location.bursa">Bursa</option>
-          <option value="Agora" data-translate="filter.location.agora">Agora</option>
-          <option value="Antalya" data-translate="filter.location.antalya">Antalya</option>
+          <option value="">Select Location</option>
+          <!-- Cities will be loaded dynamically from database -->
         </select>
       </div>
     </div>
@@ -283,12 +179,8 @@
   <div class="container-2">
     <!-- Category Tabs -->
     <div class="category-tabs-2" id="category-tabs-2">
-      <button class="category-tab-2 active" data-category="gundem">AGENDA</button>
-      <button class="category-tab-2" data-category="blog">BLOG</button>
-      <button class="category-tab-2" data-category="duyurular">ANNOUNCEMENTS</button>
-      <button class="category-tab-2" data-category="haberler">NEWS</button>
-      <a href="all-news.html" class="category-tab-2 ms-5">Show All Posts</a>
-
+      <!-- Categories will be loaded dynamically from database -->
+      <a href="/en/all-news" class="category-tab-2 ms-5">Show All Posts</a>
     </div>
 
     <!-- Card Slider -->
@@ -331,6 +223,5 @@
   
   @section Scripts{
   <script src="~/js/stant-talebi.js" asp-append-version="true"></script>
-  <script src="~/js/anasayfa-fuar-takvimi.js" asp-append-version="true"></script>
-  <script src="~/js/card-slider-2.js" asp-append-version="true"></script>
+  <script src="~/js/home.js" asp-append-version="true"></script>
   }

@@ -1,0 +1,136 @@
+@model BursaFuarMerkezi.Models.Blog
+
+@{
+    ViewData["Title"] = Model.TitleTr;
+    ViewData["Description"] = !string.IsNullOrEmpty(Model.MetaDescriptionTr) ? Model.MetaDescriptionTr : Model.TitleTr;
+    ViewData["Keywords"] = !string.IsNullOrEmpty(Model.MetaKeywordsTr) ? Model.MetaKeywordsTr : "BFM, Blog, Fuar Merkezi";
+}
+
+@section styles{
+    <link rel="stylesheet" href="~/css/blog-single-page.css">
+}
+
+    <div class="banner">
+
+    </div>
+
+    <div class="container py-5">
+        <div class="breadcrumb justify-content-center">
+            <a href="/tr">Ana Sayfa</a> /
+            <a href="/tr/tum-haberler">Tüm Haberler</a> /
+            <span>@Model.TitleTr</span>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="news-container">
+
+                    <div class="news-content">
+                        <!-- Blog Header -->
+                        <div class="blog-header mb-4">
+                            <h2 class="fw-normal">@Model.TitleTr</h2>
+                            <div class="blog-meta">
+                                <span class="blog-date">@Model.CreatedAt.ToString("dd MMMM yyyy")</span>
+                                @if (Model.ContentType != null && !string.IsNullOrEmpty(Model.ContentType.NameTr))
+                                {
+                                    <span class="blog-category">@Model.ContentType.NameTr</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Featured Image -->
+                        @if (!string.IsNullOrEmpty(Model.CardImageUrl))
+                        {
+                            <img src="@Model.CardImageUrl" alt="@Model.TitleTr" class="news-image mb-4">
+                        }
+
+                        <!-- Blog Content -->
+                        <div class="blog-content">
+                            @Html.Raw(Model.ContentTr)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.BlogImages != null && Model.BlogImages.Any())
+    {
+        <div class="container-bspg">
+            <h2>Blog Görselleri</h2>
+
+            <!-- Galeri Slider -->
+            <div class="gallery-container-bspg">
+                <div class="gallery-wrapper-bspg" id="galleryWrapper">
+                    @foreach (var image in Model.BlogImages.OrderBy(i => i.DisplayOrder))
+                    {
+                        <div class="gallery-item-bspg">
+                            <img src="@image.ImageUrl" alt="@Model.TitleTr" 
+                                 class="gallery-image-bspg" onclick="openLightbox('@image.ImageUrl', '@Model.TitleTr')">
+                        </div>
+                    }
+                </div>
+
+                @if (Model.BlogImages.Count > 1)
+                {
+                    <button class="gallery-nav-bspg prev-bspg" id="prevBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="gallery-nav-bspg next-bspg" id="nextBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                }
+            </div>
+
+            <!-- Lightbox -->
+            <div class="lightbox-bspg" id="lightbox">
+                <div class="lightbox-content-bspg">
+                    <img src="/placeholder.svg" alt="" id="lightboxImage">
+                    <div class="lightbox-caption" id="lightboxCaption"></div>
+                    <button class="close-lightbox-bspg" id="closeLightbox">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+
+@section scripts{
+<!-- Custom Scripts -->
+<script src="~/js/blog-single-page.js"></script>
+
+<script>
+    // Lightbox functionality for blog images
+    function openLightbox(imageUrl, title) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        
+        lightboxImage.src = imageUrl;
+        lightboxCaption.textContent = title || '';
+        lightbox.style.display = 'flex';
+    }
+
+    // Close lightbox
+    document.getElementById('closeLightbox')?.addEventListener('click', function() {
+        document.getElementById('lightbox').style.display = 'none';
+    });
+
+    // Close lightbox on background click
+    document.getElementById('lightbox')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.style.display = 'none';
+        }
+    });
+</script>
+}

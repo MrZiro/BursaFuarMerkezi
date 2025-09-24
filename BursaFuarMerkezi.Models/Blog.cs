@@ -97,6 +97,9 @@ namespace BursaFuarMerkezi.Models
         [ValidateNever]
         public ContentType ContentType { get; set; }
 
+        // Navigation property for related images
+        [ValidateNever]
+        public virtual ICollection<BlogImage> BlogImages { get; set; } = new List<BlogImage>();
 
     }
 }

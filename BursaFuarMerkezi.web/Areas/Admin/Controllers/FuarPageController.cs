@@ -132,6 +132,8 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                     }
                     if (!ModelState.IsValid)
                     {
+                        // Repopulate the dropdowns for when validation fails
+                        pageVM.AllSectors = _unitOfWork.Sector.GetAll();
                         return View(pageVM);
                     }
                     // Only process the featured image if a new one is provided
@@ -144,6 +146,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                         {
                             // If image saving failed but validation passed, something went wrong
                             ModelState.AddModelError("FeaturedImage", "Failed to upload image. Please try again.");
+                            pageVM.AllSectors = _unitOfWork.Sector.GetAll();
                             return View(pageVM);
                         }
                     }
@@ -151,6 +154,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                     {
                         // This is a safety check - shouldn't happen due to validation above
                         ModelState.AddModelError("FeaturedImage", "Please select an image.");
+                        pageVM.AllSectors = _unitOfWork.Sector.GetAll();
                         return View(pageVM);
                     }
 
@@ -163,6 +167,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                         if (pageVM.FuarPage.CardImageUrl == null)
                         {
                             ModelState.AddModelError("CardImage", "Failed to upload card image. Please try again.");
+                            pageVM.AllSectors = _unitOfWork.Sector.GetAll();
                             return View(pageVM);
                         }
                     }
@@ -170,6 +175,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "Error: " + ex.Message);
+                    pageVM.AllSectors = _unitOfWork.Sector.GetAll();
                     return View(pageVM);
                 }
 
@@ -189,6 +195,10 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 _unitOfWork.Save();
                 return RedirectToAction("Index");
             }
+            
+            // If we got this far, something failed, redisplay form
+            // Repopulate the dropdowns for when validation fails
+            pageVM.AllSectors = _unitOfWork.Sector.GetAll();
             return View(pageVM);
         }
 

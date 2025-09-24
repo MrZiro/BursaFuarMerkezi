@@ -166,9 +166,12 @@
                                 <span asp-validation-for="FuarPage.OrganizerTr" class="text-danger"></span>
                                 <label asp-for="SelectedSectorIds" class="form-label mt-3">Fuar Konusu (Sectors)</label>
                                 <select asp-for="SelectedSectorIds" class="form-select js-sector-select" multiple>
-                                    @foreach (var s in Model.AllSectors)
+                                    @if (Model.AllSectors != null)
                                     {
-                                        <option value="@s.Id" selected="@(Model.SelectedSectorIds.Contains(s.Id))">@s.NameTr (@s.NameEn)</option>
+                                        @foreach (var s in Model.AllSectors)
+                                        {
+                                            <option value="@s.Id" selected="@(Model.SelectedSectorIds?.Contains(s.Id) == true)">@s.NameTr (@s.NameEn)</option>
+                                        }
                                     }
                                 </select>
                                 <label asp-for="FuarPage.FairLocationTr" class="form-label mt-3">Fuar Alanı (TR)</label>
@@ -180,10 +183,13 @@
                                 <input asp-for="FuarPage.OrganizerEn" class="form-control" />
                                 <span asp-validation-for="FuarPage.OrganizerEn" class="text-danger"></span>
                                 <label class="form-label mt-3">Sectors (EN)</label>
-                                <select class="form-select js-sector-select" multiple disabled>
-                                    @foreach (var s in Model.AllSectors)
+                                <select class="form-select js-sector-select-en" multiple disabled>
+                                    @if (Model.AllSectors != null)
                                     {
-                                        <option selected="@(Model.SelectedSectorIds.Contains(s.Id))">@s.NameEn</option>
+                                        @foreach (var s in Model.AllSectors)
+                                        {
+                                            <option value="@s.Id" selected="@(Model.SelectedSectorIds?.Contains(s.Id) == true)">@s.NameEn</option>
+                                        }
                                     }
                                 </select>
                                 <label asp-for="FuarPage.FairLocationEn" class="form-label mt-3">Fair Location (EN)</label>
@@ -366,6 +372,19 @@
                 width: '100%',
                 placeholder: 'Select sectors',
                 allowClear: true
+            });
+            
+            // Initialize EN sectors select2 (disabled but shows selected)
+            $('.js-sector-select-en').select2({
+                width: '100%',
+                placeholder: 'Selected sectors will show here',
+                allowClear: false
+            });
+            
+            // Synchronize TR selections with EN display
+            $('.js-sector-select').on('change', function() {
+                var selectedValues = $(this).val() || [];
+                $('.js-sector-select-en').val(selectedValues).trigger('change');
             });
         });
     </script>

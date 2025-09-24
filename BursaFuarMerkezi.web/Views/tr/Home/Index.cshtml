@@ -18,96 +18,50 @@
     <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
     <!-- <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="" aria-current="true"></button> -->
-  </div>
+    </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="./images/food-point-tr.png" class="d-block w-100 img-1" alt="...">
-        <!-- <video class="video-slide" autoplay muted loop playsinline>
-          <source src="videos/Bursa Fuar Merkezi.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video> -->
-        <!-- <div class="container">
-          <div class="row">
-            <div class="carousel-caption text-start col-6">
-              <h1 class="fw-bold" data-translate="slider.mainTitle">Bursa'nın sesini duyuran Rising City & Yapı ve Yaşam
-                Fuarı</h1>
-              <p data-translate="slider.mainSubtitle">Yükselen Şehir Bursa'nın yatırım rotasındaki seyrini
-                değerlendiriyor.</p>
-              <p><a class="btn btn-lg text-white btn-slider" href="fuar-single-page.html"
-                  >Göz at</a></p>
+
+        <div class="action-buttons">
+          <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Bilet</button>
+          <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stant Talebi</a>
+        </div>
+        <!-- Modal Overlay -->
+        <div class="modal-overlay" id="modalOverlay">
+          <div class="modal-container">
+            <div class="modal-header">
+              <h3 class="modal-title" data-translate="slider.triggerButton1">E-Bilet</h3>
+              <button class="close-button" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-content">
+              <!-- Ana Logo -->
+              <!-- Resim Galerisi -->
+              <div class="image-gallery">
+                <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
+                  <img src="./images/rising.jpg" alt="Rising">
+                  <p>Rising City</p>
+                </a>
+                <a href="https://junioshow.com.tr/online-bilet" class="gallery-item">
+                  <img src="./images/junioshow.jpg" alt="JuniShow">
+                  <p>JuniShow</p>
+                </a>
+                <a href="https://meexx.webonalti.net" target="_blank" class="gallery-item">
+                  <img src="./images/meexx_banner.jpg" alt="Rising">
+                  <p>MEEXX</p>
+                </a>
+                <a href="https://bursafoodpoint.com.tr" target="_blank" class="gallery-item">
+                  <img src="./images/food_point_banner.jpg" alt="Rising">
+                  <p>Food Point</p>
+                </a>
+              </div>
             </div>
           </div>
-        </div> -->
-      </div>
-      <!-- <div class="carousel-item">
-      <img src="./images/RS_slider_2.jpg" class="d-block w-100 img-1" alt="...">
-      <div class="container">
-        <div class="row">
-        <div class="carousel-caption text-start col-6">
-          <h1 class="fw-bold fs-2">Another example headline.</h1>
-          <p class="fs-3">Some representative placeholder content for the second slide of the carousel.</p>
-          <p><a class="btn btn-lg text-white btn-slider" href="#">Learn more</a></p>
         </div>
-    </div>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="./images/RS_slider_3.jpg" class="d-block w-100 img-1" alt="...">
-      <div class="container">
-        <div class="row">
-        <div class="carousel-caption text-start col-6">
-          <h1 class="fw-bold fs-2">One more for good measure.</h1>
-          <p class="fs-3">Some representative placeholder content for the third slide of this carousel.</p>
-          <p><a class="btn btn-lg text-white btn-slider" href="#">Browse gallery</a></p>
-        </div>
-    </div>
-      </div>
-    </div> -->
-    </div>
-    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button> -->
-    <div class="action-buttons">
-      <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Bilet</button>
-      <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stant Talebi</a>
-    </div>
-    <!-- Modal Overlay -->
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal-container">
-        <div class="modal-header">
-          <h3 class="modal-title" data-translate="slider.triggerButton1">E-Bilet</h3>
-          <button class="close-button" id="closeModalBtn">&times;</button>
-        </div>
-        <div class="modal-content">
-          <!-- Ana Logo -->
-          <!-- Resim Galerisi -->
-          <div class="image-gallery">
-            <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
-              <img src="./images/rising.jpg" alt="Rising">
-              <p>Rising City</p>
-            </a>
-            <a href="https://junioshow.com.tr/online-bilet" class="gallery-item">
-              <img src="./images/junioshow.jpg" alt="JuniShow">
-              <p>JuniShow</p>
-            </a>
-            <a href="https://meexx.webonalti.net" target="_blank" class="gallery-item">
-              <img src="./images/meexx_banner.jpg" alt="Rising">
-              <p>MEEXX</p>
-            </a>
-            <a href="https://bursafoodpoint.com.tr" target="_blank" class="gallery-item">
-              <img src="./images/food_point_banner.jpg" alt="Rising">
-              <p>Food Point</p>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
 
+       </div>
+      </div>
+    </div>
   </div>
   <!-- Slider End -->
   <div class="container-1">
@@ -319,7 +273,7 @@
       <button class="category-tab-2" data-category="blog" data-translate="tabs.blog">BLOG</button>
       <button class="category-tab-2" data-category="duyurular" data-translate="tabs.announcements">DUYURULAR</button>
       <button class="category-tab-2" data-category="haberler" data-translate="tabs.news">HABERLER</button>
-      <a href="tum-haberler.html" class="category-tab-2 ms-5">Tüm Yazıları Görüntüle</a>
+      <a href="/tr/tum-haberler" class="category-tab-2 ms-5">Tüm Yazıları Görüntüle</a>
 
     </div>
 
@@ -363,6 +317,5 @@
 
   @section Scripts{
   <script src="~/js/stant-talebi.js" asp-append-version="true"></script>
-  <script src="~/js/anasayfa-fuar-takvimi.js" asp-append-version="true"></script>
-  <script src="~/js/card-slider-2.js" asp-append-version="true"></script>
+  <script src="~/js/home.js" asp-append-version="true"></script>
   }
