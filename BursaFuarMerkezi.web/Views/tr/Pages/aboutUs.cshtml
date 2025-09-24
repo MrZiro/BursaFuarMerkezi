@@ -1,0 +1,320 @@
+@{
+    ViewData["Title"] = "BFM Hakkında";
+    ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+    ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
+
+@section styles{
+<link href="~/css/hakkimizda.css" rel="stylesheet"/>
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+ <div class="row">
+  <!-- Sidebar -->
+  <div class="col-md-3 sidebar-container">
+   <div class="sidebar">
+    <div class="sidebar-sticky">
+     <div class="sidebar-header p-3 mb-3 text-center">
+      <h3 class="" data-translate="hakkimizda.sidebar.mainTitle">
+       BFM
+      </h3>
+      <p class="text-muted small mb-0" data-translate="hakkimizda.sidebar.subTitle">
+       Bursa FuarMerkezi
+      </p>
+     </div>
+     <ul class="nav flex-column">
+      <!-- Hakkımızda -->
+      <li class="nav-item dropdown">
+       <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu" data-bs-toggle="collapse" href="#">
+        <span class="menu-icon">
+         <i class="fas fa-info-circle">
+         </i>
+        </span>
+        <span data-translate="hakkimizda.sidebar.aboutUs">
+         Hakkımızda
+        </span>
+       </a>
+       <div class="collapse show" id="hakkimizdaSubmenu">
+        <ul class="nav flex-column submenu">
+         <li class="nav-item">
+          <a class="nav-link active" href="/tr/hakkimizda">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.bfmAbout">
+            BFM Hakkında
+           </span>
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/baskan-mesaji">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.presidentMessage">
+            Başkan
+                                                    Mesajı
+           </span>
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/kalite-politimiz">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.qualityPolicy">
+            Kalite
+                                                    Politikamız
+           </span>
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/ekibimiz">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.ourTeam">
+            Ekibimiz
+           </span>
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/kvkk-dokumanları">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.kvkkDocuments">
+            KVKK
+                                                    Dokümanları
+           </span>
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/bilgi-toplum-hizmetleri">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.informationSocietyServices">
+            Bilgi
+                                                    Toplumu Hizmetleri
+           </span>
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/raporlar">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.reports">
+            Raporlar
+           </span>
+          </a>
+         </li>
+        </ul>
+       </div>
+      </li>
+      <li class="nav-item dropdown">
+       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu" data-bs-toggle="collapse" href="#">
+        <span class="menu-icon">
+         <i class="fas fa-briefcase">
+         </i>
+        </span>
+        <span data-translate="hakkimizda.sidebar.bfmOffices">
+         BFM Ofisleri
+        </span>
+       </a>
+       <div class="collapse" id="ifmSubmenu">
+        <ul class="nav flex-column submenu">
+         <li class="nav-item">
+          <a class="nav-link" href="/tr/toplanti-salonlari">
+           <i class="fas fa-angle-right me-2">
+           </i>
+           <span data-translate="hakkimizda.sidebar.bfmReadyOffices">
+            BFM Hazır Ofis
+                                                    ve Toplantı Salonları
+           </span>
+          </a>
+         </li>
+        </ul>
+       </div>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </div>
+  <!-- Main content -->
+  <main class="col-md-9 content-container">
+   <div class="content-header">
+    <div class="breadcrumb">
+     <a data-translate="hakkimizda.breadcrumb.home" href="/tr">
+      Ana Sayfa
+     </a>
+     /
+     <a data-translate="hakkimizda.breadcrumb.aboutUs" href="/tr/hakkimizda">
+      Hakkımızda
+     </a>
+    </div>
+   </div>
+   <div class="content-body">
+    <h1 class="page-title-2" data-translate="hakkimizda.content.pageTitle">
+     BFM Hakkında
+    </h1>
+    <div class="content-text">
+     <h3 data-translate="hakkimizda.content.missionTitle">
+      Misyonumuz:
+     </h3>
+     <p class="mb-5" data-translate="hakkimizda.content.missionText">
+      Firmalarımızın hem ulusal hem de
+                            uluslararası arenada yeni pazarlara erişimini destekleyerek, ülkemizin ihracatına doğrudan
+                            katkı sağlamak.
+     </p>
+     <h3 data-translate="hakkimizda.content.visionTitle">
+      Vizyonumuz:
+     </h3>
+     <p class="mb-5" data-translate="hakkimizda.content.visionText">
+      Uluslararası standartlarda hizmet
+                            sunan, sürekli yenilenen üst düzey altyapısı ve katılımcı‑z ziyaretçi memnuniyetini aşan
+                            yaklaşımıyla Türkiye’nin lider fuar merkezi olmak.
+     </p>
+     <h3 data-translate="hakkimizda.content.valuesTitle">
+      Değerlerimiz:
+     </h3>
+     <ul>
+      <li data-translate="hakkimizda.content.values.0">
+       Müşteri Odaklılık
+      </li>
+      <li data-translate="hakkimizda.content.values.1">
+       Şeffaflık
+      </li>
+      <li data-translate="hakkimizda.content.values.2">
+       Güvenilirlik
+      </li>
+      <li data-translate="hakkimizda.content.values.3">
+       Yenilikçilik
+      </li>
+      <li data-translate="hakkimizda.content.values.4">
+       Takım Çalışması
+      </li>
+      <li data-translate="hakkimizda.content.values.5">
+       Sürdürülebilirlik
+      </li>
+     </ul>
+     <br/>
+     <h3 data-translate="hakkimizda.content.historyTitle">
+      Kuruluş ve Gelişim Sürecimiz
+     </h3>
+     <p data-translate="hakkimizda.content.historyText1">
+      Bursa Fuar Merkezi (BFM), BTSO iştiraki KFA
+                            Fuarcılık A.Ş. tarafından 2025 yılı itibarıyla devralınmış ve kapsamlı yenileme
+                            çalışmalarını tamamlamıştır. BTSO’nun 30 yılı aşan deneyimiyle yönetilen bu dönüşüm,
+                            fuarımızı fiziki ve organizasyonel açıdan modern bir yapıya kavuşturmuştur.
+     </p>
+     <p data-translate="hakkimizda.content.historyText2">
+      Yenilenmenin ardından BFM, 24–27 Nisan 2025
+                            arasında ilk kez düzenlenen Rising City &amp; Yapı ve Yaşam Fuarı’na ev sahipliği yapmış;
+                            yaklaşık 40 firmayı, 16 ülkeden 200’ün üzerinde yabancı alıcının da katılımıyla buluşturarak
+                            bölgesel ve uluslararası etkinliğini pekiştirmiştir.
+     </p>
+     <p class="mb-5" data-translate="hakkimizda.content.historyText3">
+      KFA Fuarcılık’la birlikte
+                            BFM’de her yıl 20’nin üzerinde uluslararası fuar düzenleme hedefiyle, Bursa’yı fuarcılık
+                            alanında marka şehir konumuna taşımayı amaçlıyoruz.
+     </p>
+     <h3 data-translate="hakkimizda.content.statsTitle">
+      Altyapı ve Kapasitemiz
+     </h3>
+     <ul class="mb-5">
+      <li data-translate="hakkimizda.content.statsArea">
+       Toplam Alan: 140.000 m² (Kapalı: ~40.000
+                                m² / Açık: ~100.000 m²)
+      </li>
+      <li data-translate="hakkimizda.content.statsIndoorArea">
+       Salon Sayısı: 6
+      </li>
+      <li data-translate="hakkimizda.content.statsOutdoorArea">
+       Toplantı Salonu: 15 adet
+      </li>
+      <li data-translate="hakkimizda.content.statsHalls">
+       Yıllık Fuara Ev Sahipliği: 20+
+                                uluslararası etkinlik hedeflenmektedir
+      </li>
+     </ul>
+     <h3 data-translate="hakkimizda.content.statsTitle">
+      Konum ve Ulaşım
+     </h3>
+     <ul class="mb-5">
+      <p class="fs-5">
+       Şehir merkezine yakın konumuyla ulaşımı kolay olan BFM;
+      </p>
+      <li data-translate="hakkimizda.content.statsArea">
+       Bursa şehir merkezine yalnızca birkaç
+                                kilometre,
+      </li>
+      <li data-translate="hakkimizda.content.statsIndoorArea">
+       Yenişehir Havalimanı’na yaklaşık 45
+                                km,
+      </li>
+      <li data-translate="hakkimizda.content.statsOutdoorArea">
+       İstanbul Sabiha Gökçen
+                                Havalimanı’na ise ~1,5 saat mesafededir.
+                                Toplu taşıma ve ticari araçlarla sorunsuz erişim imkânı mevcuttur.
+      </li>
+     </ul>
+     <h3 data-translate="hakkimizda.content.statsTitle">
+      Hizmet Kapsamımız
+     </h3>
+     <ul class="mb-5">
+      <p class="fs-5">
+       Katılımcı ve ziyaretçilere şunları sağlamaktayız:
+      </p>
+      <li data-translate="hakkimizda.content.statsArea">
+       Fuar organizasyonu
+      </li>
+      <li data-translate="hakkimizda.content.statsIndoorArea">
+       Profesyonel stant tasarımı ve
+                                kurulumu
+      </li>
+      <li data-translate="hakkimizda.content.statsOutdoorArea">
+       Teknik destek hizmetleri
+      </li>
+      <li data-translate="hakkimizda.content.statsIndoorArea">
+       Konaklama ve ulaşım düzenlemeleri
+      </li>
+      <li data-translate="hakkimizda.content.statsIndoorArea">
+       Yemek-içme deneyimleri ve diğer
+                                lojistik destekler
+      </li>
+     </ul>
+     <h3 data-translate="hakkimizda.content.collaborationTitle">
+      İş Birlikleri ve Katma Değer
+                            Yaklaşımımız
+     </h3>
+     <p class="mb-5" data-translate="hakkimizda.content.collaborationText">
+      BTSO başta olmak üzere
+                            yerel ve ulusal paydaşlarla iş birliğine büyük önem veriyoruz. Bu sinerjiyle katılımcı
+                            memnuniyetini artırmayı, katılımcıların iş geliştirmelerine ve Bursa’nın ihracat
+                            potansiyeline katkı sağlamayı amaçlıyoruz.
+     </p>
+    </div>
+   </div>
+  </main>
+ </div>
+</div>
+
+
+@section scripts{
+<script src="~/js/hakkimizda.js"></script>
+
+<script>
+ const buttons = document.querySelectorAll('#pagination .page-button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => {
+                    btn.classList.remove('btn-danger');
+                    btn.classList.add('btn-outline-danger');
+                });
+
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-danger');
+            });
+        });
+</script>
+
+}
