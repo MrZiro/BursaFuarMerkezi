@@ -50,14 +50,6 @@ namespace BursaFuarMerkezi.web.Controllers
             return View();
         }
 
-        [HttpGet("fair-calendar")]
-        [HttpGet("fuar-takvimi")]
-        public IActionResult FairCalendar()
-        {
-            ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "FairCalendar", Lang);
-            ViewData["AlternateUrls"] = _urlService.GetAlternateLanguageUrls("Pages", "FairCalendar", Lang);
-            return View();
-        }
 
         [HttpGet("florist")]
         [HttpGet("cicekci")]

@@ -1,0 +1,223 @@
+@using System.Globalization
+@model BursaFuarMerkezi.Models.ViewModels.FairCalendarViewModel
+@{
+    var culture = new CultureInfo("tr-TR");
+    var fairsByMonth = Model.Fairs
+        .SelectMany(f =>
+        {
+            var dates = new List<DateTime>();
+            for (var date = f.StartDate.Date; date <= f.EndDate.Date; date = date.AddDays(1))
+            {
+                dates.Add(date);
+            }
+            return dates.Select(d => new { Fair = f, Date = d });
+        })
+        .GroupBy(x => new DateTime(x.Date.Year, x.Date.Month, 1))
+        .OrderBy(g => g.Key);
+    
+    var fairsByWeek = Model.Fairs
+        .GroupBy(f => CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(f.StartDate, CalendarWeekRule.FirstDay, DayOfWeek.Monday))
+        .OrderBy(g => g.First().StartDate);
+}
+
+@section Styles{
+    <link href="/css/fuar-takvimi.css" rel="stylesheet"/>
+}
+
+<div class="banner">
+</div>
+
+<div class="container">
+    <header class="view-header">
+        <h1 class="mt-4">
+            Fuar Takvimi
+        </h1>
+        <div class="view-buttons">
+            <button class="view-btn active" data-view="list">
+                Liste Görünüm
+            </button>
+            <button class="view-btn" data-view="monthly">
+                Aylık Görünüm
+            </button>
+            <button class="view-btn" data-view="weekly">
+                Haftalık Görünüm
+            </button>
+        </div>
+    </header>
+    <div class="search-container">
+        <input id="searchInput" placeholder="Arama Yap..." type="text"/>
+        <span class="search-icon">
+            🔍
+        </span>
+    </div>
+    <div class="content-container">
+        <div class="view-content active" id="listView">
+            <!-- Liste görünümü içeriği -->
+            <div class="fair-list">
+                @if (Model.Fairs != null && Model.Fairs.Any())
+                {
+                    @foreach (var fair in Model.Fairs)
+                    {
+                        <div class="fair-item">
+                            <div class="fair-date">
+                                <span class="day">@fair.StartDate.ToString("dd")</span>
+                                <span class="month">@fair.StartDate.ToString("MMMM", culture)</span>
+                                <span class="year">@fair.StartDate.Year</span>
+                            </div>
+                            <div class="fair-details">
+                                <h3>
+                                    <a href="/fuar/@fair.SlugTr">@fair.TitleTr</a>
+                                </h3>
+                                <p class="location">
+                                    <strong>Yer:</strong> @fair.FairLocationTr
+                                </p>
+                                <p class="description">
+                                    @fair.SubTitleTr
+                                </p>
+                                <div class="fair-tags">
+                                    @foreach (var sector in fair.Sectors)
+                                    {
+                                        <span class="tag">@sector.NameTr</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Gösterilecek fuar bulunamadı.</p>
+                }
+            </div>
+        </div>
+        <div class="view-content" id="monthlyView">
+            @if (fairsByMonth.Any())
+            {
+                @foreach (var monthGroup in fairsByMonth)
+                {
+                    var monthStart = monthGroup.Key;
+                    var daysInMonth = DateTime.DaysInMonth(monthStart.Year, monthStart.Month);
+                    var firstDayOfMonth = new DateTime(monthStart.Year, monthStart.Month, 1);
+                    int startDayOfWeek = (int)firstDayOfMonth.DayOfWeek;
+                    if (startDayOfWeek == 0) startDayOfWeek = 7; // Pazar = 7
+                    startDayOfWeek--; // Pazartesi = 0
+
+                    <div class="monthly-calendar">
+                        <div class="month-header">
+                            <h2>@monthStart.ToString("MMMM yyyy", culture)</h2>
+                        </div>
+                        <div class="month-grid">
+                            <div class="weekdays">
+                                <div>Pzt</div><div>Sal</div><div>Çar</div><div>Per</div><div>Cum</div><div>Cmt</div><div>Paz</div>
+                            </div>
+                            <div class="days">
+                                @for (int i = 0; i < startDayOfWeek; i++)
+                                {
+                                    <div class="day empty"></div>
+                                }
+                                @for (int day = 1; day <= daysInMonth; day++)
+                                {
+                                    var currentDate = new DateTime(monthStart.Year, monthStart.Month, day);
+                                    var fairsOnDay = monthGroup.Where(x => x.Date.Date == currentDate.Date).Select(x => x.Fair).Distinct().ToList();
+                                    if (fairsOnDay.Any())
+                                    {
+                                        <div class="day has-event">
+                                            @day
+                                            <div class="event-indicator"></div>
+                                            <div class="event-popup">
+                                                @foreach (var fair in fairsOnDay)
+                                                {
+                                                    <p><strong>@fair.TitleTr</strong></p>
+                                                    <p>@fair.FairLocationTr</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="day">@day</div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="month-events">
+                            <h3>Bu Aydaki Fuarlar</h3>
+                            @foreach (var fair in monthGroup.Select(x => x.Fair).Distinct().OrderBy(f => f.StartDate))
+                            {
+                                <div class="month-event-item">
+                                    <div class="event-date">
+                                        @fair.StartDate.ToString("dd MMMM yyyy", culture) - @fair.EndDate.ToString("dd MMMM yyyy", culture)
+                                    </div>
+                                    <div class="event-details">
+                                        <h3><strong>@fair.TitleTr</strong></h3>
+                                        <p>@fair.FairLocationTr</p>
+                                        <p>@string.Join(", ", fair.Sectors.Select(s => s.NameTr))</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Gösterilecek fuar bulunamadı.</p>
+            }
+        </div>
+        <div class="view-content" id="weeklyView">
+            @if (fairsByWeek.Any())
+            {
+                @foreach (var weekGroup in fairsByWeek)
+                {
+                    var firstFairInWeek = weekGroup.First();
+                    var startDateOfWeek = firstFairInWeek.StartDate.AddDays(-(int)firstFairInWeek.StartDate.DayOfWeek + (int)DayOfWeek.Monday);
+                    if (startDateOfWeek > firstFairInWeek.StartDate) startDateOfWeek = startDateOfWeek.AddDays(-7);
+                    
+                    var endDateOfWeek = startDateOfWeek.AddDays(6);
+                    var weekHeader = $"{startDateOfWeek.ToString("dd MMM", culture)} - {endDateOfWeek.ToString("dd MMM yyyy", culture)}";
+
+                    <div class="weekly-calendar">
+                        <div class="week-header">
+                            <h2>@weekHeader</h2>
+                        </div>
+                        <div class="week-grid">
+                            @for (int i = 0; i < 7; i++)
+                            {
+                                var day = startDateOfWeek.AddDays(i);
+                                var fairsOnDay = Model.Fairs.Where(f => day.Date >= f.StartDate.Date && day.Date <= f.EndDate.Date).ToList();
+
+                                <div class="day-column @(fairsOnDay.Any() ? "has-event" : "")">
+                                    <div class="day-header">@day.ToString("dddd", culture)</div>
+                                    <div class="day-date">@day.ToString("dd MMMM", culture)</div>
+                                    <div class="day-events">
+                                        @if (fairsOnDay.Any())
+                                        {
+                                            @foreach (var fair in fairsOnDay)
+                                            {
+                                                <div class="week-event">
+                                                    <h4>@fair.TitleTr</h4>
+                                                    <p>@fair.VisitingHours</p>
+                                                    <p>@fair.FairLocationTr</p>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <p>Fuar yok</p>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                 <p>Gösterilecek fuar bulunamadı.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="/js/fuar-takvimi.js"></script>
