@@ -49,26 +49,25 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             return View(sliderVM);
         }
 
-        [HttpPost]
-        public IActionResult Upsert(SliderVM sliderVM)
+		[HttpPost]
+		public async Task<IActionResult> Upsert(SliderVM sliderVM)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(sliderVM);
-            }
+			// Image URLs are set after file upload; ignore their model validation at bind time
+			ModelState.Remove("Slider.ImageUrl");
+			ModelState.Remove("Slider.MobileImageUrl");
 
             try
             {
                 // Handle desktop image upload
                 if (sliderVM.DesktopImage != null)
                 {
-                    var desktopImageUrl = _fileHelper.UploadFile(sliderVM.DesktopImage, "sliders");
+					var desktopImageUrl = await _fileHelper.SaveFileAsync(sliderVM.DesktopImage, null, "sliders");
                     if (!string.IsNullOrEmpty(desktopImageUrl))
                     {
                         // Delete old desktop image if updating
                         if (sliderVM.Slider.Id != 0 && !string.IsNullOrEmpty(sliderVM.Slider.ImageUrl))
                         {
-                            _fileHelper.DeleteFile(sliderVM.Slider.ImageUrl);
+							await _fileHelper.DeleteFileAsync(sliderVM.Slider.ImageUrl);
                         }
                         sliderVM.Slider.ImageUrl = desktopImageUrl;
                     }
@@ -77,19 +76,25 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 // Handle mobile image upload
                 if (sliderVM.MobileImage != null)
                 {
-                    var mobileImageUrl = _fileHelper.UploadFile(sliderVM.MobileImage, "sliders");
+					var mobileImageUrl = await _fileHelper.SaveFileAsync(sliderVM.MobileImage, null, "sliders");
                     if (!string.IsNullOrEmpty(mobileImageUrl))
                     {
                         // Delete old mobile image if updating
                         if (sliderVM.Slider.Id != 0 && !string.IsNullOrEmpty(sliderVM.Slider.MobileImageUrl))
                         {
-                            _fileHelper.DeleteFile(sliderVM.Slider.MobileImageUrl);
+							await _fileHelper.DeleteFileAsync(sliderVM.Slider.MobileImageUrl);
                         }
                         sliderVM.Slider.MobileImageUrl = mobileImageUrl;
                     }
                 }
 
-                if (sliderVM.Slider.Id == 0)
+				// After possible file handling, validate remaining fields
+				if (!ModelState.IsValid)
+				{
+					return View(sliderVM);
+				}
+
+				if (sliderVM.Slider.Id == 0)
                 {
                     // Create new slider
                     sliderVM.Slider.CreatedAt = DateTime.Now;
@@ -130,8 +135,8 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             return View(sliderFromDb);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
+		[HttpPost, ActionName("Delete")]
+		public async Task<IActionResult> DeletePOST(int? id)
         {
             Slider? obj = _unitOfWork.Slider.Get(u => u.Id == id);
             if (obj == null)
@@ -144,11 +149,11 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
                 // Delete associated images
                 if (!string.IsNullOrEmpty(obj.ImageUrl))
                 {
-                    _fileHelper.DeleteFile(obj.ImageUrl);
+					await _fileHelper.DeleteFileAsync(obj.ImageUrl);
                 }
                 if (!string.IsNullOrEmpty(obj.MobileImageUrl))
                 {
-                    _fileHelper.DeleteFile(obj.MobileImageUrl);
+					await _fileHelper.DeleteFileAsync(obj.MobileImageUrl);
                 }
 
                 _unitOfWork.Slider.Remove(obj);

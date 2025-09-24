@@ -102,6 +102,8 @@ namespace BursaFuarMerkezi.web.Services
             });
         }
 
+        // (No synchronous wrappers; prefer async usage in controllers)
+
         public bool ValidateImageFile(IFormFile file, ModelStateDictionary modelState, string key, bool isRequired = false)
         {
             // Check if file is required but not provided

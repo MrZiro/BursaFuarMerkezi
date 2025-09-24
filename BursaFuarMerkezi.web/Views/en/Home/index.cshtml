@@ -1,3 +1,4 @@
+@model BursaFuarMerkezi.Models.ViewModels.HomeVM
 @{
     ViewData["Title"] = "Bursa Fuar Merkezi - Anasayfa";
     ViewData["Description"] = "Bursa Fuar Merkezi Anasayfa - ";
@@ -14,20 +15,25 @@
 
   <!-- Slider Start -->
   <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
+    @{ var sliders = Model?.Sliders?.ToList() ?? new List<BursaFuarMerkezi.Models.Slider>(); }
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <!-- <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
+      @for (var i = 0; i < sliders.Count; i++)
+      {
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : null)" aria-label="Slide @(i + 1)" aria-current="@(i==0 ? "true" : null)"></button>
+      }
     </div>
     <div class="carousel-inner">
-      
-      <div class="carousel-item active">
-        <img src="/images/food-point-en.png" class="d-none d-md-block w-100 img-1" alt="...">
-        <img src="/images/mobile-food-point-slider.png" class="d-block d-md-none w-100 img-1" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="/images/ing-meexx-slider.jpg" class="d-block w-100 img-1" alt="...">
-      </div>
+      @for (var i = 0; i < sliders.Count; i++)
+      {
+        var s = sliders[i];
+        <div class="carousel-item @(i == 0 ? "active" : null)">
+          <img src="@s.ImageUrl" class="d-none d-md-block w-100 img-1" alt="@s.AltText">
+          @if (!string.IsNullOrEmpty(s.MobileImageUrl))
+          {
+            <img src="@s.MobileImageUrl" class="d-block d-md-none w-100 img-1" alt="@s.AltText">
+          }
+        </div>
+      }
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -49,8 +55,6 @@
           <button class="close-button" id="closeModalBtn">&times;</button>
         </div>
         <div class="modal-content">
-          <!-- Ana Logo -->
-          <!-- Resim Galerisi -->
           <div class="image-gallery">
             <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
               <img src="/images/rising.jpg" alt="Rising">
@@ -72,7 +76,6 @@
         </div>
       </div>
     </div>
-
   </div>
   <!-- Slider End -->
   <div class="container-1">

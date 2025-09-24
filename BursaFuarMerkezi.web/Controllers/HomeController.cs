@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BursaFuarMerkezi.Models;
+using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 namespace BursaFuarMerkezi.web.Controllers;
 
@@ -20,12 +21,15 @@ public class HomeController : Controller
     [HttpGet("{lang}/home")]
     [HttpGet("{lang}/anasayfa")]
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        // get all sliders
-        // get the latest 9 blogs
-        // get all events
-        return View();
+        var vm = new HomeVM
+        {
+            // Sliders only for now; other sections can be filled later
+            Sliders = await _unitOfWork.Slider.GetActiveSlidersByOrderAsync()
+        };
+
+        return View(vm);
     }
 
 

@@ -1,3 +1,4 @@
+@model BursaFuarMerkezi.Models.ViewModels.HomeVM
 @{
     ViewData["Title"] = "Bursa Fuar Merkezi - Anasayfa";
     ViewData["Description"] = "Bursa Fuar Merkezi Anasayfa - ";
@@ -12,54 +13,66 @@
   <link rel="stylesheet" href="~/css/card-slider-1.css">
 }
 <!-- Slider Start -->
-  <div id="myCarousel" class="carousels slide" data-bs-ride="carousel">
-    <!-- Görsel slider'ları aktif etmek için bu kısımdaki yorum satırlarını kaldırmak yeterli. -->
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    @{ var sliders = Model?.Sliders?.ToList() ?? new List<BursaFuarMerkezi.Models.Slider>(); }
     <div class="carousel-indicators">
-    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-    <!-- <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="" aria-current="true"></button> -->
+      @for (var i = 0; i < sliders.Count; i++)
+      {
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : null)" aria-label="Slide @(i + 1)"></button>
+      }
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="./images/food-point-tr.png" class="d-block w-100 img-1" alt="...">
-
-        <div class="action-buttons">
-          <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Bilet</button>
-          <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stant Talebi</a>
+      @for (var i = 0; i < sliders.Count; i++)
+      {
+        var s = sliders[i];
+        <div class="carousel-item @(i == 0 ? "active" : null)">
+          <img src="@s.ImageUrl" class="d-none d-md-block w-100 img-1" alt="@s.AltText">
+          @if (!string.IsNullOrEmpty(s.MobileImageUrl))
+          {
+            <img src="@s.MobileImageUrl" class="d-block d-md-none w-100 img-1" alt="@s.AltText">
+          }
         </div>
-        <!-- Modal Overlay -->
-        <div class="modal-overlay" id="modalOverlay">
-          <div class="modal-container">
-            <div class="modal-header">
-              <h3 class="modal-title" data-translate="slider.triggerButton1">E-Bilet</h3>
-              <button class="close-button" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-content">
-              <!-- Ana Logo -->
-              <!-- Resim Galerisi -->
-              <div class="image-gallery">
-                <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
-                  <img src="./images/rising.jpg" alt="Rising">
-                  <p>Rising City</p>
-                </a>
-                <a href="https://junioshow.com.tr/online-bilet" class="gallery-item">
-                  <img src="./images/junioshow.jpg" alt="JuniShow">
-                  <p>JuniShow</p>
-                </a>
-                <a href="https://meexx.webonalti.net" target="_blank" class="gallery-item">
-                  <img src="./images/meexx_banner.jpg" alt="Rising">
-                  <p>MEEXX</p>
-                </a>
-                <a href="https://bursafoodpoint.com.tr" target="_blank" class="gallery-item">
-                  <img src="./images/food_point_banner.jpg" alt="Rising">
-                  <p>Food Point</p>
-                </a>
-              </div>
-            </div>
+      }
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Önceki</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Sonraki</span>
+    </button>
+    <div class="action-buttons">
+      <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Bilet</button>
+      <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stant Talebi</a>
+    </div>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title" data-translate="slider.triggerButton1">E-Bilet</h3>
+          <button class="close-button" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-content">
+          <div class="image-gallery">
+            <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
+              <img src="/images/rising.jpg" alt="Rising">
+              <p>Rising City</p>
+            </a>
+            <a href="https://junioshow.com.tr/online-bilet" class="gallery-item">
+              <img src="/images/junioshow.jpg" alt="JuniShow">
+              <p>JuniShow</p>
+            </a>
+            <a href="https://meexx.webonalti.net" target="_blank" class="gallery-item">
+              <img src="/images/meexx_banner.jpg" alt="Rising">
+              <p>MEEXX</p>
+            </a>
+            <a href="https://bursafoodpoint.com.tr" target="_blank" class="gallery-item">
+              <img src="/images/food_point_banner.jpg" alt="Rising">
+              <p>Food Point</p>
+            </a>
           </div>
         </div>
-
-       </div>
       </div>
     </div>
   </div>
@@ -72,31 +85,24 @@
         <div class="stat-number">10+</div>
         <div class="stat-label" data-translate="stats.fairsHeld">Gerçekleşen Fuar</div>
       </div>
-
       <div class="stat-item">
         <div class="stat-number">70+</div>
         <div class="stat-label" data-translate="stats.countries">Farklı Ülkeden</div>
       </div>
-
       <div class="stat-item">
         <div class="stat-number">1000</div>
         <div class="stat-label" data-translate="stats.businessPeople">İş insanı</div>
       </div>
-
       <div class="stat-item">
         <div class="stat-number">7000</div>
         <div class="stat-label" data-translate="stats.visitors">Ziyaretçi</div>
       </div>
-
-
-
       <div class="stat-item">
         <div class="stat-number">140.000</div>
         <div class="stat-label" data-translate="stats.area">m² alan</div>
       </div>
     </div>
   </div>
-
   <!-- Card Slide Start -->
   <section class="card-1-section">
     <div class="container">
@@ -104,84 +110,9 @@
     </div>
     <div class="slider-container">
       <div class="slider">
-        <!-- Kart 1 -->
-        <div class="card" style="background-image: url('./images/junioshow.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer" data-translate="upcomingFairs.card1.category">Tekstil & Giyim</div>
-              <h2 class="card-title" data-translate="upcomingFairs.card1.title">Bebek ve Çocuk Hazır Giyim Sektörünün
-                Kalbi "JUNIOSHOW" ile Bursa'da Atıyor</h2>
-              <a href="#" class="card-link" data-translate="upcomingFairs.card1.details">Fuar Detayı <i
-                  class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">28</div>
-                <div class="date-month">30</div>
-                <div class="date-info" data-translate="upcomingFairs.card1.month">Ocak</div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Kart 2 -->
-        <div class="card" style="background-image: url('./images/meexx_banner.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer">Makine & Teknoloji</div>
-              <h2 class="card-title" >Sanayinin Gücünü Buluşturan MEEXX Makine Fuarı</h2>
-              <a href="meexx-single-page.html" class="card-link" >Fuar Detayı <i
-                  class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">02</div>
-                <div class="date-month">05</div>
-                <div class="date-info" >Aralık</div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Kart 3 -->
-        <div class="card" style="background-image: url('images/rising.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer">İnşaat</div>
-              <h2 class="card-title" >Bursa'nın sesini duyuran Rising City &
-                Yapı ve Yaşam Fuarı</h2>
-              <a href="fuar-single-page.html" class="card-link">Fuar Detayı
-                <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">23</div>
-                <div class="date-month">26</div>
-                <div class="date-info" data-translate="upcomingFairs.card3.month">Nis</div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Kart 4 -->
-        <div class="card" style="background-image: url('images/food_point_banner.jpg')">
-          <div class="card-overlay">
-            <div class="card-content">
-              <div class="card-organizer">Gıda</div>
-              <h2 class="card-title">Gıda Sektörünün Buluşma Noktası: Food Point Gıda Ürünleri ve Teknolojileri Fuarı
-              </h2>
-              <a href="food-point.html" class="card-link">Fuar Detayı
-                <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="card-date">
-              <div class="date-box">
-                <div class="date-day">23</div>
-                <div class="date-month">25</div>
-                <div class="date-info">Ekim</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Slider Kontrolleri -->
@@ -204,49 +135,25 @@
       <div class="col-md-3 mb-3">
         <select id="yearFilter" class="form-select custom-select">
           <option value="" data-translate="filter.selectYear">Yıl seçiniz</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
+
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <select id="monthFilter" class="form-select custom-select">
           <option value="" data-translate="filter.selectMonth">Ay Seçiniz</option>
-          <option value="Ocak" data-translate="filter.month.january">Ocak</option>
-          <option value="Şubat" data-translate="filter.month.february">Şubat</option>
-          <option value="Mart" data-translate="filter.month.march">Mart</option>
-          <option value="Nisan" data-translate="filter.month.april">Nisan</option>
-          <option value="Mayıs" data-translate="filter.month.may">Mayıs</option>
-          <option value="Haziran" data-translate="filter.month.june">Haziran</option>
-          <option value="Temmuz" data-translate="filter.month.july">Temmuz</option>
-          <option value="Ağustos" data-translate="filter.month.august">Ağustos</option>
-          <option value="Eylül" data-translate="filter.month.september">Eylül</option>
-          <option value="Ekim" data-translate="filter.month.october">Ekim</option>
-          <option value="Kasım" data-translate="filter.month.november">Kasım</option>
-          <option value="Aralık" data-translate="filter.month.december">Aralık</option>
+
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <select id="sectorFilter" class="form-select custom-select">
           <option value="">Sektör Seçiniz</option>
-          <option value="Mücevherat">Mücevherat</option>
-          <option value="Teknoloji">Teknoloji</option>
-          <option value="Makine">Makine</option>
-          <option value="Tavukçuluk" >Tavukçuluk</option>
-          <option value="Gıda">Gıda İşleme</option>
-          <option value="İnşaat">İnşaat</option>
-          <option value="Otomotiv">Otomotiv</option>
-          <option value="Turizm">Turizm</option>
-          <option value="Mobilya">Mobilya</option>
+
         </select>
       </div>
       <div class="col-md-3 mb-3">
         <select id="locationFilter" class="form-select custom-select">
           <option value="" data-translate="filter.selectLocation">Lokasyon Seçiniz</option>
-          <option value="İstanbul" data-translate="filter.location.istanbul">İstanbul</option>
-          <option value="Ankara" data-translate="filter.location.ankara">Ankara</option>
-          <option value="Bursa" data-translate="filter.location.bursa">Bursa</option>
-          <option value="Agora" data-translate="filter.location.agora">Agora</option>
-          <option value="Antalya" data-translate="filter.location.antalya">Antalya</option>
+
         </select>
       </div>
     </div>
@@ -269,10 +176,7 @@
   <div class="container-2">
     <!-- Category Tabs -->
     <div class="category-tabs-2" id="category-tabs-2">
-      <button class="category-tab-2 active" data-category="gundem" data-translate="tabs.agenda">GÜNDEM</button>
-      <button class="category-tab-2" data-category="blog" data-translate="tabs.blog">BLOG</button>
-      <button class="category-tab-2" data-category="duyurular" data-translate="tabs.announcements">DUYURULAR</button>
-      <button class="category-tab-2" data-category="haberler" data-translate="tabs.news">HABERLER</button>
+
       <a href="/tr/tum-haberler" class="category-tab-2 ms-5">Tüm Yazıları Görüntüle</a>
 
     </div>

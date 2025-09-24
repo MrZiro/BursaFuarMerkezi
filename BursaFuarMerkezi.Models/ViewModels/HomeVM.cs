@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using BursaFuarMerkezi.Models;
 
 namespace BursaFuarMerkezi.Models.ViewModels
 {
     public class HomeVM
     {
-        public IEnumerable<ContentType> ContentTypes { get; set; } = new List<ContentType>();
-        public IEnumerable<Blog> LatestBlogs { get; set; } = new List<Blog>();
+        public IEnumerable<Slider> Sliders { get; set; } = new List<Slider>();
     }
 }
