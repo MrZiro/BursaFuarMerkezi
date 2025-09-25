@@ -1,20 +1,12 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
 
-<link href="../tr/assets/style.css" rel="stylesheet"/>
-
-<link href="../tr/assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="../tr/assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="../tr/assets/header.css" rel="stylesheet"/>
-
-<link href="../tr/assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
 
 <div class="banner">
 </div>
@@ -48,7 +40,7 @@
        <div class="collapse show" id="hakkimizdaSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="aboutus.html">
+          <a class="nav-link" href="/en/aboutus">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.bfmAbout">
@@ -57,7 +49,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link active" href="president-message.html">
+          <a class="nav-link" href="/en/president-message">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.presidentMessage">
@@ -66,7 +58,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="quality-policy.html">
+          <a class="nav-link" href="/en/quality-policy">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.qualityPolicy">
@@ -75,7 +67,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="our-team.html">
+          <a class="nav-link" href="/en/our-team">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.ourTeam">
@@ -84,7 +76,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="kvkk-documents.html">
+          <a class="nav-link" href="/en/kvkk-documents">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.kvkkDocuments">
@@ -93,7 +85,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="information-society-services.html">
+          <a class="nav-link" href="/en/information-society-services">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.informationSocietyServices">
@@ -103,7 +95,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="reports.html">
+          <a class="nav-link" href="/en/reports">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.reports">
@@ -127,7 +119,7 @@
        <div class="collapse" id="ifmSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="meeting-rooms.html">
+          <a class="nav-link" href="/en/meeting-rooms">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hakkimizda.sidebar.bfmReadyOffices">
@@ -777,6 +769,11 @@
    </div>
   </div>
  </div>
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+
  <script>
   const buttons = document.querySelectorAll('#pagination .page-button');
 
@@ -823,17 +820,5 @@
       document.body.removeChild(a);
     }
  </script>
- <!-- Bootstrap Bundle JS (includes Popper) - Load BEFORE custom scripts -->
- <script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
- </script>
- <!-- Swiper JS -->
- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
- </script>
- <!-- Custom Scripts -->
- <script src="../tr/hakkimizda.js">
- </script>
- <script src="../tr/main.js">
- </script>
- <script src="../tr/kvkk.js">
- </script>
-</div>
+
+}
