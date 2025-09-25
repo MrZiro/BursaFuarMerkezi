@@ -33,7 +33,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("atms")]
-        [HttpGet("atm-ler")]
+        [HttpGet("atm")]
         public IActionResult Atms()
         {
             ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "Atms", Lang);
@@ -42,7 +42,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("extra-services")]
-        [HttpGet("ekstra-hizmetler")]
+        [HttpGet("ek-hizmetler")]
         public IActionResult ExtraServices()
         {
             ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "ExtraServices", Lang);
@@ -79,7 +79,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("information-society-services")]
-        [HttpGet("bilgi-toplumu-hizmetleri")]
+        [HttpGet("bilgi-toplum-hizmetleri")]
         public IActionResult InformationSocietyServices()
         {
             ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "InformationSocietyServices", Lang);
@@ -88,7 +88,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("kvkk-documents")]
-        [HttpGet("kvkk-belgeleri")]
+        [HttpGet("kvkk-dokumanları")]
         public IActionResult KvkkDocuments()
         {
             ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "KvkkDocuments", Lang);
@@ -106,7 +106,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("meeting-rooms")]
-        [HttpGet("toplanti-odalari")]
+        [HttpGet("toplanti-salonlari")]
         public IActionResult MeetingRooms()
         {
             ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "MeetingRooms", Lang);
@@ -169,7 +169,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("quality-policy")]
-        [HttpGet("kalite-politikasi")]
+        [HttpGet("kalite-politimiz")]
         public IActionResult QualityPolicy()
         {
             ViewData["CanonicalUrl"] = _urlService.GetCanonicalUrl("Pages", "QualityPolicy", Lang);
