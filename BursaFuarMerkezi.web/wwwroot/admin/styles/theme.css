@@ -1,0 +1,97 @@
+/* --- THEME SWITCHER --- */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.theme-switcher .theme-icon {
+    font-size: 1.2rem;
+    color: var(--text-clr);
+    cursor: pointer;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--accent-clr);
+}
+
+input:checked+.slider:before {
+    transform: translateX(24px);
+}
+
+/* --- THEME VARIABLES --- */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --accent-clr: var(--primary-color);
+    --linear-clr: linear-gradient(145deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+/* Light Theme */
+body[data-theme='light'] {
+    --base-clr: #F8F9FA;
+    --main-bg: #FFFFFF;
+    --line-clr: #DEE2E6;
+    --hover-clr: #E9ECEF;
+    --hover-clr2: #DDEBFF;
+    --text-clr: #212529;
+    --text-light: #6C757D;
+    --secondary-text-clr: #495057;
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+    --card-shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --card-border: #E9ECEF;
+}
+
+/* Dark Theme */
+body[data-theme='dark'] {
+    --base-clr: #121212;
+    --main-bg: #1A1A1A;
+    --line-clr: #343A40;
+    --hover-clr: #2C2C2C;
+    --hover-clr2: #2a3a4e;
+    --text-clr: #E9ECEF;
+    --text-light: #ADB5BD;
+    --secondary-text-clr: #CED4DA;
+    --card-bg: #1C1C1C;
+    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    --card-shadow-hover: 0 5px 15px rgba(0, 0, 0, 0.25);
+    --card-border: #343A40;
+}

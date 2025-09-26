@@ -27,13 +27,22 @@
     <link rel="stylesheet" href="~/admin/styles/loader.css">
     @RenderSection("Styles", required: false)
     <link href="~/admin/styles/style.css" rel="stylesheet" />
+    <link href="~/admin/styles/theme.css" rel="stylesheet" />
 </head>
-<body>
+<body data-theme="light">
     <partial name="_Notification" />
     <div class="main-content">
 
         <div class="d-flex flex-column">
             <div class="nav-bar">
+                <div class="theme-switcher">
+                    <span class="material-symbols-rounded theme-icon">light_mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="material-symbols-rounded theme-icon">dark_mode</span>
+                </div>
                 <partial name="_LogoutAdmin" />
             </div>
 
@@ -169,8 +178,27 @@
                         // Only fade in after loading animation for first-time visitors
                         $mainContent.fadeIn(800);
                     }, 1000);
-                }, 2000);
-            }  </script>
+                }, 2000);}
+
+
+            // Theme switcher logic
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const savedTheme = localStorage.getItem('theme') || 'light';
+
+            function applyTheme(theme) {
+                body.setAttribute('data-theme', theme);
+                themeToggle.checked = theme === 'dark';
+            }
+
+            applyTheme(savedTheme);
+
+            themeToggle.addEventListener('change', () => {
+                const newTheme = themeToggle.checked ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+    </script>
 
 
 
