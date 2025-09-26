@@ -31,7 +31,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("atms")]
-        [HttpGet("atm-ler")]
+        [HttpGet("atm")]
         public IActionResult Atms()
         {
             ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Pages", "Atms", Lang);
@@ -86,7 +86,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("kvkk-documents")]
-        [HttpGet("kvkk-belgeleri")]
+        [HttpGet("kvkk-dokumanlari")]
         public IActionResult KvkkDocuments()
         {
             ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Pages", "KvkkDocuments", Lang);
@@ -104,7 +104,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("meeting-rooms")]
-        [HttpGet("toplanti-odalari")]
+        [HttpGet("toplanti-salonlari")]
         public IActionResult MeetingRooms()
         {
             ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Pages", "MeetingRooms", Lang);
@@ -167,7 +167,7 @@ namespace BursaFuarMerkezi.web.Controllers
         }
 
         [HttpGet("quality-policy")]
-        [HttpGet("kalite-politikasi")]
+        [HttpGet("kalite-politikamiz")]
         public IActionResult QualityPolicy()
         {
             ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Pages", "QualityPolicy", Lang);
