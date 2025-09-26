@@ -82,7 +82,7 @@ namespace BursaFuarMerkezi.web.Middleware
 
                             // 301 Permanent Redirect for SEO
                             context.Response.StatusCode = 301;
-                            context.Response.Headers.Location = canonicalUrl;
+                            context.Response.Headers.Location = Uri.EscapeUriString(canonicalUrl);
                             return;
                         }
                     }
