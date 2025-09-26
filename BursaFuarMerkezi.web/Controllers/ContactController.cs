@@ -3,6 +3,7 @@ using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.Utility;
 using BursaFuarMerkezi.web.Models.Configuration;
+using BursaFuarMerkezi.web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -36,6 +37,10 @@ namespace BursaFuarMerkezi.web.Controllers
         [HttpGet("contact")]
         public IActionResult Index()
         {
+            // Add SEO data
+            ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Contact", "Index", Lang);
+            ViewData["AlternateUrls"] = SeoHelper.GetAlternateLanguageUrls("Contact", "Index", Lang);
+            
             return View(new ContactVM());
         }
 

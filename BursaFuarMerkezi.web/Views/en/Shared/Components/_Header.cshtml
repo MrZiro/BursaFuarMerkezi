@@ -1,12 +1,12 @@
-@inject BursaFuarMerkezi.web.Services.IUrlLocalizationService urlLocalizationService
+@using BursaFuarMerkezi.web.Services
 @{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
     var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
     var currentLang = ViewContext.RouteData.Values["lang"]?.ToString() ?? "en";
     var targetLang = "tr";
 
-    object? routeValues = ViewData["alternateSlug"] != null ? new { slug = ViewData["alternateSlug"] } : null;
-    var alternateUrl = BursaFuarMerkezi.web.Services.ViewHelper.LocalizedUrlHelper.SwitchLanguageUrl(Url, urlLocalizationService, controller, action, currentLang, targetLang, routeValues);
+    object? routeValues = ViewData["alternateSlug"] != null ? new { slug = ViewData["alternateSlug"].ToString() } : null;
+    var alternateUrl = SeoHelper.GetLanguageSwitchUrl(controller, action, currentLang, targetLang, routeValues);
 }
   <!-- Header Start -->
   <header class="main-header">

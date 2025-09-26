@@ -909,14 +909,13 @@ a {
     padding: 8px 0;
     display: none;
     z-index: 1000;
-    margin-top: 5px;
   }
 
-  .lang-dropdown:hover .lang-dropdown-content {
+  .lang-dropdown.active .lang-dropdown-content {
     display: block;
   }
 
-  .lang-dropdown:hover .lang-dropdown-btn i {
+  .lang-dropdown.active .lang-dropdown-btn i {
     transform: rotate(180deg);
   }
 

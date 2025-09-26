@@ -12,14 +12,12 @@ namespace BursaFuarMerkezi.web.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<BlogsController> _logger;
-        private readonly IUrlLocalizationService _urlService;
         protected string Lang => (RouteData.Values["lang"]?.ToString() ?? "tr").ToLower();
 
-        public BlogsController(IUnitOfWork unitOfWork, ILogger<BlogsController> logger, IUrlLocalizationService urlService)
+        public BlogsController(IUnitOfWork unitOfWork, ILogger<BlogsController> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-            _urlService = urlService;
         }
 
         // GET: Blogs/Index
@@ -33,8 +31,8 @@ namespace BursaFuarMerkezi.web.Controllers
             //    .OrderByDescending(b => b.CreatedAt)
             //    .ToList();
             var contentTypes = _unitOfWork.ContentType.GetAll().ToList();
-            ViewBag.CanonicalUrl = _urlService.GetCanonicalUrl("Blogs", "Index", Lang);
-            ViewBag.AlternateUrls = _urlService.GetAlternateLanguageUrls("Blogs", "Index", Lang);
+            ViewBag.CanonicalUrl = SeoHelper.GetCanonicalUrl("Blogs", "Index", Lang);
+            ViewBag.AlternateUrls = SeoHelper.GetAlternateLanguageUrls("Blogs", "Index", Lang);
             return View(contentTypes);
         }
 
@@ -59,7 +57,19 @@ namespace BursaFuarMerkezi.web.Controllers
                 return NotFound();
             }
 
-        return View(blog);
+            // Set alternate slug for language switcher
+            string? alternateSlug = Lang == "tr" ? blog.SlugEn : blog.SlugTr;
+            if (!string.IsNullOrEmpty(alternateSlug))
+            {
+                ViewData["alternateSlug"] = alternateSlug;
+            }
+
+            // Set SEO data
+            ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Blogs", "Details", Lang);
+            ViewData["AlternateUrls"] = SeoHelper.GetAlternateLanguageUrlsWithSlug("Blogs", "Details", Lang, 
+                (Lang == "tr" ? blog.SlugTr : blog.SlugEn) ?? "", alternateSlug);
+
+            return View(blog);
     }
 
     // GET: /Blogs/GetBlogDetails/{slug}
@@ -136,6 +146,15 @@ namespace BursaFuarMerkezi.web.Controllers
                 // Filter by category if specified
                 if (!string.IsNullOrEmpty(filterParams.Category) && filterParams.Category != "all")
                 {
+                    _logger.LogInformation($"Filtering by category: '{filterParams.Category}' (language: {Lang})");
+                    
+                    // Log what categories exist in blogs
+                    var blogCategories = blogsQuery.Where(b => b.ContentType != null)
+                        .Select(b => Lang == "en" ? b.ContentType.NameEn : b.ContentType.NameTr)
+                        .Distinct()
+                        .ToList();
+                    _logger.LogInformation($"Available blog categories: {string.Join(", ", blogCategories)}");
+                    
                     blogsQuery = blogsQuery.Where(b => b.ContentType != null && 
                         (Lang == "en" ? b.ContentType.NameEn.ToLower() : b.ContentType.NameTr.ToLower()) == filterParams.Category.ToLower());
                     

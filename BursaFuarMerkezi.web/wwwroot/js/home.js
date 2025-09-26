@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         months.forEach(month => {
             const option = document.createElement('option');
-            option.value = month.name;
+            option.value = month.value; // Use month number for filtering
             option.textContent = month.name;
             monthFilter.appendChild(option);
         });
@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         sectors.forEach(sector => {
             const option = document.createElement('option');
-            option.value = sector.name;
+            option.value = sector.id; // Use sector ID for filtering
             option.textContent = sector.name;
             sectorFilter.appendChild(option);
         });
@@ -402,6 +402,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Helper function to get month number from month name
+    function getMonthNumber(monthName) {
+        const months = {
+            'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
+            'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12,
+            'Ocak': 1, 'Şubat': 2, 'Mart': 3, 'Nisan': 4, 'Mayıs': 5, 'Haziran': 6,
+            'Temmuz': 7, 'Ağustos': 8, 'Eylül': 9, 'Ekim': 10, 'Kasım': 11, 'Aralık': 12
+        };
+        return months[monthName] || 1;
+    }
+
     // All Fairs Calendar System (similar to anasayfa-fuar-takvimi.js)
     let allFairs = [];
     let filteredFairs = [];
@@ -419,16 +430,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Extract year and month from formatted date string (e.g., "25 December 2024")
                     const startDateParts = fair.startDate.split(' ');
                     const year = startDateParts[2] || new Date().getFullYear().toString();
-                    const month = startDateParts[1] || '';
+                    const monthName = startDateParts[1] || '';
+                    
+                    // Get month number from month name
+                    const monthNumber = getMonthNumber(monthName);
                     
                     return {
                         id: fair.id,
                         title: fair.title,
                         date: `${fair.startDate} - ${fair.endDate}`,
                         year: year,
-                        month: month,
-                        sector: fair.organizer || '', // Using organizer as sector for now
-                        location: 'Bursa', // Default location
+                        month: monthNumber.toString(), // Store as string for filtering
+                        monthName: monthName,
+                        sectors: fair.sectors || [], // Store sectors array
+                        location: fair.city || 'Bursa', // Use actual city from API
                         organizer: fair.organizer || '',
                         url: fair.detailUrl
                     };
@@ -482,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterFairEvents() {
         const selectedYear = yearFilter?.value || '';
         const selectedMonth = document.getElementById('monthFilter')?.value || '';
-        const selectedSector = document.getElementById('sectorFilter')?.value || '';
+        const selectedSectorId = document.getElementById('sectorFilter')?.value || '';
         const selectedLocation = document.getElementById('locationFilter')?.value || '';
 
         filteredFairs = allFairs;
@@ -496,12 +511,17 @@ document.addEventListener('DOMContentLoaded', function() {
             filteredFairs = filteredFairs.filter(event => event.month === selectedMonth);
         }
 
-        if (selectedSector) {
-            filteredFairs = filteredFairs.filter(event => event.sector.includes(selectedSector));
+        if (selectedSectorId) {
+            // Filter by sector ID - check if any sector in the array matches
+            filteredFairs = filteredFairs.filter(event => 
+                event.sectors.some(sector => sector.id.toString() === selectedSectorId)
+            );
         }
 
         if (selectedLocation) {
-            filteredFairs = filteredFairs.filter(event => event.location === selectedLocation);
+            filteredFairs = filteredFairs.filter(event => 
+                event.location && event.location.toLowerCase().includes(selectedLocation.toLowerCase())
+            );
         }
 
         updateFairEvents();

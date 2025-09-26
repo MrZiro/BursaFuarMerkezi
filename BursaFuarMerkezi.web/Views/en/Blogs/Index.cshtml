@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="~/css/tum-haberler.css">
 }
 
+    <div class="banner">
+
+    </div>
+
     <div class="container-blogs">
         <h2 class="heading-blogs">All News</h2>
         <div class="filter-buttons-blogs" id="filterButtons-blogs">
@@ -42,8 +46,6 @@
     </div>
 
 @section scripts{
-    <script src="~/js/tum-haberler.js"></script>
-    
     <script>
         let currentPage = 1;
         let currentCategory = 'all';
@@ -66,6 +68,7 @@
                     this.classList.add('active-blogs');
                     
                     currentCategory = this.dataset.category;
+                    console.log('Filter button clicked, new category:', currentCategory); // Debug log
                     currentPage = 1;
                     loadBlogs();
                 });
@@ -74,20 +77,25 @@
 
         // Load blogs via AJAX
         function loadBlogs() {
-            const loadingSpinner = document.getElementById('loadingSpinner');
             const cardGrid = document.getElementById('cardGrid-blogs');
             const paginationContainer = document.getElementById('paginationContainer');
             
             // Show loading spinner
-            loadingSpinner.style.display = 'block';
-            paginationContainer.style.display = 'none';
+            cardGrid.innerHTML = `
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Loading...</p>
+                </div>
+            `;
+            if (paginationContainer) paginationContainer.style.display = 'none';
             
-            const url = `/en/blog/getblogs?Category=${currentCategory}&PageNumber=${currentPage}&PageSize=${pageSize}`;
+            const url = `/en/blog/getblogs?Category=${encodeURIComponent(currentCategory)}&PageNumber=${currentPage}&PageSize=${pageSize}`;
+            console.log('Loading blogs with URL:', url); // Debug log
             
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    loadingSpinner.style.display = 'none';
+                    console.log('API Response:', data); // Debug log
                     
                     if (data.success) {
                         displayBlogs(data.data);
@@ -98,7 +106,6 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    loadingSpinner.style.display = 'none';
                     showError('Error loading blogs');
                 });
         }
@@ -117,18 +124,19 @@
             }
             
             const blogsHtml = blogs.map(blog => `
-                <div class="card-blogs" onclick="window.location.href='${blog.detailUrl}'">
+                <div class="card-blogs" onclick="window.location.href='${blog.detailUrl}'" style="cursor: pointer;">
                     <div class="card-image-blogs">
-                        <img src="${blog.cardImageUrl || '/images/default-blog.jpg'}" alt="${blog.title}" onerror="this.src='/images/default-blog.jpg'">
+                        <img src="${blog.cardImageUrl || '/images/default-blog.png'}" alt="${blog.title}" onerror="this.src='/images/default-blog.png'">
                         <div class="card-date-blogs">${blog.createdAt}</div>
                     </div>
                     <div class="card-content-blogs">
                         <div class="card-category-blogs">${blog.category}</div>
                         <h3 class="card-title-blogs">${blog.title}</h3>
+                        <p class="card-description-blogs">${blog.shortDescription}</p>
                         <div class="card-footer-blogs">
-                            <span class="card-link-blogs">
+                            <a href="${blog.detailUrl}" class="card-link-blogs" onclick="event.stopPropagation();">
                                 Read More
-                            </span>
+                            </a>
                         </div>
                     </div>
                 </div>

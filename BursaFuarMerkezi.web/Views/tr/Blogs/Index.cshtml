@@ -69,6 +69,7 @@
                     this.classList.add('active-blogs');
                     
                     currentCategory = this.dataset.category;
+                    console.log('Filter button clicked, new category:', currentCategory); // Debug log
                     currentPage = 1;
                     loadBlogs();
                 });
@@ -77,20 +78,26 @@
 
         // Load blogs via AJAX
         function loadBlogs() {
-            const loadingSpinner = document.getElementById('loadingSpinner');
             const cardGrid = document.getElementById('cardGrid-blogs');
             const paginationContainer = document.getElementById('paginationContainer');
             
             // Show loading spinner
-            loadingSpinner.style.display = 'block';
-            paginationContainer.style.display = 'none';
+            cardGrid.innerHTML = `
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                    <p>Yükleniyor...</p>
+                </div>
+            `;
+            if (paginationContainer) paginationContainer.style.display = 'none';
             
-            const url = `/tr/blog/getblogs?Category=${currentCategory}&PageNumber=${currentPage}&PageSize=${pageSize}`;
+            const url = `/tr/blog/getblogs?Category=${encodeURIComponent(currentCategory)}&PageNumber=${currentPage}&PageSize=${pageSize}`;
+            console.log('Loading blogs with URL:', url); // Debug log
+            console.log('Current category:', currentCategory); // Debug log
             
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    loadingSpinner.style.display = 'none';
+                    console.log('API Response:', data); // Debug log
                     
                     if (data.success) {
                         displayBlogs(data.data);
@@ -101,7 +108,6 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    loadingSpinner.style.display = 'none';
                     showError('Bloglar yüklenirken hata oluştu');
                 });
         }
@@ -128,13 +134,13 @@
                 <div class="card-blogs" onclick="window.location.href='${blog.detailUrl}'" style="cursor: pointer;">
                     <div class="card-image-blogs">
                         <img src="${blog.cardImageUrl}" alt="${blog.title}" onerror="this.src='/images/default-blog.png'">
-                        <div class="card-category-blogs">${blog.category}</div>
+                        <div class="card-date-blogs">${blog.createdAt}</div>
                     </div>
                     <div class="card-content-blogs">
+                        <div class="card-category-blogs">${blog.category}</div>
                         <h3 class="card-title-blogs">${blog.title}</h3>
                         <p class="card-description-blogs">${blog.shortDescription}</p>
                         <div class="card-footer-blogs">
-                            <span class="card-date-blogs">${blog.createdAt}</span>
                             <a href="${blog.detailUrl}" class="card-link-blogs" onclick="event.stopPropagation();">
                                 Devamını Oku
                             </a>

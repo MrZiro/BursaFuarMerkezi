@@ -4,8 +4,9 @@ using BursaFuarMerkezi.DataAccess.Repository;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
 using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Utility;
-using BursaFuarMerkezi.web.Middleware;
+// its for email templates don't delete
 using BursaFuarMerkezi.web.Models.Configuration;
+using BursaFuarMerkezi.web.Middleware;
 using BursaFuarMerkezi.web.Services;
 using BursaFuarMerkezi.web.ViewEngines;
 using Microsoft.AspNetCore.Identity;
@@ -36,8 +37,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 
-// Add localization services
-builder.Services.Configure<LocalizedRoutesConfig>(builder.Configuration.GetSection(LocalizedRoutesConfig.SectionName));
+// Add configuration
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 
@@ -45,7 +45,6 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IFileHelper, FileHelper>();
-builder.Services.AddScoped<IUrlLocalizationService, UrlLocalizationService>();
 builder.Services.AddScoped<IEmailSender, EmailSenderSmtp>();
 builder.Services.AddHostedService<TempFileCleanupService>();
 
@@ -75,10 +74,38 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Configure 404 handling with language detection
+app.UseStatusCodePages(async context =>
+{
+    var request = context.HttpContext.Request;
+    var response = context.HttpContext.Response;
+    
+    if (response.StatusCode == 404)
+    {
+        // Try to detect language from URL
+        var path = request.Path.Value;
+        var lang = "tr"; // default
+        
+        if (!string.IsNullOrEmpty(path))
+        {
+            var segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            if (segments.Length > 0 && (segments[0] == "en" || segments[0] == "tr"))
+            {
+                lang = segments[0];
+            }
+        }
+        
+        var notFoundPath = lang == "en" ? "/en/error-404" : "/tr/hata-404";
+        response.Redirect(notFoundPath);
+    }
+});
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseUrlCanonicalization();
+// Add URL redirect middleware before routing
+app.UseMiddleware<UrlRedirectMiddleware>();
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

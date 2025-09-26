@@ -19,7 +19,7 @@ namespace BursaFuarMerkezi.Utility
         public const int TempFileCleanupIntervalMinutes = 1440; // Run cleanup every day
         public const int TempFileMaxAgeMinutes = 120;         // Delete files older than 2 hours
 
-        public const string siteUrl = "https://www.bursafuarmerkezi.com";
+        public const string siteUrl = "http://localhost:5106";
         public const string AdminEmail = "test@test.com";
     }
 }

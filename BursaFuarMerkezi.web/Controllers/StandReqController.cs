@@ -3,6 +3,7 @@ using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.Utility;
 using BursaFuarMerkezi.web.Models.Configuration;
+using BursaFuarMerkezi.web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
@@ -32,6 +33,10 @@ namespace BursaFuarMerkezi.web.Controllers
         [HttpGet("stand-request")]
         public IActionResult Index()
         {
+            // Add SEO data
+            ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("StandReq", "Index", Lang);
+            ViewData["AlternateUrls"] = SeoHelper.GetAlternateLanguageUrls("StandReq", "Index", Lang);
+            
             var fuarList = _unitOfWork.FuarPages.GetAll().Select(u => new SelectListItem
             {
                 Text = Lang == "tr" ? u.TitleTr : u.TitleEn,

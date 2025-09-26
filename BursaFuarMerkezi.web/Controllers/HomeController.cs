@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Models.ViewModels;
 using BursaFuarMerkezi.DataAccess.Repository.IRepository;
+using BursaFuarMerkezi.web.Services;
 namespace BursaFuarMerkezi.web.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly IUnitOfWork _unitOfWork;
-
+    protected string Lang => (RouteData.Values["lang"]?.ToString() ?? "tr").ToLower();
 
     public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
     {
@@ -28,6 +29,10 @@ public class HomeController : Controller
             // Sliders only for now; other sections can be filled later
             Sliders = await _unitOfWork.Slider.GetActiveSlidersByOrderAsync()
         };
+
+        // Set SEO data
+        ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Home", "Index", Lang);
+        ViewData["AlternateUrls"] = SeoHelper.GetAlternateLanguageUrls("Home", "Index", Lang);
 
         return View(vm);
     }
@@ -51,8 +56,8 @@ public class HomeController : Controller
             var today = DateTime.Today;
             var fourMonthsLater = today.AddMonths(4);
 
-            var fairs = _unitOfWork.FuarPages.GetAll()
-                .Where(f => f.IsPublished && f.StartDate >= today && f.StartDate <= fourMonthsLater)
+            var fairs = _unitOfWork.FuarPages.GetAll(includeProperties: "Sectors")
+                .Where(f => f.IsPublished && f.EndDate >= today && f.StartDate <= fourMonthsLater)
                 .OrderBy(f => f.StartDate)
                 .Select(f => new
                 {
@@ -60,10 +65,15 @@ public class HomeController : Controller
                     title = useTr ? f.TitleTr : f.TitleEn,
                     subtitle = useTr ? f.SubTitleTr : f.SubTitleEn,
                     cardImageUrl = f.CardImageUrl ?? "/images/default-fair.png",
-                    startDate = f.StartDate.ToString("dd MMMM yyyy"),
-                    endDate = f.EndDate.ToString("dd MMMM yyyy"),
+                    startDate = f.StartDate.ToString("dd MMMM yyyy", useTr ? new System.Globalization.CultureInfo("tr-TR") : new System.Globalization.CultureInfo("en-US")),
+                    endDate = f.EndDate.ToString("dd MMMM yyyy", useTr ? new System.Globalization.CultureInfo("tr-TR") : new System.Globalization.CultureInfo("en-US")),
                     fairHall = f.FairHall,
                     organizer = useTr ? f.OrganizerTr : f.OrganizerEn,
+                    city = f.City,
+                    sectors = f.Sectors.Select(s => new { 
+                        id = s.Id, 
+                        name = useTr ? s.NameTr : s.NameEn 
+                    }).ToList(),
                     detailUrl = useTr ? $"/tr/fuar-detay/{f.SlugTr}" : $"/en/fair-detail/{f.SlugEn}"
                 })
                 .ToList();
@@ -77,22 +87,40 @@ public class HomeController : Controller
         }
     }
 
-    // Get all fairs with year filter
+    // Get all fairs with year and sector filter
     [HttpGet("{lang}/home/all-fairs")]
-    public async Task<JsonResult> GetAllFairs(int? year = null)
+    public async Task<JsonResult> GetAllFairs(int? year = null, int? sectorId = null, int? month = null, string? city = null)
     {
         try
         {
             var lang = RouteData.Values["lang"]?.ToString() ?? "tr";
             var useTr = lang == "tr";
 
-            var query = _unitOfWork.FuarPages.GetAll()
+            var query = _unitOfWork.FuarPages.GetAll(includeProperties: "Sectors")
                 .Where(f => f.IsPublished);
 
             // Filter by year if provided
             if (year.HasValue)
             {
                 query = query.Where(f => f.StartDate.Year == year.Value);
+            }
+
+            // Filter by month if provided
+            if (month.HasValue)
+            {
+                query = query.Where(f => f.StartDate.Month == month.Value);
+            }
+
+            // Filter by city if provided
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(f => f.City != null && f.City.ToLower().Contains(city.ToLower()));
+            }
+
+            // Filter by sector if provided
+            if (sectorId.HasValue)
+            {
+                query = query.Where(f => f.Sectors.Any(s => s.Id == sectorId.Value));
             }
 
             var fairs = query
@@ -103,10 +131,15 @@ public class HomeController : Controller
                     title = useTr ? f.TitleTr : f.TitleEn,
                     subtitle = useTr ? f.SubTitleTr : f.SubTitleEn,
                     cardImageUrl = f.CardImageUrl ?? "/images/default-fair.png",
-                    startDate = f.StartDate.ToString("dd MMMM yyyy"),
-                    endDate = f.EndDate.ToString("dd MMMM yyyy"),
+                    startDate = f.StartDate.ToString("dd MMMM yyyy", useTr ? new System.Globalization.CultureInfo("tr-TR") : new System.Globalization.CultureInfo("en-US")),
+                    endDate = f.EndDate.ToString("dd MMMM yyyy", useTr ? new System.Globalization.CultureInfo("tr-TR") : new System.Globalization.CultureInfo("en-US")),
                     fairHall = f.FairHall,
                     organizer = useTr ? f.OrganizerTr : f.OrganizerEn,
+                    city = f.City,
+                    sectors = f.Sectors.Select(s => new { 
+                        id = s.Id, 
+                        name = useTr ? s.NameTr : s.NameEn 
+                    }).ToList(),
                     detailUrl = useTr ? $"/tr/fuar-detay/{f.SlugTr}" : $"/en/fair-detail/{f.SlugEn}"
                 })
                 .ToList();

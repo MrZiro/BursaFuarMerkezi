@@ -13,14 +13,12 @@ namespace BursaFuarMerkezi.web.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<FuarController> _logger;
-        private readonly IUrlLocalizationService _urlService;
         protected string Lang => (RouteData.Values["lang"]?.ToString() ?? "tr").ToLower();
 
-        public FuarController(IUnitOfWork unitOfWork, ILogger<FuarController> logger, IUrlLocalizationService urlService)
+        public FuarController(IUnitOfWork unitOfWork, ILogger<FuarController> logger)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-            _urlService = urlService;
         }
 
         [HttpGet("fair-detail/{slug}")]
@@ -43,6 +41,11 @@ namespace BursaFuarMerkezi.web.Controllers
             {
                 ViewData["alternateSlug"] = alternateSlug;
             }
+
+            // Set SEO data
+            ViewData["CanonicalUrl"] = SeoHelper.GetCanonicalUrl("Fuar", "FuarDetail", Lang);
+            ViewData["AlternateUrls"] = SeoHelper.GetAlternateLanguageUrlsWithSlug("Fuar", "FuarDetail", Lang, 
+                (Lang == "tr" ? fuarPage.SlugTr : fuarPage.SlugEn) ?? "", alternateSlug);
 
             var vm = new FuarPageVM
             {
