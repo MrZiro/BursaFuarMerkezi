@@ -144,6 +144,7 @@ namespace BursaFuarMerkezi.web.Areas.Admin.Controllers
             return View(registerVM);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

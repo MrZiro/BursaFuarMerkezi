@@ -6,7 +6,6 @@ using BursaFuarMerkezi.Models;
 using BursaFuarMerkezi.Utility;
 // its for email templates don't delete
 using BursaFuarMerkezi.web.Models.Configuration;
-using BursaFuarMerkezi.web.Middleware;
 using BursaFuarMerkezi.web.Services;
 using BursaFuarMerkezi.web.ViewEngines;
 using Microsoft.AspNetCore.Identity;
@@ -103,8 +102,7 @@ app.UseStatusCodePages(async context =>
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-// Add URL redirect middleware before routing
-app.UseMiddleware<UrlRedirectMiddleware>();
+
 
 app.UseRouting();
 app.UseAuthentication();

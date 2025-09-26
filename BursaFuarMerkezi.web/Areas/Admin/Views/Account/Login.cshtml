@@ -18,7 +18,7 @@
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -44,7 +44,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 25%, #e8f5e8 75%, #008384 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -298,9 +298,9 @@
     <div class="login-container">
         <div class="login-header">
             <div class="login-logo">
-                <i class="fas fa-user-shield"></i>
+                <img src="/images/logo-beyaz.png" alt="Bursa Fuar Merkezi" style="width: 60px; height: auto; filter: brightness(0) invert(1);" />
             </div>
-            <h1 class="login-title">Admin Panel</h1>
+            <h1 class="login-title">Yönetici Paneli</h1>
             <p class="login-subtitle">Bursa Fuar Merkezi Yönetim Sistemi</p>
         </div>
         
@@ -309,7 +309,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                 
                 <div class="form-group">
-                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <label asp-for="Email" class="form-label">E-posta Adresi</label>
                     <div class="input-group">
                         <i class="input-icon fas fa-envelope"></i>
                         <input asp-for="Email" 
@@ -323,13 +323,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <label asp-for="Password" class="form-label">Password</label>
+                    <label asp-for="Password" class="form-label">Şifre</label>
                     <div class="input-group">
                         <i class="input-icon fas fa-lock"></i>
                         <input asp-for="Password" 
                                class="form-control with-icon" 
                                type="password" 
-                               placeholder="Enter your password"
+                               placeholder="Şifrenizi girin"
                                aria-required="true" 
                                autocomplete="current-password"
                                id="passwordInput" />
@@ -342,16 +342,16 @@
                 
                 <div class="checkbox-group">
                     <input asp-for="RememberMe" type="checkbox" id="rememberMe" />
-                    <label for="rememberMe">Remember me for 30 days</label>
+                    <label for="rememberMe">30 gün boyunca beni hatırla</label>
                 </div>
                 
                 <button type="submit" class="btn-login" id="loginButton">
                     <i class="loading-spinner fas fa-spinner fa-spin"></i>
-                    <span class="button-text">Sign In</span>
+                    <span class="button-text">Giriş Yap</span>
                 </button>
                 
                 <div class="forgot-password">
-                    <a href="#" onclick="showForgotPasswordAlert()">Forgot your password?</a>
+                    <a href="#" onclick="showForgotPasswordAlert()">Şifrenizi mi unuttunuz?</a>
                 </div>
             </form>
         </div>
@@ -392,13 +392,13 @@
                 loginForm.addEventListener('submit', function() {
                     loginButton.disabled = true;
                     loadingSpinner.style.display = 'inline-block';
-                    buttonText.textContent = 'Signing in...';
+                    buttonText.textContent = 'Giriş yapılıyor...';
                     
                     // Re-enable button after 10 seconds as fallback
                     setTimeout(() => {
                         loginButton.disabled = false;
                         loadingSpinner.style.display = 'none';
-                        buttonText.textContent = 'Sign In';
+                        buttonText.textContent = 'Giriş Yap';
                     }, 10000);
                 });
             }

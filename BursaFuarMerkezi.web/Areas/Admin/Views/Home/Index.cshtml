@@ -1,132 +1,147 @@
-﻿<div class="row justify-content-evenly row-gap-5 w-100">
-    <div class="container-card col-3">
-        <a href="#" class="mycard-link text-decoration-none">
-            <div class="mycard-body">
-                <div class="mycard-header">
-                    <span class="material-symbols-rounded">
-                        home
-                    </span>
-                    <h2>Home</h2>
-                </div>
-                <div class="mycar-content">
-                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, cumque laborum. Consequatur, molestias unde voluptas velit, </p>
-                </div>
-            </div>
-        </a>
+﻿@model DashboardStatsVM
+
+<div class="dashboard-container">
+    <div class="dashboard-header mb-4">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <p class="dashboard-subtitle">Bursa Fuar Merkezi Yönetim Paneli Özeti</p>
     </div>
-    <div class="container-card">
-        <a href="#" class="mycard-link text-decoration-none">
-            <div class="mycard-body">
-                <div class="mycard-header">
-                    <span class="material-symbols-rounded">
-                        dashboard
-                    </span>
-                    <h2>Dashboard</h2>
-                </div>
-                <div class="mycar-content">
-                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, cumque laborum. Consequatur, molestias unde voluptas velit, </p>
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card stat-card-primary">
+                <div class="stat-content">
+                    <span class="stat-icon material-symbols-rounded">article</span>
+                    <div class="stat-info">
+                        <h3 class="stat-number">@Model.TotalBlogs</h3>
+                        <p class="stat-label">Blog Yazıları</p>
+                    </div>
                 </div>
             </div>
-        </a>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card stat-card-success">
+                <div class="stat-content">
+                    <span class="stat-icon material-symbols-rounded">event</span>
+                    <div class="stat-info">
+                        <h3 class="stat-number">@Model.TotalFuars</h3>
+                        <p class="stat-label">Fuar Sayfaları</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card stat-card-info">
+                <div class="stat-content">
+                    <span class="stat-icon material-symbols-rounded">mail</span>
+                    <div class="stat-info">
+                        <h3 class="stat-number">@Model.TotalContacts</h3>
+                        <p class="stat-label">İletişim Mesajları</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card stat-card-warning">
+                <div class="stat-content">
+                    <span class="stat-icon material-symbols-rounded">storefront</span>
+                    <div class="stat-info">
+                        <h3 class="stat-number">@Model.TotalStandRequests</h3>
+                        <p class="stat-label">Stand Talepleri</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="stat-card stat-card-secondary">
+                <div class="stat-content">
+                    <span class="stat-icon material-symbols-rounded">business_center</span>
+                    <div class="stat-info">
+                        <h3 class="stat-number">@Model.TotalSectors</h3>
+                        <p class="stat-label">Sektörler</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container-card">
-        <a href="pages/page.html" class="mycard-link text-decoration-none">
-            <div class="mycard-body">
-                <div class="mycard-header">
-                    <span class="material-symbols-rounded">
-                        edit
-                    </span>
-                    <h2>Pages</h2>
+
+    <!-- Recent Activities -->
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h5 class="activity-title">Son Blog Yazıları</h5>
+                    <a asp-area="admin" asp-controller="Blog" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                        Tümünü Gör
+                    </a>
                 </div>
-                <div class="mycar-content">
-                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, cumque laborum. Consequatur, molestias unde voluptas velit, </p>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="container-card">
-        <a href="#" class="mycard-link text-decoration-none">
-            <div class="mycard-body">
-                <div class="mycard-header">
-                    <span class="material-symbols-rounded bgclr-ter">
-                        calendar_today
-                    </span>
-                    <h2>Calendar</h2>
-                </div>
-                <div class="mycar-content">
-                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, cumque laborum. Consequatur, molestias unde voluptas velit, </p>
+                <div class="activity-list">
+                    @foreach (var blog in Model.RecentBlogs.Take(5))
+                    {
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <span class="material-symbols-rounded">article</span>
+                            </div>
+                            <div class="activity-content">
+                                <h6 class="activity-name">@blog.TitleTr</h6>
+                                <p class="activity-time">@blog.CreatedAt.ToString("dd MMM yyyy")</p>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        </a>
-    </div>
-    <div class="container-card">
-        <a href="#" class="mycard-link text-decoration-none">
-            <div class="mycard-body">
-                <div class="mycard-header">
-                    <span class="material-symbols-rounded">
-                        edit
-                    </span>
-                    <h2>Pages</h2>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h5 class="activity-title">Son İletişim Mesajları</h5>
+                    <a asp-area="admin" asp-controller="Contact" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                        Tümünü Gör
+                    </a>
                 </div>
-                <div class="mycar-content">
-                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, cumque laborum. Consequatur, molestias unde voluptas velit, </p>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="container-card">
-        <a href="#" class="mycard-link text-decoration-none">
-            <div class="mycard-body">
-                <div class="mycard-header">
-                    <span class="material-symbols-rounded">
-                        edit
-                    </span>
-                    <h2>Pages</h2>
-                </div>
-                <div class="mycar-content">
-                    <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate, cumque laborum. Consequatur, molestias unde voluptas velit, </p>
+                <div class="activity-list">
+                    @foreach (var contact in Model.RecentContacts.Take(5))
+                    {
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <span class="material-symbols-rounded">mail</span>
+                            </div>
+                            <div class="activity-content">
+                                <h6 class="activity-name">@contact.Name</h6>
+                                <p class="activity-time">@contact.CreatedAt.ToString("dd MMM yyyy")</p>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        </a>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h5 class="activity-title">Son Stand Talepleri</h5>
+                    <a asp-area="admin" asp-controller="StandReq" asp-action="Index" class="btn btn-sm btn-outline-primary">
+                        Tümünü Gör
+                    </a>
+                </div>
+                <div class="activity-list">
+                    @foreach (var request in Model.RecentStandRequests.Take(5))
+                    {
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <span class="material-symbols-rounded">storefront</span>
+                            </div>
+                            <div class="activity-content">
+                                <h6 class="activity-name">@request.Company</h6>
+                                <p class="activity-time">@request.CreatedAt.ToString("dd MMM yyyy")</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
-@section Scripts {
-    
-    @* <script> *@
-    @* const loader = document.querySelector('.loading-container'); *@
-    @*     const mainContent = document.querySelector('.main-content'); *@
-    @*     const body = document.body; *@
-    @*     const sessionKey = 'introShown'; *@
-
-    @*     const hasSeenIntro = sessionStorage.getItem(sessionKey); *@
-
-    @*     function showLoader() { *@
-    @*         body.classList.add('loading'); *@
-    @*         loader.classList.add('show'); *@
-    @*         mainContent.setAttribute('aria-hidden', 'true'); *@
-    @*         // mainContent.classList.add('d-none'); *@
-    @*     } *@
-
-    @*     function removeLoader() { *@
-    @*         loader.classList.remove('show'); *@
-    @*         setTimeout(() => { *@
-    @*             // mainContent.classList.remove('d-none'); *@
-    @*             body.classList.remove('loading'); *@
-    @*             mainContent.removeAttribute('aria-hidden'); *@
-    @*             loader.remove(); *@
-    @*         }, 1000); *@
-    @*     } *@
-
-    @*     if (!hasSeenIntro) { *@
-    @*         sessionStorage.setItem(sessionKey, 'true'); *@
-    @*         showLoader(); *@
-
-    @*         setTimeout(removeLoader, 2000); *@
-    @*     } else { *@
-    @*         // showLoader(); *@
-    @*         loader.remove() *@
-    @*     } *@
-    @* </script> *@
-}

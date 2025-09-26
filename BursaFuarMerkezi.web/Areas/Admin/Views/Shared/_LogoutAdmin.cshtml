@@ -15,7 +15,9 @@
             <div class="nav-link">Hello @UserManager.GetUserName(User)</div>
         </div>
         <div class="nav-item">
-            <a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Logout">Logout</a>
+            <form asp-area="Admin" asp-controller="Account" asp-action="Logout" method="post" style="display: inline;">
+                <button type="submit" class="nav-link btn btn-link p-0 border-0" style="color: inherit; text-decoration: none;">Logout</button>
+            </form>
         </div>
     </div>
 }
