@@ -1,0 +1,169 @@
+@{
+    ViewData["Title"] = "BFM Konaklama";
+    ViewData["Description"] = "BFM Konaklama - Bursa Fuar Merkezi Konaklama";
+    ViewData["Keywords"] = "BFM, Konaklama, Fuar Merkezi";
+}
+
+@section styles {
+    <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar-container">
+            <div class="sidebar">
+                <div class="sidebar-sticky">
+                    <div class="sidebar-header p-3 mb-3 text-center">
+                        <h3 class="">
+                            BFM
+                        </h3>
+                        <p class="text-muted small mb-0">
+                            Bursa Fuar Merkezi
+                        </p>
+                    </div>
+                    <ul class="nav flex-column">
+                        <!-- Hakkımızda -->
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle"
+                                data-bs-target="#hakkimizdaSubmenu" data-bs-toggle="collapse" href="#">
+                                <span class="menu-icon">
+                                    <i class="fas fa-info-circle">
+                                    </i>
+                                </span>
+                                <span>
+                                    Organizatör
+                                </span>
+                            </a>
+                            <div class="collapse" id="hakkimizdaSubmenu">
+                                <ul class="nav flex-column submenu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/organizator">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            E-Broşürler
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/diger-hizmetler">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            Diğer Hizmetler
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/planlar">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            Planlar
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/toplanti-salonlari">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            Toplantı Salonları
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/ek-hizmetler">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            Ek Hizmetler
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <main class="col-md-9 content-container">
+            <div class="content-header">
+                <div class="breadcrumb">
+                    <a href="index.html">
+                        Ana Sayfa
+                    </a>
+                    /
+                    <a href="organizator.html">
+                        Organizatör
+                    </a>
+                    /
+                    <a href="diger-hizmetler.html">
+                        Diğer Hizmetler
+                    </a>
+                </div>
+            </div>
+            <div class="content-body ms-5">
+                <div class="fs-1 mb-4">
+                    Diğer Hizmetler
+                </div>
+                <h3>
+                    Catering
+                </h3>
+                <p class="mb-5">
+                    Fuar süresince katılımcılar ve ziyaretçiler, yeme-içme ihtiyaçlarını 2-5 ana fuayede
+                    bulunan Cemile Sultan Korusu, Bulvar Cafe’den sağlayabilirler. 9-10 numaralı fuar salonları ise,
+                    yeme-içme ihtiyaçlarını ana fuayede bulunan Expo Food ’dan sağlayabilirler.
+                </p>
+                <p>
+                    Ayrıca ihtiyaç duyulması halinde restoranlar; coffee break organizasyonları, kokteyl
+                    organizasyonları, personel yemekleri, açık büfe catering gibi ek hizmetlerden faydalanabilirler.
+                </p>
+                <h3>
+                    Basın Odası
+                </h3>
+                <p class="mb-5">
+                    BFM (Bursa Fuar Merkezi) bünyesinde, basın mensuplarının ihtiyaçları düşünülerek
+                    kurgulanmış, gerekli alt yapı ve imkanlara sahip “2 adet” basın odası bulunmaktadır. Basın
+                    odaları 2-5 fuaye alanında 1 adet ve 9-10 fuar salonunda 1 adet olmak üzere konumlanmaktadır.
+                    Basın mensupları, basın kartlarını göstererek alana giriş yapabilirler.
+                </p>
+                <h3>
+                    Organizatör Odası
+                </h3>
+                <p class="mb-5">
+                    BFM (Bursa Fuar Merkezi) bünyesinde, organizatörlerin ihtiyaçları düşünülerek
+                    kurgulanmış, gerekli alt yapı ve imkanlara sahip “3 adet” organizatör odası bulunmaktadır.
+                    Organizatör odaları 2-5 fuaye alanında 2 adet, 1, 9, 10 ve 11 no'lu fuar salonlarında 1'er adet
+                    olmak üzere konumlanmaktadır.
+                </p>
+                <h3>
+                    Ambulans Hizmeti
+                </h3>
+                <p class="mb-5">
+                    BFM (Bursa Fuar Merkezi) bünyesinde, fuar kurulum, fuar süresi ve söküm süreçleri
+                    boyunca, acil durumlarda müdahale etmek üzere “2 adet” mavi şeritli ambulans bulunmaktadır.
+                    Ambulanslar 1-8 numaralı fuar salonları için 1 adet, 9-10-11 numaralı fuar salonları için 1 adet
+                    olarak hizmet vermektedir.
+                </p>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/hakkimizda.js"></script>
+
+    <script>
+        const buttons = document.querySelectorAll('#pagination .page-button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => {
+                    btn.classList.remove('btn-danger');
+                    btn.classList.add('btn-outline-danger');
+                });
+
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-danger');
+            });
+        });
+    </script>
+
+}

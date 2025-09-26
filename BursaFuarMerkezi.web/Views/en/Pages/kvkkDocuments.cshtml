@@ -1,0 +1,312 @@
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
+
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="hakkimizda.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="hakkimizda.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Hakkımızda -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-info-circle">
+                  </i>
+                </span>
+                <span data-translate="hakkimizda.sidebar.aboutUs">
+                  About Us
+                </span>
+              </a>
+              <div class="collapse show" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/about-us">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.bfmAbout">
+                        About BFM
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/president-message">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.presidentMessage">
+                        President's Message
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/quality-policy">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.qualityPolicy">
+                        Quality Policy
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/our-team">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.ourTeam">
+                        Our Team
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/kvkk-documents">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.kvkkDocuments">
+                        KVKK Documents
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/information-society-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.informationSocietyServices">
+                        Information Society
+                        Services
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/reports">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.reports">
+                        Reports
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-briefcase">
+                  </i>
+                </span>
+                <span data-translate="hakkimizda.sidebar.bfmOffices">
+                  BFM Offices
+                </span>
+              </a>
+              <div class="collapse" id="ifmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/meeting-rooms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.bfmReadyOffices">
+                        BFM Ready Offices and Meeting
+                        Rooms
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a data-translate="hakkimizda.breadcrumb.home" href="/en/home">
+            Home
+          </a>
+          /
+          <a href="aboutus.html">
+            About us
+          </a>
+          /
+          <a href="kvkk-documents.html">
+            KVKK Documents
+          </a>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="document-header">
+          BFM KVKK Documents
+        </div>
+        <table class="document-table">
+          <thead>
+            <tr>
+              <th style="width: 70%">
+                File Name
+              </th>
+              <th>
+                Download Link
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                BFM Storage and Destruction Policy
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Employee Information Text
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Fairground Visitor Information Text
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Personal Data Security Policy
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                KVKK Application Form
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Cookie Policy
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-outline-danger');
+        });
+
+        button.classList.remove('btn-outline-danger');
+        button.classList.add('btn-danger');
+      });
+    });
+
+
+    // Gerçek çalışan indirme fonksiyonu
+    function downloadDocument(button) {
+      const documentMappings = {
+        'BFM Saklama ve İmha Politikası': {
+          url: 'documents/logo-turkuaz.pdf',
+          filename: 'logo-turkuaz.pdf'
+        },
+        'Çalışan Aydınlatma Metni': {
+          url: 'documents/',
+          filename: ''
+        },
+        'Fuar Alanı Ziyaretçi Aydınlatma Metni': {
+          url: 'documents/',
+          filename: ''
+        },
+        'Kişisel Veri Güvenliği Politikası': {
+          url: 'documents/',
+          filename: ''
+        },
+        'KVKK Başvuru Formu': {
+          url: 'documents/',
+          filename: ''
+        },
+        'Çerez Politikası': {
+          url: 'documents/',
+          filename: ''
+        },
+        // Diğer belgeler
+      };
+
+      const row = button.closest('tr');
+      const documentName = row.querySelector('td:first-child').textContent;
+
+      if (documentMappings[documentName]) {
+        const { url, filename } = documentMappings[documentName];
+        forceDownload(url, filename);
+      } else {
+        alert('Belge bulunamadı!');
+      }
+    }
+
+    // Dosya indirme fonksiyonu
+    function forceDownload(url, filename) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+
+}

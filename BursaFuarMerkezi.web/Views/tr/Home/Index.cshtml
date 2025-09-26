@@ -12,34 +12,14 @@
 }
 <!-- Slider Start -->
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    @{ var sliders = Model?.Sliders?.ToList() ?? new List<BursaFuarMerkezi.Models.Slider>(); }
-    <div class="carousel-indicators">
-      @for (var i = 0; i < sliders.Count; i++)
-      {
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : null)" aria-label="Slide @(i + 1)"></button>
-      }
-    </div>
     <div class="carousel-inner">
-      @for (var i = 0; i < sliders.Count; i++)
-      {
-        var s = sliders[i];
-        <div class="carousel-item @(i == 0 ? "active" : null)">
-          <img src="@s.ImageUrl" class="d-none d-md-block w-100 img-1" alt="@s.AltText">
-          @if (!string.IsNullOrEmpty(s.MobileImageUrl))
-          {
-            <img src="@s.MobileImageUrl" class="d-block d-md-none w-100 img-1" alt="@s.AltText">
-          }
-        </div>
-      }
+      <div class="carousel-item active">
+        <video class="video-slide w-100" autoplay muted loop playsinline>
+          <source src="~/videos/BursaFuarMerkezi.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Önceki</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Sonraki</span>
-    </button>
     <div class="action-buttons">
       <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Bilet</button>
       <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stant Talebi</a>

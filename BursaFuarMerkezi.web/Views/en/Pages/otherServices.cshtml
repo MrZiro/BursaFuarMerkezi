@@ -1,0 +1,174 @@
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
+
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="organizator.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="organizator.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Organizatör -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-info-circle">
+                  </i>
+                </span>
+                <span data-translate="organizator.sidebar.organizerTitle">
+                  Organizer
+                </span>
+              </a>
+              <div class="collapse show" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/organizer">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.eBrochures">
+                        E-Brochures
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/en/other-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.otherServices">
+                        Other Services
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/plans">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.plans">
+                        Plans
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/meeting-rooms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.meetingRooms">
+                        Meeting Rooms
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/extra-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.extraServices">
+                        Extra Services
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a href="home.html">
+            Home
+          </a>
+          /
+          <a href="organizer.html">
+            Organizer
+          </a>
+          <a href="other-services.html">
+            Other Services
+          </a>
+        </div>
+      </div>
+      <div class="content-body ms-5">
+        <div class="fs-1 mb-4">
+          Other Services
+        </div>
+        <h3>
+          Catering
+        </h3>
+        <p class="mb-5">
+          During the fair, participants and visitors can meet their food and beverage needs at Cemile
+          Sultan Korusu, Bulvar Cafe located in the main foyers 2-5. Fair halls 9-10 can meet their food and beverage
+          needs at Expo Food located in the main foyer.
+        </p>
+        <p>
+          In addition, if needed, restaurants can benefit from additional services such as coffee break
+          organizations, cocktail organizations, staff meals, open buffet catering.
+        </p>
+        <h3>
+          Media Room
+        </h3>
+        <p class="mb-5">
+          Within the BFM (Bursa Fair Center), there are "2" press rooms designed with the necessary
+          infrastructure and facilities, considering the needs of the press members. The press rooms are located in
+          the 2-5 foyer area, 1 in the 9-10 fair halls. Media members can enter the area by showing their press cards.
+        </p>
+        <h3>
+          Organizer Room
+        </h3>
+        <p class="mb-5">
+          Within BFM (Bursa Fair Center), there are "3" organizer rooms designed considering the needs
+          of organizers and having the necessary infrastructure and facilities. Organizer rooms are located in the
+          foyer area 2-5, 2 in each of the fair halls 1, 9, 10 and 11.
+        </p>
+        <h3>
+          Ambulance Service
+        </h3>
+        <p class="mb-5">
+          Within the BFM (Bursa Fair Center), there are "2" blue-striped ambulances to intervene in
+          emergencies during the fair setup, fair duration and dismantling processes.
+          The ambulances serve as 1 for fair halls 1-8 and 1 for fair halls 9-10-11.
+        </p>
+      </div>
+    </main>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-outline-danger');
+        });
+
+        button.classList.remove('btn-outline-danger');
+        button.classList.add('btn-danger');
+      });
+    });
+  </script>
+}

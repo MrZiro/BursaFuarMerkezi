@@ -14,37 +14,17 @@
 
   <!-- Slider Start -->
   <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
-    @{ var sliders = Model?.Sliders?.ToList() ?? new List<BursaFuarMerkezi.Models.Slider>(); }
-    <div class="carousel-indicators">
-      @for (var i = 0; i < sliders.Count; i++)
-      {
-        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : null)" aria-label="Slide @(i + 1)" aria-current="@(i==0 ? "true" : null)"></button>
-      }
-    </div>
     <div class="carousel-inner">
-      @for (var i = 0; i < sliders.Count; i++)
-      {
-        var s = sliders[i];
-        <div class="carousel-item @(i == 0 ? "active" : null)">
-          <img src="@s.ImageUrl" class="d-none d-md-block w-100 img-1" alt="@s.AltText">
-          @if (!string.IsNullOrEmpty(s.MobileImageUrl))
-          {
-            <img src="@s.MobileImageUrl" class="d-block d-md-none w-100 img-1" alt="@s.AltText">
-          }
-        </div>
-      }
+      <div class="carousel-item active">
+        <video class="video-slide w-100" autoplay muted loop playsinline>
+          <source src="~/videos/BursaFuarMerkezi.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
     <div class="action-buttons">
       <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Ticket</button>
-      <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stand Request</a>
+      <a href="/en/stand-request" class="trigger-button" data-translate="slider.triggerButton2">Stand Request</a>
     </div>
     <!-- Modal Overlay -->
     <div class="modal-overlay" id="modalOverlay">

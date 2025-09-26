@@ -1,0 +1,266 @@
+@{
+    ViewData["Title"] = "BFM Konaklama";
+    ViewData["Description"] = "BFM Konaklama - Bursa Fuar Merkezi Konaklama";
+    ViewData["Keywords"] = "BFM, Konaklama, Fuar Merkezi";
+}
+
+@section styles {
+    <link href="~/css/hakkimizda.css" rel="stylesheet" />
+    <link href="~/css/blog-single-page.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar-container">
+            <div class="sidebar">
+                <div class="sidebar-sticky">
+                    <div class="sidebar-header p-3 mb-3 text-center">
+                        <h3 class="" data-translate="hakkimizda.sidebar.mainTitle">
+                            BFM
+                        </h3>
+                        <p class="text-muted small mb-0" data-translate="hakkimizda.sidebar.subTitle">
+                            Bursa FuarMerkezi
+                        </p>
+                    </div>
+                    <ul class="nav flex-column">
+                        <!-- Hakkımızda -->
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                                data-bs-toggle="collapse" href="#">
+                                <span class="menu-icon">
+                                    <i class="fas fa-info-circle">
+                                    </i>
+                                </span>
+                                <span data-translate="hakkimizda.sidebar.aboutUs">
+                                    Hakkımızda
+                                </span>
+                            </a>
+                            <div class="collapse show" id="hakkimizdaSubmenu">
+                                <ul class="nav flex-column submenu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/hakkimizda">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.bfmAbout">
+                                                BFM Hakkında
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/baskan-mesaji">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.presidentMessage">
+                                                Başkan
+                                                Mesajı
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/kalite-politimiz">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.qualityPolicy">
+                                                Kalite
+                                                Politikamız
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/ekibimiz">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.ourTeam">
+                                                Ekibimiz
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/kvkk-dokumanları">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.kvkkDocuments">
+                                                KVKK
+                                                Dokümanları
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/bilgi-toplum-hizmetleri">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.informationSocietyServices">
+                                                Bilgi
+                                                Toplumu Hizmetleri
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/raporlar">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.reports">
+                                                Raporlar
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu"
+                                data-bs-toggle="collapse" href="#">
+                                <span class="menu-icon">
+                                    <i class="fas fa-briefcase">
+                                    </i>
+                                </span>
+                                <span data-translate="hakkimizda.sidebar.bfmOffices">
+                                    BFM Ofisleri
+                                </span>
+                            </a>
+                            <div class="collapse" id="ifmSubmenu">
+                                <ul class="nav flex-column submenu">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="/tr/toplanti-salonlari">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="hakkimizda.sidebar.bfmReadyOffices">
+                                                BFM Hazır Ofis
+                                                ve Toplantı Salonları
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <main class="col-md-9 content-container">
+            <div class="content-header">
+                <div class="breadcrumb">
+                    <a data-translate="hakkimizda.breadcrumb.home" href="index.html">
+                        Ana Sayfa
+                    </a>
+                    /
+                    <a href="toplanti-salonlari.html">
+                        Hazır Ofis ve Toplantı Salonları
+                    </a>
+                </div>
+            </div>
+            <div class="content-body">
+                <h1 class="page-title-2">
+                    BFM Hazır Ofis ve Toplantı Salonları
+                </h1>
+                <div class="content-text">
+                    <p class="mb-5">
+                        Bursa Uluslararası Fuar Merkezi’nin yapısı içerisinde yer alan Hazır Ofis ve
+                        Toplantı Salonları, iş dünyası için profesyonel, esnek ve teknolojik donanımlı çalışma
+                        alanları sunuyor.
+                    </p>
+                    <h3>
+                        Ofis ve Toplantı Salonlarımız
+                    </h3>
+                    <p class="">
+                        Toplam 6 adet isimlendirilmiş ofisle faaliyet göstermekteyiz:
+                    </p>
+                    <ul>
+                        <li>
+                            Çekirge
+                        </li>
+                        <li>
+                            Uludağ
+                        </li>
+                        <li>
+                            Cumalıkızık
+                        </li>
+                        <li>
+                            İznik
+                        </li>
+                        <li>
+                            Trilye
+                        </li>
+                        <li>
+                            Mudanya
+                        </li>
+                    </ul>
+                    Bu ofisler, ergonomik mobilyalar ve modern altyapı ile donatılmış olup; bireysel çalışma ve ekip
+                    toplantıları için ideal ortamlar sunar.
+                    <h3>
+                        Hizmet Modelimiz
+                    </h3>
+                    <p class="">
+                    </p>
+                    <ul>
+                        <li>
+                            Günlük, haftalık veya aylık kiralama seçenekleri
+                        </li>
+                        <li>
+                            Esnek masa üyelik modelleri
+                        </li>
+                        <li>
+                            Sessiz ve verimli çalışma ortamı
+                        </li>
+                        <li>
+                            Yüksek hızlı internet, sunum ekipmanları, görüntü ve ses sistemleri
+                        </li>
+                    </ul>
+                    <h3>
+                        Konum ve Ulaşım
+                    </h3>
+                    <p class="mb-5">
+                        BFM Ofis ve Toplantı Salonları, Bursa Fuar Merkezi’nin içerisinde, şehir
+                        merkezine yakın konumuyla kolay ulaşım avantajı sunmaktadır. Toplu taşıma ve özel araç ile
+                        kolay erişim imkânı sunar. Ana yol bağlantılarına ve BUTTİM durağına yakınlığı sayesinde
+                        merkezi bir konuma sahiptir.
+                    </p>
+                    <h3>
+                        İletişim ve Rezervasyon
+                    </h3>
+                    <p class="">
+                    </p>
+                    <ul>
+                        <li>
+                            Adres: Altınova Mah., Fuar Cad. No:25, 16250 Osmangazi / Bursa
+                        </li>
+                        <li>
+                            Telefon: (0224) 211 27 51
+                        </li>
+                        <li>
+                            E-posta: info@bfm.com.tr
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/hakkimizda.js"></script>
+    <script src="~/js/toplanti-salonlari.js"></script>
+
+    <script>
+        const buttons = document.querySelectorAll('#pagination .page-button');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => {
+                    btn.classList.remove('btn-danger');
+                    btn.classList.add('btn-outline-danger');
+                });
+
+                button.classList.remove('btn-outline-danger');
+                button.classList.add('btn-danger');
+            });
+        });
+    </script>
+
+}

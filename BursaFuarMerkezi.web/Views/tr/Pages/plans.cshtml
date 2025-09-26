@@ -1,0 +1,197 @@
+@{
+    ViewData["Title"] = "BFM Konaklama";
+    ViewData["Description"] = "BFM Konaklama - Bursa Fuar Merkezi Konaklama";
+    ViewData["Keywords"] = "BFM, Konaklama, Fuar Merkezi";
+}
+
+@section styles {
+    <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar-container">
+            <div class="sidebar">
+                <div class="sidebar-sticky">
+                    <div class="sidebar-header p-3 mb-3 text-center">
+                        <h3 class="" data-translate="organizator.sidebar.mainTitle">
+                            BFM
+                        </h3>
+                        <p class="text-muted small mb-0" data-translate="organizator.sidebar.subTitle">
+                            Bursa FuarMerkezi
+                        </p>
+                    </div>
+                    <ul class="nav flex-column">
+                        <!-- Organizatör -->
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                                data-bs-toggle="collapse" href="#">
+                                <span class="menu-icon">
+                                    <i class="fas fa-info-circle">
+                                    </i>
+                                </span>
+                                <span data-translate="organizator.sidebar.organizerTitle">
+                                    Organizatör
+                                </span>
+                            </a>
+                            <div class="collapse show" id="hakkimizdaSubmenu">
+                                <ul class="nav flex-column submenu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/organizator">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="organizator.sidebar.eBrochures">
+                                                E-Broşürler
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/diger-hizmetler">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="organizator.sidebar.otherServices">
+                                                Diğer
+                                                Hizmetler
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="/tr/planlar">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="organizator.sidebar.plans">
+                                                Planlar
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/toplanti-salonlari">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="organizator.sidebar.meetingRooms">
+                                                Toplantı
+                                                Salonları
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/tr/ek-hizmetler">
+                                            <i class="fas fa-angle-right me-2">
+                                            </i>
+                                            <span data-translate="organizator.sidebar.extraServices">
+                                                Ek
+                                                Hizmetler
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Main content -->
+        <main class="col-md-9 content-container">
+            <div class="content-header">
+                <div class="breadcrumb">
+                    <a href="index.html">
+                        Ana Sayfa
+                    </a>
+                    /
+                    <a href="organizator.html">
+                        Organizatör
+                    </a>
+                    /
+                    <a href="planlar.html">
+                        Planlar
+                    </a>
+                </div>
+            </div>
+            <div class="content-body">
+                <div class="document-header">
+                    Planlar
+                </div>
+                <table class="document-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70%">
+                                Belge Adı
+                            </th>
+                            <th>
+                                İndirme Linki
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                BFM Fuar Salonları Genel Planı
+                            </td>
+                            <td>
+                                <button class="download-btn" onclick="downloadDocument(this)">
+                                    İndir
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/js/hakkimizda.js"></script>
+
+<script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            buttons.forEach(btn => {
+                btn.classList.remove('btn-danger');
+                btn.classList.add('btn-outline-danger');
+            });
+
+            button.classList.remove('btn-outline-danger');
+            button.classList.add('btn-danger');
+        });
+    });
+
+    // Gerçek çalışan indirme fonksiyonu
+    function downloadDocument(button) {
+        const documentMappings = {
+            'BFM Fuar Salonları Genel Planı': {
+                url: './assets/documents/bfmyerlesim.pdf',
+                filename: 'bfmyerlesim.pdf'
+            },
+            // Diğer belgeler
+        };
+
+        const row = button.closest('tr');
+        const documentName = row.querySelector('td:first-child').textContent;
+
+        if (documentMappings[documentName]) {
+            const { url, filename } = documentMappings[documentName];
+            forceDownload(url, filename);
+        } else {
+            alert('Belge bulunamadı!');
+        }
+    }
+
+    // Dosya indirme fonksiyonu
+    function forceDownload(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+}

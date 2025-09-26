@@ -1,0 +1,248 @@
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
+
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="hizmetler.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="hizmetler.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Hizmetler -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#idtmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.servicesTitle">
+                  Services
+                </span>
+              </a>
+              <div class="collapse" id="idtmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.prayerRoom">
+                        Mosque
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/florist">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.florist">
+                        Florist
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/atms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.atms">
+                        ATM's
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/infirmary">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.infirmary">
+                        Infirmary
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/lost-item">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.lostAndFound">
+                        Lost Item
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Restoran ve Kafeler -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.restaurantsCafesTitle">
+                  Restaurants And Cafes
+                </span>
+              </a>
+              <div class="collapse" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/en/restaurant-and-cafes">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.restaurantsCafesList">
+                        Restaurants And Cafes List
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Ulaşım -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#usalımSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.transportTitle">
+                  Transport
+                </span>
+              </a>
+              <div class="collapse" id="usalımSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/transportation">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.transportToBFM">
+                        Reaching BFM
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/parking">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.parking">
+                        Parking
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Konaklama -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.accommodationTitle">
+                  Accomodation
+                </span>
+              </a>
+              <div class="collapse" id="ifmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/accommodation">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.nearbyHotels">
+                        Nearby Hotels
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a href="home.html">
+            Home Page
+          </a>
+          /
+          <a href="restaurant-and-cafes.html">
+            Restaurant And Cafes
+          </a>
+          /
+        </div>
+      </div>
+      <div class="content-body mb-5">
+        <div class="content-body mb-5">
+          <h1 class="page-title-2 text-center">
+            BURSA FAIR CENTER (BFC)
+          </h1>
+          <h4>
+            Restaurants and Cafes
+          </h4>
+          <p>
+            At the Bursa Fair Center, the comfort of our visitors and exhibitors is our top priority.
+            Restaurants and cafes located within the fairgrounds offer all your food and beverage needs throughout the
+            day.
+          </p>
+          <h4>
+            Restaurant Area
+          </h4>
+          <p>
+            Offering a wide range of dishes, including traditional Turkish cuisine, international menus, and freshly
+            prepared dishes daily, it offers an ideal setting for lunches, meeting breaks, and events.
+          </p>
+          <h4>
+            Cafe Areas
+          </h4>
+          <p>
+            Located at the foyer and hall entrances, cafes offer visitors a pleasant break with a variety of hot and
+            cold beverages, desserts, and snacks.
+          </p>
+          <h4>
+            Comfort and Fast Service
+          </h4>
+          <p>
+            With their modern design, spacious seating areas, and fast service, restaurants and cafes aim to make
+            your trade fair experience more comfortable and productive.
+          </p>
+          <h4>
+            Event Support Services
+          </h4>
+          <p>
+            Group catering, cocktails, and special menu services are also provided as needed, meeting the demands of
+            participating companies and organizers.
+            <br />
+            In short, our guests at the Bursa Fair Center can enjoy both their business meetings and social breaks by
+            taking advantage of quality food and beverage services throughout the event.
+          </p>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-outline-danger');
+        });
+
+        button.classList.remove('btn-outline-danger');
+        button.classList.add('btn-danger');
+      });
+    });
+  </script>
+}

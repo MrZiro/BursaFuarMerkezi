@@ -1,0 +1,247 @@
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
+
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="hizmetler.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="hizmetler.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Hizmetler -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#idtmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.servicesTitle">
+                  Services
+                </span>
+              </a>
+              <div class="collapse" id="idtmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.prayerRoom">
+                        Mosque
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/florist">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.florist">
+                        Florist
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/atms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.atms">
+                        ATM's
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/infirmary">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.infirmary">
+                        Infirmary
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/lost-item">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.lostAndFound">
+                        Lost Item
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Restoran ve Kafeler -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.restaurantsCafesTitle">
+                  Restaurants And Cafes
+                </span>
+              </a>
+              <div class="collapse" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/restaurant-and-cafes">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.restaurantsCafesList">
+                        Restaurants And Cafes List
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Ulaşım -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#usalımSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.transportTitle">
+                  Transport
+                </span>
+              </a>
+              <div class="collapse" id="usalımSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/transportation">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.transportToBFM">
+                        Reaching BFM
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/parking">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.parking">
+                        Parking
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Konaklama -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.accommodationTitle">
+                  Accomodation
+                </span>
+              </a>
+              <div class="collapse" id="ifmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/accommodation">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.nearbyHotels">
+                        Nearby Hotels
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a data-translate="hizmetler.breadcrumb.home" href="/en/home">
+            Home Page
+          </a>
+          /
+          <a href="transportation.html">
+            Visit BFM
+          </a>
+          <a href="services.html">
+            Services
+          </a>
+        </div>
+      </div>
+      <div class="content-body">
+        <h1>
+          BURSA FAIR CENTER (BFC)
+        </h1>
+        <h2>
+          SERVICES
+        </h2>
+        <p>
+          Bursa Fair Center offers various support services to maximize the comfort of visitors and participants
+          throughout the fair.
+        </p>
+        <hr />
+        <h2>
+          Baby Nursing and Care Room
+        </h2>
+        <p>
+          The baby care and breastfeeding room, specially designed for the comfort of our visitors, offers a hygienic
+          and safe environment where mothers can easily meet their needs.
+          All necessary equipment is provided for babies' feeding and care needs.
+        </p>
+        <h2>
+          Mosque
+        </h2>
+        <p>
+          The prayer room, with separate sections for men and women within the fairgrounds, provides a peaceful
+          environment for our visitors to pray.
+        </p>
+        <h2>
+          Infirmary
+        </h2>
+        <p>
+          The health of our visitors is our top priority. The exhibition area is equipped with professional medical
+          staff and a well-equipped infirmary to address any potential health issues. In emergencies, first aid is
+          provided, and referrals to healthcare facilities are provided when necessary.
+        </p>
+        <h2>
+          Lost and Found Items
+        </h2>
+        <p>
+          During the fair, a help desk is available to assist with lost or found items. Guests can report lost items
+          and safely retrieve their items.
+        </p>
+      </div>
+    </main>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-outline-danger');
+        });
+
+        button.classList.remove('btn-outline-danger');
+        button.classList.add('btn-danger');
+      });
+    });
+  </script>
+}

@@ -1,0 +1,194 @@
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
+
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
+
+<div class="banner">
+</div>
+
+<div class="container main-container">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="organizator.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="organizator.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Organizatör -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-info-circle">
+                  </i>
+                </span>
+                <span data-translate="organizator.sidebar.organizerTitle">
+                  Organizer
+                </span>
+              </a>
+              <div class="collapse show" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/organizer">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.eBrochures">
+                        E-Brochures
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/other-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.otherServices">
+                        Other Services
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/en/plans">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.plans">
+                        Plans
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/meeting-rooms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.meetingRooms">
+                        Meeting Rooms
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/extra-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.extraServices">
+                        Extra Services
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a href="home.html">
+            Home
+          </a>
+          /
+          <a href="organizer.html">
+            Organizer
+          </a>
+          /
+          <a href="plans.html">
+            Plans
+          </a>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="document-header">
+          Plans
+        </div>
+        <table class="document-table">
+          <thead>
+            <tr>
+              <th style="width: 70%">
+                Documeny Name
+              </th>
+              <th>
+                Download Link
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                BFM Exhibition Halls General Plan
+              </td>
+              <td>
+                <button class="download-btn" onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => {
+          btn.classList.remove('btn-danger');
+          btn.classList.add('btn-outline-danger');
+        });
+
+        button.classList.remove('btn-outline-danger');
+        button.classList.add('btn-danger');
+      });
+    });
+
+    // Gerçek çalışan indirme fonksiyonu
+    function downloadDocument(button) {
+      const documentMappings = {
+        'BFM Fuar Salonları Genel Planı': {
+          url: '../tr/documents/bfmyerlesim.pdf',
+          filename: 'bfmyerlesim.pdf'
+        },
+        // Diğer belgeler
+      };
+
+      const row = button.closest('tr');
+      const documentName = row.querySelector('td:first-child').textContent;
+
+      if (documentMappings[documentName]) {
+        const { url, filename } = documentMappings[documentName];
+        forceDownload(url, filename);
+      } else {
+        alert('Belge bulunamadı!');
+      }
+    }
+
+    // Dosya indirme fonksiyonu
+    function forceDownload(url, filename) {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+}
