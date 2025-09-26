@@ -1,261 +1,257 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
 
-<link href="../tr/assets/style.css" rel="stylesheet"/>
-
-<link href="../tr/assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="../tr/assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="../tr/assets/header.css" rel="stylesheet"/>
-
-<link href="../tr/assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
-
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
 <div class="banner">
 </div>
 
 <div class="container main-container">
- <div class="row">
-  <!-- Sidebar -->
-  <div class="col-md-3 sidebar-container">
-   <div class="sidebar">
-    <div class="sidebar-sticky">
-     <div class="sidebar-header p-3 mb-3 text-center">
-      <h3 class="" data-translate="hizmetler.sidebar.mainTitle">
-       BFM
-      </h3>
-      <p class="text-muted small mb-0" data-translate="hizmetler.sidebar.subTitle">
-       Bursa Fair Center
-      </p>
-     </div>
-     <ul class="nav flex-column">
-      <!-- Hizmetler -->
-      <li class="nav-item dropdown">
-       <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#idtmSubmenu" data-bs-toggle="collapse" href="#">
-        <span data-translate="hizmetler.sidebar.servicesTitle">
-         Services
-        </span>
-       </a>
-       <div class="collapse" id="idtmSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link" href="services.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.prayerRoom">
-            Mosque
-           </span>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="hizmetler.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="hizmetler.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Hizmetler -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#idtmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.servicesTitle">
+                  Services
+                </span>
+              </a>
+              <div class="collapse" id="idtmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.prayerRoom">
+                        Mosque
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/florist">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.florist">
+                        Florist
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/atms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.atms">
+                        ATM's
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/infirmary">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.infirmary">
+                        Infirmary
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/lost-item">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.lostAndFound">
+                        Lost Item
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Restoran ve Kafeler -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.restaurantsCafesTitle">
+                  Restaurants And Cafes
+                </span>
+              </a>
+              <div class="collapse" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/restaurant-and-cafes">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.restaurantsCafesList">
+                        Restaurants And Cafes List
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Ulaşım -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#usalımSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.transportTitle">
+                  Transport
+                </span>
+              </a>
+              <div class="collapse" id="usalımSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/transportation">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.transportToBFM">
+                        Reaching BFM
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/en/parking">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.parking">
+                        Parking
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <!-- Konaklama -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span data-translate="hizmetler.sidebar.accommodationTitle">
+                  Accomodation
+                </span>
+              </a>
+              <div class="collapse" id="ifmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/accommodation">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hizmetler.sidebar.nearbyHotels">
+                        Nearby Hotels
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a href="/tr/home">
+            Home Page
           </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="florist.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.florist">
-            Florist
-           </span>
+          /
+          <a href="/tr/transportation">
+            Transport
           </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="atms.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.atms">
-            ATM's
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="infirmary.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.infirmary">
-            Infirmary
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="lost-item.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.lostAndFound">
-            Lost Item
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-      <!-- Restoran ve Kafeler -->
-      <li class="nav-item dropdown">
-       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu" data-bs-toggle="collapse" href="#">
-        <span data-translate="hizmetler.sidebar.restaurantsCafesTitle">
-         Restaurants And Cafes
-        </span>
-       </a>
-       <div class="collapse" id="hakkimizdaSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link" href="restaurant-and-cafes.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.restaurantsCafesList">
-            Restaurants And Cafes List
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-      <!-- Ulaşım -->
-      <li class="nav-item dropdown">
-       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#usalımSubmenu" data-bs-toggle="collapse" href="#">
-        <span data-translate="hizmetler.sidebar.transportTitle">
-         Transport
-        </span>
-       </a>
-       <div class="collapse" id="usalımSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link" href="transportation.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.transportToBFM">
-            Reaching BFM
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link active" href="parking.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.parking">
+          /
+          <a href="/tr/parking">
             Parking
-           </span>
           </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-      <!-- Konaklama -->
-      <li class="nav-item dropdown">
-       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu" data-bs-toggle="collapse" href="#">
-        <span data-translate="hizmetler.sidebar.accommodationTitle">
-         Accomodation
-        </span>
-       </a>
-       <div class="collapse" id="ifmSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link" href="accommodation.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hizmetler.sidebar.nearbyHotels">
-            Nearby Hotels
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-     </ul>
-    </div>
-   </div>
+        </div>
+      </div>
+      <div class="content-body">
+        <h1 class="page-title-2">
+          Parking
+        </h1>
+        <div class="content-text">
+          <p class="mb-4 fs-6 fw-normal">
+            Our car park, which serves our guests at the Istanbul Fair Center, has a capacity of approximately 3000
+            vehicles. Our car park in our fair halls numbered 9-10-11 is a closed car park, the rest is an open car
+            park. There are special parking areas in our car park for our disabled guests.
+          </p>
+          <p>
+            Otopark payment booths; are located at the ground floor level within the parking buildings on the open
+            floor of the parking lot.
+          </p>
+          <p>
+            Apart from this, there is a payment point at the -1 red floor ring road exit. Payment can be made by cash
+            or credit card at the payment booths.
+          </p>
+          <p>
+            There are also automatic payment points where you can pay by credit card or cash at the entrance to the
+            main foyer, at the entrance and exit doors of exhibition halls 7-8, and at the exit doors of exhibition
+            halls 9-10.
+          </p>
+          <p>
+            Diplomatic corps and official vehicles can use the parking lot free of charge if they submit the necessary
+            documents (official vehicle license and institutional identity card, etc.) to our marketing unit.
+          </p>
+          <p>
+            Subscription procedures must be completed within 1 hour after entering the car park.
+          </p>
+          <p>
+            For questions about parking, you can contact the parking office staff at 0 111 111 11 11.
+          </p>
+          <p class="fw-bold">
+            Important Reminder About Parking Lot Usage
+          </p>
+          <p>
+          </p>
+          <ul class="ms-3" style="list-style-type: disc;">
+            <li>
+              It is forbidden to park on the sidewalks within the Istanbul Expo Center area,
+              please use the parking lot. Vehicles of owners who park in illegal areas will be towed and fined.
+            </li>
+            <li>
+              Keep your parking ticket for as long as your vehicle remains in the parking lot. If you lose your
+              ticket, we kindly ask you to contact the parking office staff.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
   </div>
-  <!-- Main content -->
-  <main class="col-md-9 content-container">
-   <div class="content-header">
-    <div class="breadcrumb">
-     <a href="home.html">
-      Home Page
-     </a>
-     /
-     <a href="transportation.html">
-      Transport
-     </a>
-     /
-     <a href="parking.html">
-      Parking
-     </a>
-    </div>
-   </div>
-   <div class="content-body">
-    <h1 class="page-title-2">
-     Parking
-    </h1>
-    <div class="content-text">
-     <p class="mb-4 fs-6 fw-normal">
-      Our car park, which serves our guests at the Istanbul Fair Center, has a capacity of approximately 3000
-              vehicles. Our car park in our fair halls numbered 9-10-11 is a closed car park, the rest is an open car
-              park. There are special parking areas in our car park for our disabled guests.
-     </p>
-     <p>
-      Otopark payment booths; are located at the ground floor level within the parking buildings on the open
-              floor of the parking lot.
-     </p>
-     <p>
-      Apart from this, there is a payment point at the -1 red floor ring road exit. Payment can be made by cash
-              or credit card at the payment booths.
-     </p>
-     <p>
-      There are also automatic payment points where you can pay by credit card or cash at the entrance to the
-              main foyer, at the entrance and exit doors of exhibition halls 7-8, and at the exit doors of exhibition
-              halls 9-10.
-     </p>
-     <p>
-      Diplomatic corps and official vehicles can use the parking lot free of charge if they submit the necessary
-              documents (official vehicle license and institutional identity card, etc.) to our marketing unit.
-     </p>
-     <p>
-      Subscription procedures must be completed within 1 hour after entering the car park.
-     </p>
-     <p>
-      For questions about parking, you can contact the parking office staff at 0 111 111 11 11.
-     </p>
-     <p class="fw-bold">
-      Important Reminder About Parking Lot Usage
-     </p>
-     <p>
-     </p>
-     <ul class="ms-3" style="list-style-type: disc;">
-      <li>
-       It is forbidden to park on the sidewalks within the Istanbul Expo Center area,
-                please use the parking lot. Vehicles of owners who park in illegal areas will be towed and fined.
-      </li>
-      <li>
-       Keep your parking ticket for as long as your vehicle remains in the parking lot. If you lose your
-                ticket, we kindly ask you to contact the parking office staff.
-      </li>
-     </ul>
-    </div>
-   </div>
-  </main>
- </div>
 </div>
 
 <script>
- const buttons = document.querySelectorAll('#pagination .page-button');
+  const buttons = document.querySelectorAll('#pagination .page-button');
 
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        buttons.forEach(btn => {
-          btn.classList.remove('btn-danger');
-          btn.classList.add('btn-outline-danger');
-        });
-
-        button.classList.remove('btn-outline-danger');
-        button.classList.add('btn-danger');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => {
+        btn.classList.remove('btn-danger');
+        btn.classList.add('btn-outline-danger');
       });
+
+      button.classList.remove('btn-outline-danger');
+      button.classList.add('btn-danger');
     });
+  });
 </script>
 
-<script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
-</script>
+<script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
+  </script>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
 </script>

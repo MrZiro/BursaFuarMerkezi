@@ -1,20 +1,20 @@
 @model BursaFuarMerkezi.Models.ViewModels.HomeVM
 @{
-    ViewData["Title"] = "Bursa Fuar Merkezi - Anasayfa";
-    ViewData["Description"] = "Bursa Fuar Merkezi Anasayfa - ";
-    ViewData["Keywords"] = "Bursa Fuar Merkezi, Anasayfa, Fair";
-    ViewData["CanonicalUrl"] = SD.siteUrl + "/tr/anasayfa";
-    ViewData["AlternateUrls"] = new string[] { SD.siteUrl + "/en/home" };
+  ViewData["Title"] = "Bursa Fuar Merkezi - Anasayfa";
+  ViewData["Description"] = "Bursa Fuar Merkezi Anasayfa - ";
+  ViewData["Keywords"] = "Bursa Fuar Merkezi, Anasayfa, Fair";
+  ViewData["CanonicalUrl"] = SD.siteUrl + "/tr/anasayfa";
+  ViewData["AlternateUrls"] = new string[] { SD.siteUrl + "/en/home" };
 }
 
-@section Styles{
-  
+@section Styles {
+
   <link rel="stylesheet" href="~/css/card-slider-2.css" asp-append-version="true">
   <link rel="stylesheet" href="~/css/card-slider-1.css" asp-append-version="true">
 }
 
-  <!-- Slider Start -->
-  <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
+<!-- Slider Start -->
+@* <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="false">
     @{ var sliders = Model?.Sliders?.ToList() ?? new List<BursaFuarMerkezi.Models.Slider>(); }
     <div class="carousel-indicators">
       @for (var i = 0; i < sliders.Count; i++)
@@ -42,189 +42,199 @@
     <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
-    </button>
-    <div class="action-buttons">
-      <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Ticket</button>
-      <a href="stant-talebi-form.html" class="trigger-button" data-translate="slider.triggerButton2">Stand Request</a>
+    </button> *@
+
+<div class="carousel-inner">
+  <div class="carousel-item active">
+    <video class="video-slide w-100" autoplay muted loop playsinline>
+      <source src="~/videos/BursaFuarMerkezi.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<div class="action-buttons">
+  <button class="trigger-button" data-translate="slider.triggerButton1" id="openModalBtn">E-Ticket</button>
+  <a href="/en/stand-request" class="trigger-button" data-translate="slider.triggerButton2">Stand Request</a>
+</div>
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-container">
+    <div class="modal-header">
+      <h3 class="modal-title" data-translate="slider.triggerButton1">E-Ticket</h3>
+      <button class="close-button" id="closeModalBtn">&times;</button>
     </div>
-    <!-- Modal Overlay -->
-    <div class="modal-overlay" id="modalOverlay">
-      <div class="modal-container">
-        <div class="modal-header">
-          <h3 class="modal-title" data-translate="slider.triggerButton1">E-Ticket</h3>
-          <button class="close-button" id="closeModalBtn">&times;</button>
-        </div>
-        <div class="modal-content">
-          <div class="image-gallery">
-            <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
-              <img src="/images/rising.jpg" alt="Rising">
-              <p>Rising City</p>
-            </a>
-            <a href="https://junioshow.com.tr/online-bilet" class="gallery-item">
-              <img src="/images/junioshow.jpg" alt="JuniShow">
-              <p>JuniShow</p>
-            </a>
-            <a href="https://meexx.webonalti.net" target="_blank" class="gallery-item">
-              <img src="/images/meexx_banner.jpg" alt="Rising">
-              <p>MEEXX</p>
-            </a>
-            <a href="https://bursafoodpoint.com.tr" target="_blank" class="gallery-item">
-              <img src="/images/food_point_banner.jpg" alt="Rising">
-              <p>Food Point</p>
-            </a>
-          </div>
-        </div>
+    <div class="modal-content">
+      <div class="image-gallery">
+        <a href="https://risingcity.com.tr/katilimci-stant-talebi" target="_blank" class="gallery-item">
+          <img src="/images/rising.jpg" alt="Rising">
+          <p>Rising City</p>
+        </a>
+        <a href="https://junioshow.com.tr/online-bilet" class="gallery-item">
+          <img src="/images/junioshow.jpg" alt="JuniShow">
+          <p>JuniShow</p>
+        </a>
+        <a href="https://meexx.webonalti.net" target="_blank" class="gallery-item">
+          <img src="/images/meexx_banner.jpg" alt="Rising">
+          <p>MEEXX</p>
+        </a>
+        <a href="https://bursafoodpoint.com.tr" target="_blank" class="gallery-item">
+          <img src="/images/food_point_banner.jpg" alt="Rising">
+          <p>Food Point</p>
+        </a>
       </div>
     </div>
   </div>
-  <!-- Slider End -->
-  <div class="container-1">
-    <h1 class="text-uppercase">Bursa's fair vision shapes the future of trade</h1>
+</div>
+</div>
+<!-- Slider End -->
+<div class="container-1">
+  <h1 class="text-uppercase">Bursa's fair vision shapes the future of trade</h1>
 
-    <div class="stats-container">
-      <div class="stat-item">
-        <div class="stat-number">10+</div>
-        <div class="stat-label" data-translate="stats.fairsHeld">Fairs Held</div>
+  <div class="stats-container">
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-label" data-translate="stats.fairsHeld">Fairs Held</div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-number">70+</div>
+      <div class="stat-label" data-translate="stats.countries">From Different Countries</div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-number">1000</div>
+      <div class="stat-label" data-translate="stats.businessPeople">Business People</div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-number">7000</div>
+      <div class="stat-label" data-translate="stats.visitors">Visitors</div>
+    </div>
+
+
+
+    <div class="stat-item">
+      <div class="stat-number">140.000</div>
+      <div class="stat-label" data-translate="stats.area">m² area</div>
+    </div>
+  </div>
+</div>
+
+<!-- Card Slide Start -->
+<section class="card-1-section">
+  <div class="container">
+    <h2 class="fw-bold fs-1 mb-5 ms-5 mt-5" data-translate="upcomingFairs.title">Upcoming Fairs</h2>
+  </div>
+  <div class="slider-container">
+    <div class="slider">
+      <!-- Upcoming fairs will be loaded dynamically from database -->
+    </div>
+
+    <!-- Slider Kontrolleri -->
+    <div class="slider-controls">
+      <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+      <div class="slider-progress">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
       </div>
+      <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>
+<!-- Card Slider End -->
 
-      <div class="stat-item">
-        <div class="stat-number">70+</div>
-        <div class="stat-label" data-translate="stats.countries">From Different Countries</div>
-      </div>
-
-      <div class="stat-item">
-        <div class="stat-number">1000</div>
-        <div class="stat-label" data-translate="stats.businessPeople">Business People</div>
-      </div>
-
-      <div class="stat-item">
-        <div class="stat-number">7000</div>
-        <div class="stat-label" data-translate="stats.visitors">Visitors</div>
-      </div>
-
-
-
-      <div class="stat-item">
-        <div class="stat-number">140.000</div>
-        <div class="stat-label" data-translate="stats.area">m² area</div>
-      </div>
+<!-- Fuar İnformation Start -->
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <select id="yearFilter" class="form-select custom-select">
+        <option value="">Select Year</option>
+        <!-- Years will be loaded dynamically from database -->
+      </select>
+    </div>
+    <div class="col-md-3 mb-3">
+      <select id="monthFilter" class="form-select custom-select">
+        <option value="">Select Month</option>
+        <!-- Months will be loaded dynamically from database -->
+      </select>
+    </div>
+    <div class="col-md-3 mb-3">
+      <select id="sectorFilter" class="form-select custom-select">
+        <option value="">Select Sector</option>
+        <!-- Sectors will be loaded dynamically from database -->
+      </select>
+    </div>
+    <div class="col-md-3 mb-3">
+      <select id="locationFilter" class="form-select custom-select">
+        <option value="">Select Location</option>
+        <!-- Cities will be loaded dynamically from database -->
+      </select>
     </div>
   </div>
 
-  <!-- Card Slide Start -->
-  <section class="card-1-section">
-    <div class="container">
-      <h2 class="fw-bold fs-1 mb-5 ms-5 mt-5" data-translate="upcomingFairs.title">Upcoming Fairs</h2>
-    </div>
-    <div class="slider-container">
-      <div class="slider">
-        <!-- Upcoming fairs will be loaded dynamically from database -->
-      </div>
-
-      <!-- Slider Kontrolleri -->
-      <div class="slider-controls">
-        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
-        <div class="slider-progress">
-          <div class="progress-bar">
-            <div class="progress-fill"></div>
-          </div>
-        </div>
-        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
-      </div>
-    </div>
-  </section>
-  <!-- Card Slider End -->
-
-  <!-- Fuar İnformation Start -->
-  <div class="container mt-5">
-    <div class="row mb-4">
-      <div class="col-md-3 mb-3">
-        <select id="yearFilter" class="form-select custom-select">
-          <option value="">Select Year</option>
-          <!-- Years will be loaded dynamically from database -->
-        </select>
-      </div>
-      <div class="col-md-3 mb-3">
-        <select id="monthFilter" class="form-select custom-select">
-          <option value="">Select Month</option>
-          <!-- Months will be loaded dynamically from database -->
-        </select>
-      </div>
-      <div class="col-md-3 mb-3">
-        <select id="sectorFilter" class="form-select custom-select">
-          <option value="">Select Sector</option>
-          <!-- Sectors will be loaded dynamically from database -->
-        </select>
-      </div>
-      <div class="col-md-3 mb-3">
-        <select id="locationFilter" class="form-select custom-select">
-          <option value="">Select Location</option>
-          <!-- Cities will be loaded dynamically from database -->
-        </select>
-      </div>
-    </div>
-
-    <div id="eventsList" class="mt-4">
-      <!-- Events will be loaded here -->
-    </div>
-
-    <div class="pagination-container mt-4">
-      <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination">
-          <!-- Pagination will be generated here -->
-        </ul>
-      </nav>
-    </div>
+  <div id="eventsList" class="mt-4">
+    <!-- Events will be loaded here -->
   </div>
-  <!-- Fuar İnformation End -->
 
-  <!-- Card Slider-2 -->
-  <div class="container-2">
-    <!-- Category Tabs -->
-    <div class="category-tabs-2" id="category-tabs-2">
-      <!-- Categories will be loaded dynamically from database -->
-      <a href="/en/all-news" class="category-tab-2 ms-5">Show All Posts</a>
-    </div>
+  <div class="pagination-container mt-4">
+    <nav aria-label="Page navigation">
+      <ul class="pagination" id="pagination">
+        <!-- Pagination will be generated here -->
+      </ul>
+    </nav>
+  </div>
+</div>
+<!-- Fuar İnformation End -->
 
-    <!-- Card Slider -->
-    <div class="card-slider-container-2">
-      <!-- Navigation Arrows -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+<!-- Card Slider-2 -->
+<div class="container-2">
+  <!-- Category Tabs -->
+  <div class="category-tabs-2" id="category-tabs-2">
+    <!-- Categories will be loaded dynamically from database -->
+    <a href="/en/all-news" class="category-tab-2 ms-5">Show All Posts</a>
+  </div>
 
-      <!-- Swiper -->
-      <div class="swiper card-slider-2">
-        <div class="swiper-wrapper">
-          <!-- Cards will be dynamically inserted here -->
-        </div>
+  <!-- Card Slider -->
+  <div class="card-slider-container-2">
+    <!-- Navigation Arrows -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- Swiper -->
+    <div class="swiper card-slider-2">
+      <div class="swiper-wrapper">
+        <!-- Cards will be dynamically inserted here -->
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Card Template -->
-  <template id="card-template-2">
-    <div class="swiper-slide">
-      <div class="card-2">
-        <div class="card-image-2">
-          <img src="/placeholder.svg" alt="">
-          <div class="card-date-2">
-            <div class="date-year-2"></div>
-            <div class="date-day-2"></div>
-          </div>
-        </div>
-        <div class="card-content-2">
-          <div class="card-tag-2"></div>
-          <h3 class="card-title-2"></h3>
-          <a href="#" class="card-discover-link-2" data-translate="cardSlider2.discover">discover</a>
+<!-- Card Template -->
+<template id="card-template-2">
+  <div class="swiper-slide">
+    <div class="card-2">
+      <div class="card-image-2">
+        <img src="/placeholder.svg" alt="">
+        <div class="card-date-2">
+          <div class="date-year-2"></div>
+          <div class="date-day-2"></div>
         </div>
       </div>
+      <div class="card-content-2">
+        <div class="card-tag-2"></div>
+        <h3 class="card-title-2"></h3>
+        <a href="#" class="card-discover-link-2" data-translate="cardSlider2.discover">discover</a>
+      </div>
     </div>
-  </template>
+  </div>
+</template>
 
 
 
-  
-  @section Scripts{
+
+@section Scripts {
   <script src="~/js/stant-talebi.js" asp-append-version="true"></script>
   <script src="~/js/home.js" asp-append-version="true"></script>
-  }
+}

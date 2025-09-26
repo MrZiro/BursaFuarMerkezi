@@ -1,20 +1,12 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+    ViewData["Title"] = "BFM Konaklama";
+    ViewData["Description"] = "BFM Konaklama - Bursa Fuar Merkezi Konaklama";
+    ViewData["Keywords"] = "BFM, Konaklama, Fuar Merkezi";
+}
 
-<link href="./assets/style.css" rel="stylesheet"/>
-
-<link href="./assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="./assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="./assets/header.css" rel="stylesheet"/>
-
-<link href="./assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
+@section styles {
+    <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
 
 <div class="banner">
 </div>
@@ -48,7 +40,7 @@
        <div class="collapse show" id="hakkimizdaSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="organizator.html">
+          <a class="nav-link" href="/tr/organizator">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="organizator.sidebar.eBrochures">
@@ -57,7 +49,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="diger-hizmetler.html">
+          <a class="nav-link" href="/tr/diger-hizmetler">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="organizator.sidebar.otherServices">
@@ -67,7 +59,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="planlar.html">
+          <a class="nav-link" href="/tr/planlar">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="organizator.sidebar.plans">
@@ -76,7 +68,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="toplanti-salonlari.html">
+          <a class="nav-link" href="/tr/toplanti-salonlari">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="organizator.sidebar.meetingRooms">
@@ -86,7 +78,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link active" href="ek-hizmetler.html">
+          <a class="nav-link active" href="/tr/ek-hizmetler">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="organizator.sidebar.extraServices">
@@ -433,7 +425,7 @@
       Lütfen bu web sitesini kullanmadan önce aşağıdaki maddeleri dikkatlice okuyunuz ve inceleyiniz.
      </p>
      <p>
-      https://www.bfm.com alan adına sahip web sitesi ("Site" veya "Web Sitesi") KFA Fuarcılık A.Ş'ye
+      https://www.bursafuarmerkezi.com alan adına sahip web sitesi ("Site" veya "Web Sitesi") KFA Fuarcılık A.Ş'ye
                         ("KFA") aittir.
      </p>
      <p>
@@ -585,7 +577,7 @@
       Lütfen bu web sitesini kullanmadan önce aşağıdaki maddeleri dikkatlice okuyunuz ve inceleyiniz.
      </p>
      <p>
-      https://www.bfm.com alan adına sahip web sitesi ("Site" veya "Web Sitesi") KFA Fuarcılık A.Ş'ye
+      https://www.bursafuarmerkezi.com alan adına sahip web sitesi ("Site" veya "Web Sitesi") KFA Fuarcılık A.Ş'ye
                         ("KFA") aittir.
      </p>
      <p>
@@ -926,8 +918,12 @@
    </div>
   </div>
  </div>
- <script>
-  const buttons = document.querySelectorAll('#pagination .page-button');
+ 
+@section scripts {
+    <script src="~/js/hakkimizda.js"></script>
+
+    <script>
+        const buttons = document.querySelectorAll('#pagination .page-button');
 
         buttons.forEach(button => {
             button.addEventListener('click', () => {
@@ -940,18 +936,6 @@
                 button.classList.add('btn-danger');
             });
         });
- </script>
- <!-- Bootstrap Bundle JS (includes Popper) - Load BEFORE custom scripts -->
- <script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
- </script>
- <!-- Swiper JS -->
- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
- </script>
- <!-- Custom Scripts -->
- <script src="hakkimizda.js">
- </script>
- <script src="main.js">
- </script>
- <script src="kvkk.js">
- </script>
-</div>
+    </script>
+
+}

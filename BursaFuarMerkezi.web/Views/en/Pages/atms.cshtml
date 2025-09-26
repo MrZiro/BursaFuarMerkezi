@@ -1,20 +1,12 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
 
-<link href="../tr/assets/style.css" rel="stylesheet"/>
-
-<link href="../tr/assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="../tr/assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="../tr/assets/header.css" rel="stylesheet"/>
-
-<link href="../tr/assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
 
 <div class="banner">
 </div>
@@ -44,7 +36,7 @@
        <div class="collapse" id="idtmSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="services.html">
+          <a class="nav-link" href="/tr/services">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.prayerRoom">
@@ -53,7 +45,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="florist.html">
+          <a class="nav-link" href="/tr/florist">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.florist">
@@ -62,7 +54,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="atms.html">
+          <a class="nav-link" href="/tr/atms">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.atms">
@@ -71,7 +63,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="infirmary.html">
+          <a class="nav-link" href="/tr/infirmary">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.infirmary">
@@ -80,7 +72,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="lost-item.html">
+          <a class="nav-link" href="/tr/lost-item">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.lostAndFound">
@@ -101,7 +93,7 @@
        <div class="collapse" id="hakkimizdaSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="restaurant-and-cafes.html">
+          <a class="nav-link" href="/tr/restaurant-and-cafes">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.restaurantsCafesList">
@@ -122,7 +114,7 @@
        <div class="collapse" id="usalımSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="transportation.html">
+          <a class="nav-link" href="/tr/transportation">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.transportToBFM">
@@ -131,7 +123,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link active" href="parking.html">
+          <a class="nav-link active" href="/tr/parking">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.parking">
@@ -152,7 +144,7 @@
        <div class="collapse" id="ifmSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="accommodation.html">
+          <a class="nav-link" href="/tr/accommodation">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="hizmetler.sidebar.nearbyHotels">
@@ -171,15 +163,15 @@
   <main class="col-md-9 content-container">
    <div class="content-header">
     <div class="breadcrumb">
-     <a href="home.html">
+     <a href="/tr/home">
       Home Page
      </a>
      /
-     <a href="services.html">
+     <a href="/tr/services">
       Services
      </a>
      /
-     <a href="atms.html">
+     <a href="/tr/atms">
       ATM's
      </a>
     </div>
@@ -193,19 +185,19 @@
       Vakıfbank:
      </h3>
      <p class="mb-5 fs-6 fw-normal">
-      Located in the entrance-exit area of ​​exhibition hall number 7-8.
+      
      </p>
      <h3 class="fw-light fs-3">
       İş Bankası:
      </h3>
      <p class="mb-5 fs-6 fw-normal">
-      It is located in the entrance-exit area of ​​exhibition hall number 7-8.
+      
      </p>
      <h3 class="fw-light fs-3">
       Garanti Bankası:
      </h3>
      <p class="mb-5 fs-6 fw-normal">
-      It is located in the entrance-exit area of ​​exhibition hall number 7-8.
+      
      </p>
     </div>
    </div>
@@ -213,8 +205,11 @@
  </div>
 </div>
 
-<script>
- const buttons = document.querySelectorAll('#pagination .page-button');
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
@@ -227,19 +222,5 @@
         button.classList.add('btn-danger');
       });
     });
-</script>
-
-<script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
-</script>
-
-<script src="../tr/hakkimizda.js">
-</script>
-
-<script src="../tr/main.js">
-</script>
-
-<script src="../tr/kvkk.js">
-</script>
+  </script>
+}

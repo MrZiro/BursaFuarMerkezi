@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="tr">
+
 <head>
+<!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-0J9ZXBC39G"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-0J9ZXBC39G'); </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bursa Fuar Merkezi | @ViewData["Title"]</title>
@@ -28,18 +30,19 @@
   <link rel="icon" type="image" href="~/images/bfm-opak-logo.png">
   @RenderSection("Styles", required: false)
 </head>
+
 <body>
-    <partial name="Components/_Header" />
-    <div class="">
-        @* <main role="main" class="pb-3"> *@
-            @RenderBody()
-        @* </main> *@
-    </div>
+  <partial name="Components/_Header" />
+  <div class="">
+    @* <main role="main" class="pb-3"> *@
+    @RenderBody()
+    @* </main> *@
+  </div>
 
   <partial name="Components/_Footer" />
 
   <script src="~/js/main.js" asp-for></script>
-    <script src="~/js/kvkk.js"></script>
+  <script src="~/js/kvkk.js"></script>
   <script src="~/js/index.js"></script>
   <script src="~/js/lang-switch.js"></script>
 
@@ -56,6 +59,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    @await RenderSectionAsync("Scripts", required: false)
+  @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

@@ -17,8 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         langBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            e.stopPropagation(); // Prevents the click from bubbling up to the document
+            e.stopPropagation();
             langMenu.classList.toggle('show');
+            langBtn.parentElement.classList.toggle('active');
         });
     }
 
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function (e) {
         if (langMenu && langMenu.classList.contains('show') && !langBtn.contains(e.target)) {
             langMenu.classList.remove('show');
+            langBtn.parentElement.classList.remove('active');
         }
     });
     

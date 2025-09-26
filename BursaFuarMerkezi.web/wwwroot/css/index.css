@@ -265,3 +265,44 @@
   margin-top: 5px;
   font-size: 14px;
 }
+
+/* Video Responsive */
+.carousel-inner {
+  overflow: hidden;
+}
+
+.video-slide {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .video-slide {
+    height: 50vh;
+    object-fit: cover;
+    max-width: 100%;
+  }
+  
+  .action-buttons {
+    bottom: 15%;
+    right: 10px;
+    left: auto;
+    flex-direction: row;
+    transform: translateY(50%);
+  }
+  
+  .trigger-button {
+    padding: 16px 28px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-slide {
+    height: 40vh;
+    object-fit: cover;
+    max-width: 100%;
+  }
+}

@@ -1,152 +1,151 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
 
-<link href="../tr/assets/style.css" rel="stylesheet"/>
-
-<link href="../tr/assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="../tr/assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="../tr/assets/header.css" rel="stylesheet"/>
-
-<link href="../tr/assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
 
 <div class="banner">
 </div>
 
 <div class="container main-container">
- <div class="row">
-  <!-- Sidebar -->
-  <div class="col-md-3 sidebar-container">
-   <div class="sidebar">
-    <div class="sidebar-sticky">
-     <div class="sidebar-header p-3 mb-3 text-center">
-      <h3 class="" data-translate="organizator.sidebar.mainTitle">
-       BFM
-      </h3>
-      <p class="text-muted small mb-0" data-translate="organizator.sidebar.subTitle">
-       Bursa Fair Center
-      </p>
-     </div>
-     <ul class="nav flex-column">
-      <!-- Organizatör -->
-      <li class="nav-item dropdown">
-       <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu" data-bs-toggle="collapse" href="#">
-        <span class="menu-icon">
-         <i class="fas fa-info-circle">
-         </i>
-        </span>
-        <span data-translate="organizator.sidebar.organizerTitle">
-         Organizer
-        </span>
-       </a>
-       <div class="collapse show" id="hakkimizdaSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link active" href="organizer.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="organizator.sidebar.eBrochures">
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="organizator.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="organizator.sidebar.subTitle">
+              Bursa Fair Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Organizatör -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-info-circle">
+                  </i>
+                </span>
+                <span data-translate="organizator.sidebar.organizerTitle">
+                  Organizer
+                </span>
+              </a>
+              <div class="collapse show" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/en/organizer">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.eBrochures">
+                        E-Brochures
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/other-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.otherServices">
+                        Other Services
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/plans">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.plans">
+                        Plans
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/meeting-rooms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.meetingRooms">
+                        Meeting Rooms
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/extra-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="organizator.sidebar.extraServices">
+                        Extra Services
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a data-translate="organizator.breadcrumb.home" href="/en/home">
+            Home
+          </a>
+          /
+          <span data-translate="organizator.breadcrumb.eBrochures">
             E-Brochures
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="other-services.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="organizator.sidebar.otherServices">
-            Other Services
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="plans.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="organizator.sidebar.plans">
-            Plans
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="meeting-rooms.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="organizator.sidebar.meetingRooms">
-            Meeting Rooms
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="extra-services.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="organizator.sidebar.extraServices">
-            Extra Services
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-     </ul>
-    </div>
-   </div>
+          </span>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="document-header" data-translate="organizator.content.pageTitle">
+          E-Brochures
+        </div>
+        <table class="document-table">
+          <thead>
+            <tr>
+              <th data-translate="organizator.content.tableHeaderDocName" style="width: 70%">
+                Document name
+              </th>
+              <th data-translate="organizator.content.tableHeaderDownloadLink">
+                Download Link
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-translate="organizator.content.docNameExample">
+                BFM Agenda - April 2024
+              </td>
+              <td>
+                <button class="download-btn" data-translate="organizator.content.downloadButton"
+                  onclick="downloadDocument(this)">
+                  Download
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
-  <!-- Main content -->
-  <main class="col-md-9 content-container">
-   <div class="content-header">
-    <div class="breadcrumb">
-     <a data-translate="organizator.breadcrumb.home" href="home.html">
-      Home
-     </a>
-     /
-     <span data-translate="organizator.breadcrumb.eBrochures">
-      E-Brochures
-     </span>
-    </div>
-   </div>
-   <div class="content-body">
-    <div class="document-header" data-translate="organizator.content.pageTitle">
-     E-Brochures
-    </div>
-    <table class="document-table">
-     <thead>
-      <tr>
-       <th data-translate="organizator.content.tableHeaderDocName" style="width: 70%">
-        Document name
-       </th>
-       <th data-translate="organizator.content.tableHeaderDownloadLink">
-        Download Link
-       </th>
-      </tr>
-     </thead>
-     <tbody>
-      <tr>
-       <td data-translate="organizator.content.docNameExample">
-        BFM Agenda - April 2024
-       </td>
-       <td>
-        <button class="download-btn" data-translate="organizator.content.downloadButton" onclick="downloadDocument(this)">
-         Download
-        </button>
-       </td>
-      </tr>
-     </tbody>
-    </table>
-   </div>
-  </main>
- </div>
 </div>
 
-<script>
- const buttons = document.querySelectorAll('#pagination .page-button');
+
+
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
@@ -190,16 +189,6 @@
       a.click();
       document.body.removeChild(a);
     }
-</script>
+  </script>
 
-<script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
-</script>
-
-<script src="../tr/hakkimizda.js">
-</script>
-
-<script src="../tr/main.js">
-</script>
+}

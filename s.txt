@@ -1,0 +1,1 @@
+ "DefaultConnection": "Server=UMUT\\SQLEXPRESS;Database=BFM;User Id=umutziya;Password=umut12345;Encrypt=True;TrustServerCertificate=True"

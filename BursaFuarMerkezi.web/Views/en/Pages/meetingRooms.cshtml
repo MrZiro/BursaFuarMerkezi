@@ -1,257 +1,254 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
 
-<link href="../tr/assets/style.css" rel="stylesheet"/>
-
-<link href="../tr/assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="../tr/assets/blog-single-page.css" rel="stylesheet"/>
-
-<link href="../tr/assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="../tr/assets/header.css" rel="stylesheet"/>
-
-<link href="../tr/assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+  <link href="~/css/blog-single-page.css" rel="stylesheet" />
+}
 
 <div class="banner">
 </div>
 
 <div class="container main-container">
- <div class="row">
-  <!-- Sidebar -->
-  <div class="col-md-3 sidebar-container">
-   <div class="sidebar">
-    <div class="sidebar-sticky">
-     <div class="sidebar-header p-3 mb-3 text-center">
-      <h3 class="" data-translate="hakkimizda.sidebar.mainTitle">
-       BFM
-      </h3>
-      <p class="text-muted small mb-0" data-translate="hakkimizda.sidebar.subTitle">
-       Bursa Fair
-                Center
-      </p>
-     </div>
-     <ul class="nav flex-column">
-      <!-- Hakkımızda -->
-      <li class="nav-item dropdown">
-       <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu" data-bs-toggle="collapse" href="#">
-        <span class="menu-icon">
-         <i class="fas fa-info-circle">
-         </i>
-        </span>
-        <span data-translate="hakkimizda.sidebar.aboutUs">
-         About Us
-        </span>
-       </a>
-       <div class="collapse show" id="hakkimizdaSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link" href="aboutus.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.bfmAbout">
-            About BFM
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="president-message.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.presidentMessage">
-            President's
-                          Message
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="quality-policy.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.qualityPolicy">
-            Quality
-                          Policy
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="our-team.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.ourTeam">
-            Our Team
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="kvkk-documents.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.kvkkDocuments">
-            KVKK
-                          Documents
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="information-society-services.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.informationSocietyServices">
-            Information
-                          Society
-                          Services
-           </span>
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="reports.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.reports">
-            Reports
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-      <li class="nav-item dropdown">
-       <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu" data-bs-toggle="collapse" href="#">
-        <span class="menu-icon">
-         <i class="fas fa-briefcase">
-         </i>
-        </span>
-        <span data-translate="hakkimizda.sidebar.bfmOffices">
-         BFM Offices
-        </span>
-       </a>
-       <div class="collapse" id="ifmSubmenu">
-        <ul class="nav flex-column submenu">
-         <li class="nav-item">
-          <a class="nav-link" href="meeting-rooms.html">
-           <i class="fas fa-angle-right me-2">
-           </i>
-           <span data-translate="hakkimizda.sidebar.bfmReadyOffices">
-            BFM Ready
-                          Offices and Meeting
-                          Rooms
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-      </li>
-     </ul>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 sidebar-container">
+      <div class="sidebar">
+        <div class="sidebar-sticky">
+          <div class="sidebar-header p-3 mb-3 text-center">
+            <h3 class="" data-translate="hakkimizda.sidebar.mainTitle">
+              BFM
+            </h3>
+            <p class="text-muted small mb-0" data-translate="hakkimizda.sidebar.subTitle">
+              Bursa Fair
+              Center
+            </p>
+          </div>
+          <ul class="nav flex-column">
+            <!-- Hakkımızda -->
+            <li class="nav-item dropdown">
+              <a aria-expanded="true" class="nav-link dropdown-toggle" data-bs-target="#hakkimizdaSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-info-circle">
+                  </i>
+                </span>
+                <span data-translate="hakkimizda.sidebar.aboutUs">
+                  About Us
+                </span>
+              </a>
+              <div class="collapse show" id="hakkimizdaSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/about-us">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.bfmAbout">
+                        About BFM
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/president-message">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.presidentMessage">
+                        President's
+                        Message
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/quality-policy">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.qualityPolicy">
+                        Quality
+                        Policy
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/our-team">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.ourTeam">
+                        Our Team
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/kvkk-documents">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.kvkkDocuments">
+                        KVKK
+                        Documents
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/information-society-services">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.informationSocietyServices">
+                        Information
+                        Society
+                        Services
+                      </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/reports">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.reports">
+                        Reports
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-target="#ifmSubmenu"
+                data-bs-toggle="collapse" href="#">
+                <span class="menu-icon">
+                  <i class="fas fa-briefcase">
+                  </i>
+                </span>
+                <span data-translate="hakkimizda.sidebar.bfmOffices">
+                  BFM Offices
+                </span>
+              </a>
+              <div class="collapse" id="ifmSubmenu">
+                <ul class="nav flex-column submenu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/en/meeting-rooms">
+                      <i class="fas fa-angle-right me-2">
+                      </i>
+                      <span data-translate="hakkimizda.sidebar.bfmReadyOffices">
+                        BFM Ready
+                        Offices and Meeting
+                        Rooms
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-   </div>
+    <!-- Main content -->
+    <main class="col-md-9 content-container">
+      <div class="content-header">
+        <div class="breadcrumb">
+          <a data-translate="hakkimizda.breadcrumb.home" href="/en/home">
+            Home
+          </a>
+          /
+          <a href="meeting-rooms.html">
+            Ready-Made Offices and Meeting Rooms
+          </a>
+        </div>
+      </div>
+      <div class="content-body">
+        <h1 class="page-title-2">
+          BFM Ready-Made Offices and Meeting Rooms
+        </h1>
+        <div class="content-text">
+          <p class="mb-5">
+            Located within the Bursa International Fair Center, the Serviced Offices and Meeting Rooms
+            offer professional, flexible, and technologically equipped workspaces for the business world.
+          </p>
+          <h3>
+            Our Offices and Meeting Rooms
+          </h3>
+          <p class="">
+            We operate with a total of 6 named offices:
+          </p>
+          <ul>
+            <li>
+              Çekirge
+            </li>
+            <li>
+              Uludağ
+            </li>
+            <li>
+              Cumalıkızık
+            </li>
+            <li>
+              İznik
+            </li>
+            <li>
+              Trilye
+            </li>
+            <li>
+              Mudanya
+            </li>
+          </ul>
+          These offices are equipped with ergonomic furniture and modern infrastructure, providing ideal environments
+          for individual work and team meetings.
+          <h3>
+            Our Service Model
+          </h3>
+          <p class="">
+          </p>
+          <ul>
+            <li>
+              Daily, weekly or monthly rental options
+            </li>
+            <li>
+              Flexible table membership models
+            </li>
+            <li>
+              Quiet and efficient working environment
+            </li>
+            <li>
+              High-speed internet, presentation equipment, visual and audio systems
+            </li>
+          </ul>
+          <h3>
+            Location and Transportation
+          </h3>
+          <p class="mb-5">
+            BFM Office and Meeting Halls, located within the Bursa Fair Center, offers easy access to
+            the city center. It offers easy access by public transportation and private vehicles. Its proximity to
+            main road connections and the BUTTİM station makes it a central location.
+          </p>
+          <h3>
+            Contact and Reservation
+          </h3>
+          <p class="">
+          </p>
+          <ul>
+            <li>
+              Address: Altınova Mah., Fuar Cad. No:25, 16250 Osmangazi / Bursa
+            </li>
+            <li>
+              Phone: (0224) 211 27 51
+            </li>
+            <li>
+              E-mail: info@bfm.com.tr
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
   </div>
-  <!-- Main content -->
-  <main class="col-md-9 content-container">
-   <div class="content-header">
-    <div class="breadcrumb">
-     <a data-translate="hakkimizda.breadcrumb.home" href="home.html">
-      Home
-     </a>
-     /
-     <a href="meeting-rooms.html">
-      Ready-Made Offices and Meeting Rooms
-     </a>
-    </div>
-   </div>
-   <div class="content-body">
-    <h1 class="page-title-2">
-     BFM Ready-Made Offices and Meeting Rooms
-    </h1>
-    <div class="content-text">
-     <p class="mb-5">
-      Located within the Bursa International Fair Center, the Serviced Offices and Meeting Rooms
-              offer professional, flexible, and technologically equipped workspaces for the business world.
-     </p>
-     <h3>
-      Our Offices and Meeting Rooms
-     </h3>
-     <p class="">
-      We operate with a total of 6 named offices:
-     </p>
-     <ul>
-      <li>
-       Çekirge
-      </li>
-      <li>
-       Uludağ
-      </li>
-      <li>
-       Cumalıkızık
-      </li>
-      <li>
-       İznik
-      </li>
-      <li>
-       Trilye
-      </li>
-      <li>
-       Mudanya
-      </li>
-     </ul>
-     These offices are equipped with ergonomic furniture and modern infrastructure, providing ideal environments
-            for individual work and team meetings.
-     <h3>
-      Our Service Model
-     </h3>
-     <p class="">
-     </p>
-     <ul>
-      <li>
-       Daily, weekly or monthly rental options
-      </li>
-      <li>
-       Flexible table membership models
-      </li>
-      <li>
-       Quiet and efficient working environment
-      </li>
-      <li>
-       High-speed internet, presentation equipment, visual and audio systems
-      </li>
-     </ul>
-     <h3>
-      Location and Transportation
-     </h3>
-     <p class="mb-5">
-      BFM Office and Meeting Halls, located within the Bursa Fair Center, offers easy access to
-              the city center. It offers easy access by public transportation and private vehicles. Its proximity to
-              main road connections and the BUTTİM station makes it a central location.
-     </p>
-     <h3>
-      Contact and Reservation
-     </h3>
-     <p class="">
-     </p>
-     <ul>
-      <li>
-       Address: Altınova Mah., Fuar Cad. No:25, 16250 Osmangazi / Bursa
-      </li>
-      <li>
-       Phone: (0224) 211 27 51
-      </li>
-      <li>
-       E-mail: info@bfm.com.tr
-      </li>
-     </ul>
-    </div>
-   </div>
-  </main>
- </div>
 </div>
 
-<script>
- const buttons = document.querySelectorAll('#pagination .page-button');
+@section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+  <script src="~/js/toplanti-salonlari.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
@@ -264,22 +261,5 @@
         button.classList.add('btn-danger');
       });
     });
-</script>
-
-<script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
-</script>
-
-<script src="../tr/hakkimizda.js">
-</script>
-
-<script src="../tr/main.js">
-</script>
-
-<script src="../tr/toplanti-salonlari.js">
-</script>
-
-<script src="../tr/kvkk.js">
-</script>
+  </script>
+}

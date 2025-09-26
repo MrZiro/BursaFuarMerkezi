@@ -1,20 +1,12 @@
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" rel="stylesheet"/>
+@{
+  ViewData["Title"] = "BFM Hakkında";
+  ViewData["Description"] = "BFM Hakkında - Bursa Fuar Merkezi Hakkında";
+  ViewData["Keywords"] = "BFM, Hakkında, Fuar Merkezi";
+}
 
-<link href="../tr/assets/style.css" rel="stylesheet"/>
-
-<link href="../tr/assets/hakkimizda.css" rel="stylesheet"/>
-
-<link href="../tr/assets/arama-cubugu.css" rel="stylesheet"/>
-
-<link href="../tr/assets/header.css" rel="stylesheet"/>
-
-<link href="../tr/assets/kvkk.css" rel="stylesheet"/>
-
-<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" referrerpolicy="no-referrer" rel="stylesheet"/>
-
-<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
-
-<link href="./images/bfm-opak-logo.png" rel="icon" type="image"/>
+@section styles {
+  <link href="~/css/hakkimizda.css" rel="stylesheet" />
+}
 
 <div class="banner">
 </div>
@@ -48,7 +40,7 @@
        <div class="collapse show" id="hakkimizdaSubmenu">
         <ul class="nav flex-column submenu">
          <li class="nav-item">
-          <a class="nav-link" href="organizer.html">
+          <a class="nav-link" href="organizer">
            <i class="fas fa-angle-right me-2">
            </i>
            <span data-translate="organizator.sidebar.eBrochures">
@@ -425,7 +417,7 @@
       Please read and review the following items carefully before using this website.
      </p>
      <p>
-      The website with the domain name https://www.bfm.com ("Site" or "Website") belongs to KFA Fuarcılık A.Ş ("KFA").
+      The website with the domain name https://www.bursafuarmerkezi.com ("Site" or "Website") belongs to KFA Fuarcılık A.Ş ("KFA").
      </p>
      <p>
       By using this Website, you accept the following Terms of Use.
@@ -529,7 +521,7 @@
       Please read and review the following items carefully before using this website.
      </p>
      <p>
-      The website with the domain name https://www.bfm.com ("Site" or "Website") belongs to KFA Fuarcılık A.Ş ("KFA").
+      The website with the domain name https://www.bursafuarmerkezi.com ("Site" or "Website") belongs to KFA Fuarcılık A.Ş ("KFA").
      </p>
      <p>
       By using this Website, you accept the following Terms of Use.
@@ -759,8 +751,11 @@
    </div>
   </div>
  </div>
- <script>
-  const buttons = document.querySelectorAll('#pagination .page-button');
+ @section scripts {
+  <script src="~/js/hakkimizda.js"></script>
+
+  <script>
+    const buttons = document.querySelectorAll('#pagination .page-button');
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
@@ -773,18 +768,5 @@
         button.classList.add('btn-danger');
       });
     });
- </script>
- <!-- Bootstrap Bundle JS (includes Popper) - Load BEFORE custom scripts -->
- <script crossorigin="anonymous" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js">
- </script>
- <!-- Swiper JS -->
- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js">
- </script>
- <!-- Custom Scripts -->
- <script src="../tr/hakkimizda.js">
- </script>
- <script src="../tr/main.js">
- </script>
- <script src="../tr/kvkk.js">
- </script>
-</div>
+  </script>
+}
